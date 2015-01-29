@@ -1,10 +1,6 @@
 # LittleSoftwareStatsNET
 This library is for integrating the API for [Little Software Stats](https://github.com/little-apps/little-software-stats) with .NET projects. It is a Little Apps project and is coded in C#. 
 
-### Compatibility ###
- - It is coded in C# but also works with other .NET Framework programming languages (VB.NET, J#, etc).
- - This project is fully compatible with Microsoft .NET Framework v3.5 (or higher). It is also compatible with Mono but has not been fully tested on Unix and Mac OSX operating systems.
-
 ### Installation ###
 Please either look at the file INSTALL.txt (included with this project) or follow [these instructions](http://little-software-stats.com/docs/libraries/csharp-vb-net-mono/) on the Little Software website for steps on integrating this library with your .NET project.
 
@@ -36,3 +32,6 @@ In order for the LittleSoftwareStatsNET to properly detect operating systems, pl
         </compatibility>
     </assembly>
 
+#### Compatibility ####
+ - It is coded in C# but also works with other .NET Framework programming languages (VB.NET, J#, etc).
+ - This project is fully compatible with Microsoft .NET Framework v3.5 (or higher). It is also compatible with Mono but has not been fully tested on Unix and Mac OSX operating systems.
