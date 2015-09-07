@@ -28,7 +28,7 @@ namespace LittleSoftwareStats.Hardware
         {
         }
 
-        public override string CPUName
+        public override string CpuName
         {
             get
             {
@@ -45,7 +45,7 @@ namespace LittleSoftwareStats.Hardware
             }
         }
 
-        public override string CPUBrand
+        public override string CpuBrand
         {
             get
             {
@@ -62,7 +62,7 @@ namespace LittleSoftwareStats.Hardware
             }
         }
 
-        public override double CPUFrequency
+        public override double CpuFrequency
         {
             get
             {
@@ -72,7 +72,7 @@ namespace LittleSoftwareStats.Hardware
                     Regex regex = new Regex(@"(?:bogomips\s+:\s*)(?<bogomips>\w*)");
                     MatchCollection matches = regex.Matches(output);
                     int bogomips = int.Parse(matches[0].Groups[1].Value);
-                    return bogomips / CPUCores;
+                    return bogomips / CpuCores;
                 }
                 catch { }
 
@@ -80,7 +80,7 @@ namespace LittleSoftwareStats.Hardware
             }
         }
 
-        public override int CPUArchitecture
+        public override int CpuArchitecture
         {
             get
             {
@@ -99,7 +99,7 @@ namespace LittleSoftwareStats.Hardware
             }
         }
 
-        public override int CPUCores
+        public override int CpuCores
         {
             get
             {

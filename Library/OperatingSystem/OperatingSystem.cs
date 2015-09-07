@@ -54,7 +54,7 @@ namespace LittleSoftwareStats.OperatingSystem
             if (Environment.OSVersion.Platform == PlatformID.Unix)
                 return new UnixOperatingSystem();
             else if (Environment.OSVersion.Platform == PlatformID.MacOSX)
-                return new MacOSXOperatingSystem();
+                return new MacOsxOperatingSystem();
             else
                 return new WindowsOperatingSystem();
         }

@@ -73,7 +73,7 @@ namespace LittleSoftwareStats
             return value;
         }
 
-        public static string SerializeAsXML(Events events)
+        public static string SerializeAsXml(Events events)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.OmitXmlDeclaration = true;
@@ -113,7 +113,7 @@ namespace LittleSoftwareStats
             return sb.ToString();
         }
 
-        public static string SerializeAsJSON(Events events)
+        public static string SerializeAsJson(Events events)
         {
             StringBuilder sb = new StringBuilder();
             int i = 0;
@@ -256,14 +256,14 @@ namespace LittleSoftwareStats
         }
 
 #region MacOSX Functions
-        private static string _system_profiler;
+        private static string _systemProfiler;
         public static string SystemProfilerCommandOutput
         {
             get
             {
-                if (string.IsNullOrEmpty(_system_profiler))
-                    _system_profiler = Utils.GetCommandExecutionOutput("system_profiler", "");
-                return _system_profiler;
+                if (string.IsNullOrEmpty(_systemProfiler))
+                    _systemProfiler = Utils.GetCommandExecutionOutput("system_profiler", "");
+                return _systemProfiler;
             }
         }
 

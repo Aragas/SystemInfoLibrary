@@ -20,9 +20,9 @@ using System.Text.RegularExpressions;
 
 namespace LittleSoftwareStats.OperatingSystem
 {
-    internal class MacOSXOperatingSystem : UnixOperatingSystem
+    internal class MacOsxOperatingSystem : UnixOperatingSystem
     {
-        public MacOSXOperatingSystem()
+        public MacOsxOperatingSystem()
         {
 
         }

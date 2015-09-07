@@ -23,17 +23,17 @@ namespace LittleSoftwareStats.MachineIdentifiers
 {
     abstract public class MachineIdentifierBase : IMachineIdentifier
     {
-        private byte[] _IdentifierHash = null;
+        private byte[] _identifierHash = null;
 
         virtual public byte[] IdentifierHash 
         {
             get
             {
-                if (_IdentifierHash == null)
+                if (_identifierHash == null)
                 {
-                    _IdentifierHash = GetIdentifierHash();
+                    _identifierHash = GetIdentifierHash();
                 }
-                return _IdentifierHash;
+                return _identifierHash;
             }
         }
 

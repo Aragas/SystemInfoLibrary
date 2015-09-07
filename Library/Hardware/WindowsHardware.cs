@@ -53,29 +53,29 @@ namespace LittleSoftwareStats.Hardware
         static extern bool GlobalMemoryStatusEx([In, Out] MEMORYSTATUSEX lpBuffer);
 #endregion
         readonly string _cpuBrand = "";
-        public override string CPUBrand
+        public override string CpuBrand
         {
             get { return this._cpuBrand; }
         }
 
         readonly string _cpuName = "";
-        public override string CPUName
+        public override string CpuName
         {
             get { return this._cpuName; }
         }
 
         readonly int _cpuArch;
-        public override int CPUArchitecture
+        public override int CpuArchitecture
         {
             get { return this._cpuArch; }
         }
         
-        public override int CPUCores
+        public override int CpuCores
         {
             get { return Environment.ProcessorCount; }
         }
 
-        public override double CPUFrequency
+        public override double CpuFrequency
         {
             get { return Convert.ToDouble(Utils.GetRegistryValue(Registry.LocalMachine, @"HARDWARE\DESCRIPTION\System\CentralProcessor\0", "~MHz", 0)); }
         }

@@ -145,7 +145,7 @@ namespace LittleSoftwareStats.OperatingSystem
         public WindowsOperatingSystem()
         {
             // Get OS Info
-            GetOSInfo();
+            GetOsInfo();
 
             // Get .NET Framework version + SP
             this._frameworkVersion = new Version(); // 0.0
@@ -209,7 +209,7 @@ namespace LittleSoftwareStats.OperatingSystem
             catch { }
         }
 
-        private void GetOSInfo()
+        private void GetOsInfo()
         {
             OSVERSIONINFOEX osVersionInfo = new OSVERSIONINFOEX();
             osVersionInfo.dwOSVersionInfoSize = (uint)Marshal.SizeOf(typeof(OSVERSIONINFOEX));

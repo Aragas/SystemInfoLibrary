@@ -26,7 +26,7 @@ namespace LittleSoftwareStats.Hardware
         {
         }
 
-        public override string CPUName 
+        public override string CpuName 
         {
             get { 
                 try
@@ -41,7 +41,7 @@ namespace LittleSoftwareStats.Hardware
             }
         }
 
-        public override int CPUArchitecture
+        public override int CpuArchitecture
         {
             get
             {
@@ -53,7 +53,7 @@ namespace LittleSoftwareStats.Hardware
             }
         }
 
-        public override int CPUCores
+        public override int CpuCores
         {
             get 
             {
@@ -63,12 +63,12 @@ namespace LittleSoftwareStats.Hardware
             }
         }
 
-        public override string CPUBrand 
+        public override string CpuBrand 
         {
             get { return "GenuineIntel"; }
         }
 
-        public override double CPUFrequency 
+        public override double CpuFrequency 
         {
             get
             {

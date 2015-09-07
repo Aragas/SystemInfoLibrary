@@ -112,11 +112,11 @@ namespace LittleSoftwareStats
             e.Add("oslng", osInfo.Lcid);
             e.Add("osscn", hwInfo.ScreenResolution);
 
-            e.Add("cnm", hwInfo.CPUName);
-            e.Add("car", hwInfo.CPUArchitecture);
-            e.Add("cbr", hwInfo.CPUBrand);
-            e.Add("cfr", hwInfo.CPUFrequency);
-            e.Add("ccr", hwInfo.CPUCores);
+            e.Add("cnm", hwInfo.CpuName);
+            e.Add("car", hwInfo.CpuArchitecture);
+            e.Add("cbr", hwInfo.CpuBrand);
+            e.Add("cfr", hwInfo.CpuFrequency);
+            e.Add("ccr", hwInfo.CpuCores);
             e.Add("mtt", hwInfo.MemoryTotal);
             e.Add("mfr", hwInfo.MemoryFree);
             e.Add("dtt", hwInfo.DiskTotal);

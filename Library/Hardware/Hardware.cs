@@ -20,11 +20,11 @@ namespace LittleSoftwareStats.Hardware
 {
     internal abstract class Hardware
     {
-        public abstract string CPUName { get; }
-        public abstract int CPUArchitecture { get; }
-        public abstract int CPUCores { get; }
-        public abstract string CPUBrand { get; }
-        public abstract double CPUFrequency { get; }
+        public abstract string CpuName { get; }
+        public abstract int CpuArchitecture { get; }
+        public abstract int CpuCores { get; }
+        public abstract string CpuBrand { get; }
+        public abstract double CpuFrequency { get; }
 
         public abstract double MemoryTotal { get; }
         public abstract double MemoryFree { get; }
