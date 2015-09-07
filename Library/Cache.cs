@@ -39,10 +39,9 @@ namespace LittleSoftwareStats
         internal string GetPostData(Events events)
         {
             string cachedData = GetCacheData();
-            string data;
             string output = "";
 
-            data = Config.ApiFormat == "json" ? Utils.SerializeAsJson(events) : Utils.SerializeAsXml(events);
+            var data = Config.ApiFormat == "json" ? Utils.SerializeAsJson(events) : Utils.SerializeAsXml(events);
 
             if (string.IsNullOrEmpty(cachedData))
             {
@@ -80,9 +79,7 @@ namespace LittleSoftwareStats
 
         internal void SaveCacheToFile(Events events)
         {
-            string data;
-
-            data = Config.ApiFormat == "json" ? Utils.SerializeAsJson(events) : Utils.SerializeAsXml(events);
+            var data = Config.ApiFormat == "json" ? Utils.SerializeAsJson(events) : Utils.SerializeAsXml(events);
 
             data += "\n" + GetCacheData();
 
