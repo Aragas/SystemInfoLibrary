@@ -52,62 +52,29 @@ namespace LittleSoftwareStats.Hardware
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         static extern bool GlobalMemoryStatusEx([In, Out] MEMORYSTATUSEX lpBuffer);
 #endregion
-        readonly string _cpuBrand = "";
-        public override string CpuBrand
-        {
-            get { return this._cpuBrand; }
-        }
+
+        public override string CpuBrand { get; } = "";
 
         readonly string _cpuName = "";
-        public override string CpuName
-        {
-            get { return this._cpuName; }
-        }
+        public override string CpuName => this._cpuName;
 
-        readonly int _cpuArch;
-        public override int CpuArchitecture
-        {
-            get { return this._cpuArch; }
-        }
-        
-        public override int CpuCores
-        {
-            get { return Environment.ProcessorCount; }
-        }
+        public override int CpuArchitecture { get; }
 
-        public override double CpuFrequency
-        {
-            get { return Convert.ToDouble(Utils.GetRegistryValue(Registry.LocalMachine, @"HARDWARE\DESCRIPTION\System\CentralProcessor\0", "~MHz", 0)); }
-        }
+        public override int CpuCores => Environment.ProcessorCount;
+
+        public override double CpuFrequency => Convert.ToDouble(Utils.GetRegistryValue(Registry.LocalMachine, @"HARDWARE\DESCRIPTION\System\CentralProcessor\0", "~MHz", 0));
 
         readonly long _diskFree;
-        public override long DiskFree
-        {
-            get { return this._diskFree; }
-        }
+        public override long DiskFree => this._diskFree;
 
         readonly long _diskTotal;
-        public override long DiskTotal
-        {
-            get { return this._diskTotal; }
-        }
+        public override long DiskTotal => this._diskTotal;
 
-        readonly double _memoryFree;
-        public override double MemoryFree
-        {
-            get { return this._memoryFree; }
-        }
+        public override double MemoryFree { get; }
 
-        readonly double _memoryTotal;
-        public override double MemoryTotal
-        {
-            get { return this._memoryTotal; }
-        }
+        public override double MemoryTotal { get; }
 
-        public override string ScreenResolution
-        {
-            get { return Screen.PrimaryScreen.Bounds.Width + "x" + Screen.PrimaryScreen.Bounds.Height; }
-        }
+        public override string ScreenResolution => Screen.PrimaryScreen.Bounds.Width + "x" + Screen.PrimaryScreen.Bounds.Height;
 
         public WindowsHardware()
         {
@@ -116,8 +83,8 @@ namespace LittleSoftwareStats.Hardware
             if (GlobalMemoryStatusEx(memStatus))
             {
                 // Convert from bytes -> megabytes
-                this._memoryTotal = memStatus.ullTotalPhys / 1024 / 1024;
-                this._memoryFree = memStatus.ullAvailPhys / 1024 / 1024;
+                this.MemoryTotal = memStatus.ullTotalPhys / 1024 / 1024;
+                this.MemoryFree = memStatus.ullAvailPhys / 1024 / 1024;
             }
 
             // Get disk space
@@ -152,24 +119,24 @@ namespace LittleSoftwareStats.Hardware
 
                 try
                 {
-                    this._cpuBrand = sysItem["Manufacturer"].ToString();
+                    this.CpuBrand = sysItem["Manufacturer"].ToString();
                 }
                 catch
                 {
-                    this._cpuBrand = "Unknown";
+                    this.CpuBrand = "Unknown";
                 }
 
                 try
                 {
                     int arch = Convert.ToInt32(sysItem["Architecture"].ToString());
                     if (arch == 6 || arch == 9)
-                        this._cpuArch = 64;
+                        this.CpuArchitecture = 64;
                     else
-                        this._cpuArch = 32;
+                        this.CpuArchitecture = 32;
                 }
                 catch
                 {
-                    this._cpuArch = 32;
+                    this.CpuArchitecture = 32;
                 }
             }
         }
