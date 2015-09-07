@@ -48,7 +48,7 @@ namespace LittleSoftwareStats.OperatingSystem
             get
             {
                 if (_hardware == null)
-                    _hardware = new Hardware.MacOSXHardware();
+                    _hardware = new Hardware.MacOsxHardware();
                 return _hardware;
             }
         }

@@ -60,7 +60,7 @@ namespace LittleSoftwareStats.OperatingSystem
                         Type type = Type.GetType("Mono.Runtime");
                         if (type != null)
                         {
-                            MethodInfo invokeGetDisplayName = type.GetMethod("GetDisplayName", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+                            MethodInfo invokeGetDisplayName = type.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static);
                             if (invokeGetDisplayName != null)
                             {
                                 string displayName = invokeGetDisplayName.Invoke(null, null) as string;

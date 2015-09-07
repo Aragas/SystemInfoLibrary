@@ -46,7 +46,7 @@ namespace LittleSoftwareStats.MachineIdentifiers
                 catch { }
             }
             
-            return base.ComputeHash(identifier);
+            return ComputeHash(identifier);
         }
     }
 }

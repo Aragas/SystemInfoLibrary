@@ -120,8 +120,6 @@ namespace LittleSoftwareStats.OperatingSystem
                     case "amd64":
                     case "ia64":
                         return 64;
-                    default:
-                        break;
                 }
 
                 // Just use IntPtr size

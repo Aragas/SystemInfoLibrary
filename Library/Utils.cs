@@ -138,9 +138,9 @@ namespace LittleSoftwareStats
                     else if (value is string)
                         sb.Append("\"" + value + "\"");
                     else if (value is Version)
-                        sb.Append("\"" + value.ToString() + "\"");
+                        sb.Append("\"" + value + "\"");
                     else
-                        sb.Append("\"" + value.ToString() + "\"");
+                        sb.Append("\"" + value + "\"");
 
                     if (j++ < e.Count - 1)
                         sb.Append(',');
@@ -166,8 +166,8 @@ namespace LittleSoftwareStats
         {
             try
             {
-                byte[] toEncodeAsBytes = System.Text.Encoding.Unicode.GetBytes(toEncode);
-                string returnValue = System.Convert.ToBase64String(toEncodeAsBytes);
+                byte[] toEncodeAsBytes = Encoding.Unicode.GetBytes(toEncode);
+                string returnValue = Convert.ToBase64String(toEncodeAsBytes);
                 return returnValue;
             }
             catch
@@ -186,8 +186,8 @@ namespace LittleSoftwareStats
         {
             try
             {
-                byte[] encodedDataAsBytes = System.Convert.FromBase64String(encodedData);
-                string returnValue = System.Text.Encoding.Unicode.GetString(encodedDataAsBytes);
+                byte[] encodedDataAsBytes = Convert.FromBase64String(encodedData);
+                string returnValue = Encoding.Unicode.GetString(encodedDataAsBytes);
                 return returnValue;
             }
             catch
@@ -251,7 +251,7 @@ namespace LittleSoftwareStats
             }
             catch (WebException ex)
             {
-                Console.WriteLine("Error: " + ex.ToString());
+                Console.WriteLine("Error: " + ex);
             }
         }
 

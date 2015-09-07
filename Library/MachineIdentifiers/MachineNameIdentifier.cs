@@ -24,7 +24,7 @@ namespace LittleSoftwareStats.MachineIdentifiers
     {
         protected override byte[] GetIdentifierHash()
         {
-            return base.ComputeHash(Environment.MachineName);
+            return ComputeHash(Environment.MachineName);
         }
     }
 }
