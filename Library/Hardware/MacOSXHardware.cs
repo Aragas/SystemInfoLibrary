@@ -60,10 +60,7 @@ namespace LittleSoftwareStats.Hardware
             }
         }
 
-        public override string CpuBrand 
-        {
-            get { return "GenuineIntel"; }
-        }
+        public override string CpuBrand => "GenuineIntel";
 
         public override double CpuFrequency 
         {
