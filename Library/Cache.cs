@@ -28,10 +28,6 @@ namespace LittleSoftwareStats
             get { return string.Format(@"{0}\{1}.{2}", Path.GetTempPath(), Config.AppId, Config.ApiFormat); }
         }
 
-        public Cache()
-        {
-        }
-
         internal string GetCacheData()
         {
             string fileContents = "";

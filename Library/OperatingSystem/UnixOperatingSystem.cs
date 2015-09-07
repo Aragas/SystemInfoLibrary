@@ -23,10 +23,6 @@ namespace LittleSoftwareStats.OperatingSystem
 {
     internal class UnixOperatingSystem : OperatingSystem
     {
-        public UnixOperatingSystem()
-        {
-        }
-
         Hardware.Hardware _hardware;
         public override Hardware.Hardware Hardware
         {

@@ -22,11 +22,6 @@ namespace LittleSoftwareStats.OperatingSystem
 {
     internal class MacOsxOperatingSystem : UnixOperatingSystem
     {
-        public MacOsxOperatingSystem()
-        {
-
-        }
-
         public override int Architecture
         {
             get { return 64; }

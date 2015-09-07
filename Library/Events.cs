@@ -28,10 +28,6 @@ namespace LittleSoftwareStats
             set { this.InnerList[index] = value; }
         }
 
-        public Events()
-        {
-        }
-
         public int Add(Event eventData)
         {
             return this.InnerList.Add(eventData);

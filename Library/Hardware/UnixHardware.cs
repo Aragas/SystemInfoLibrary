@@ -24,10 +24,6 @@ namespace LittleSoftwareStats.Hardware
 {
     internal class UnixHardware : Hardware
     {
-        public UnixHardware()
-        {
-        }
-
         public override string CpuName
         {
             get

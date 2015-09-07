@@ -76,10 +76,6 @@ namespace LittleSoftwareStats
             get { return this._started; }
         }
 
-        public Watcher()
-        {
-        }
-
         /// <summary>
         /// Starts tracking software
         /// </summary>

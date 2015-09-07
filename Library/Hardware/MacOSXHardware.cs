@@ -22,10 +22,6 @@ namespace LittleSoftwareStats.Hardware
 {
     internal class MacOsxHardware : UnixHardware
     {
-        public MacOsxHardware()
-        {
-        }
-
         public override string CpuName 
         {
             get { 
