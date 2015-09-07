@@ -17,14 +17,12 @@
 */
 
 using System;
+using System.Collections;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
 using System.Text;
 using System.Xml;
-using System.Diagnostics;
-using System.Collections;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using System.Net.Security;
-using System.IO;
 using Microsoft.Win32;
 
 namespace LittleSoftwareStats
@@ -33,9 +31,9 @@ namespace LittleSoftwareStats
     {
         public static string GetCommandExecutionOutput(string command, string arguments)
         {
-            var proc = new Process()
+            var proc = new Process
             {
-                StartInfo = new ProcessStartInfo()
+                StartInfo = new ProcessStartInfo
                 {
                     UseShellExecute = true,
                     RedirectStandardOutput = true,
@@ -77,7 +75,7 @@ namespace LittleSoftwareStats
 
         public static string SerializeAsXml(Events events)
         {
-            XmlWriterSettings settings = new XmlWriterSettings()
+            XmlWriterSettings settings = new XmlWriterSettings
             {
                 OmitXmlDeclaration = true,
                 ConformanceLevel = ConformanceLevel.Fragment,
@@ -205,7 +203,7 @@ namespace LittleSoftwareStats
             if (Config.ApiSecure)
             {
                 ServicePointManager.ServerCertificateValidationCallback +=
-                        delegate(object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors sslError)
+                        delegate
                         {
                             bool validationResult = true;
                             return validationResult;
@@ -266,7 +264,7 @@ namespace LittleSoftwareStats
             get
             {
                 if (string.IsNullOrEmpty(_systemProfiler))
-                    _systemProfiler = Utils.GetCommandExecutionOutput("system_profiler", "");
+                    _systemProfiler = GetCommandExecutionOutput("system_profiler", "");
                 return _systemProfiler;
             }
         }
@@ -277,7 +275,7 @@ namespace LittleSoftwareStats
             get
             {
                 if (string.IsNullOrEmpty(_sysctl))
-                    _sysctl = Utils.GetCommandExecutionOutput("sysctl", "-a hw");
+                    _sysctl = GetCommandExecutionOutput("sysctl", "-a hw");
                 return _sysctl;
             }
         }

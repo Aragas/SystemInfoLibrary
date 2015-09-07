@@ -18,13 +18,14 @@
 
 using System;
 using System.Reflection;
+using LittleSoftwareStats.Hardware;
 
 namespace LittleSoftwareStats.OperatingSystem
 {
     internal class UnixOperatingSystem : OperatingSystem
     {
         Hardware.Hardware _hardware;
-        public override Hardware.Hardware Hardware => _hardware ?? (_hardware = new Hardware.UnixHardware());
+        public override Hardware.Hardware Hardware => _hardware ?? (_hardware = new UnixHardware());
 
         public override string Version => Utils.GetCommandExecutionOutput("uname", "-rs");
 
@@ -35,7 +36,7 @@ namespace LittleSoftwareStats.OperatingSystem
         {
             get
             {
-                if (this._frameworkVersion == null)
+                if (_frameworkVersion == null)
                 {
                     try
                     {
@@ -45,7 +46,7 @@ namespace LittleSoftwareStats.OperatingSystem
                         if (invokeGetDisplayName != null)
                         {
                             string displayName = invokeGetDisplayName.Invoke(null, null) as string;
-                            this._frameworkVersion = new Version(displayName.Substring(0, displayName.IndexOf(" ")));
+                            _frameworkVersion = new Version(displayName.Substring(0, displayName.IndexOf(" ")));
                         }
                     }
                     catch
@@ -53,14 +54,14 @@ namespace LittleSoftwareStats.OperatingSystem
                         // ignored
                     }
 
-                    if (this._frameworkVersion == null)
+                    if (_frameworkVersion == null)
                     {
                         // Just use CLR version
-                        this._frameworkVersion = new Version(Environment.Version.Major, Environment.Version.Minor);
+                        _frameworkVersion = new Version(Environment.Version.Major, Environment.Version.Minor);
                     }
                 }
 
-                return this._frameworkVersion;
+                return _frameworkVersion;
             }
         }
 
@@ -71,21 +72,21 @@ namespace LittleSoftwareStats.OperatingSystem
         {
             get
             {
-                if (this._javaVersion != null)
-                    return this._javaVersion;
+                if (_javaVersion != null)
+                    return _javaVersion;
 
                 try
                 {
                     string[] j = Utils.GetCommandExecutionOutput("java", "-version 2>&1").Split('\n');
                     j = j[0].Split('"');
-                    this._javaVersion = new Version(j[1]);
+                    _javaVersion = new Version(j[1]);
                 }
                 catch
                 {
-                    this._javaVersion = new Version();
+                    _javaVersion = new Version();
                 }
 
-                return this._javaVersion;
+                return _javaVersion;
             }
         }
 

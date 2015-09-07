@@ -17,8 +17,9 @@
 */
 
 using System;
-using Microsoft.Win32;
 using System.Runtime.InteropServices;
+using LittleSoftwareStats.Hardware;
+using Microsoft.Win32;
 
 namespace LittleSoftwareStats.OperatingSystem
 {
@@ -79,7 +80,7 @@ namespace LittleSoftwareStats.OperatingSystem
 #endregion
 
         Hardware.Hardware _hardware;
-        public override Hardware.Hardware Hardware => _hardware ?? (_hardware = new Hardware.WindowsHardware());
+        public override Hardware.Hardware Hardware => _hardware ?? (_hardware = new WindowsHardware());
 
         public override Version FrameworkVersion { get; }
 
@@ -109,10 +110,10 @@ namespace LittleSoftwareStats.OperatingSystem
         }
 
         private string _version;
-        public override string Version => this._version;
+        public override string Version => _version;
 
         private int _servicePack;
-        public override int ServicePack => this._servicePack;
+        public override int ServicePack => _servicePack;
 
         public WindowsOperatingSystem()
         {
@@ -120,8 +121,8 @@ namespace LittleSoftwareStats.OperatingSystem
             GetOsInfo();
 
             // Get .NET Framework version + SP
-            this.FrameworkVersion = new Version(); // 0.0
-            this.FrameworkSP = 0;
+            FrameworkVersion = new Version(); // 0.0
+            FrameworkSP = 0;
 
             try
             {
@@ -131,32 +132,32 @@ namespace LittleSoftwareStats.OperatingSystem
                 {
                     if (regNet.OpenSubKey("v4") != null)
                     {
-                        this.FrameworkVersion = new Version(4, 0);
+                        FrameworkVersion = new Version(4, 0);
                     }
                     else if (regNet.OpenSubKey("v3.5") != null)
                     {
-                        this.FrameworkVersion = new Version(3, 5);
-                        this.FrameworkSP = (int)regNet.GetValue("SP", 0);
+                        FrameworkVersion = new Version(3, 5);
+                        FrameworkSP = (int)regNet.GetValue("SP", 0);
                     }
                     else if (regNet.OpenSubKey("v3.0") != null)
                     {
-                        this.FrameworkVersion = new Version(3, 0);
-                        this.FrameworkSP = (int)regNet.GetValue("SP", 0);
+                        FrameworkVersion = new Version(3, 0);
+                        FrameworkSP = (int)regNet.GetValue("SP", 0);
                     }
                     else if (regNet.OpenSubKey("v2.0.50727") != null)
                     {
-                        this.FrameworkVersion = new Version(2, 0, 50727);
-                        this.FrameworkSP = (int)regNet.GetValue("SP", 0);
+                        FrameworkVersion = new Version(2, 0, 50727);
+                        FrameworkSP = (int)regNet.GetValue("SP", 0);
                     }
                     else if (regNet.OpenSubKey("v1.1.4322") != null)
                     {
-                        this.FrameworkVersion = new Version(1, 1, 4322);
-                        this.FrameworkSP = (int)regNet.GetValue("SP", 0);
+                        FrameworkVersion = new Version(1, 1, 4322);
+                        FrameworkSP = (int)regNet.GetValue("SP", 0);
                     }
                     else if (regNet.OpenSubKey("v1.0") != null)
                     {
-                        this.FrameworkVersion = new Version(1, 0);
-                        this.FrameworkSP = (int)regNet.GetValue("SP", 0);
+                        FrameworkVersion = new Version(1, 0);
+                        FrameworkSP = (int)regNet.GetValue("SP", 0);
                     }
 
                     regNet.Close();
@@ -168,18 +169,18 @@ namespace LittleSoftwareStats.OperatingSystem
             }
 
             // Get Java version
-            this.JavaVersion = new Version();
+            JavaVersion = new Version();
 
             try
             {
                 string javaVersion;
 
-                if (this.Architecture == 32)
+                if (Architecture == 32)
                     javaVersion = (string)Utils.GetRegistryValue(Registry.LocalMachine, @"Software\JavaSoft\Java Runtime Environment", "CurrentVersion", "");
                 else
                     javaVersion = (string)Utils.GetRegistryValue(Registry.LocalMachine, @"Software\Wow6432Node\JavaSoft\Java Runtime Environment", "CurrentVersion", "");
 
-                this.JavaVersion = new Version(javaVersion);
+                JavaVersion = new Version(javaVersion);
             }
             catch
             {
@@ -189,12 +190,12 @@ namespace LittleSoftwareStats.OperatingSystem
 
         private void GetOsInfo()
         {
-            OSVERSIONINFOEX osVersionInfo = new OSVERSIONINFOEX() { dwOSVersionInfoSize = (uint)Marshal.SizeOf(typeof(OSVERSIONINFOEX)) };
+            OSVERSIONINFOEX osVersionInfo = new OSVERSIONINFOEX { dwOSVersionInfoSize = (uint)Marshal.SizeOf(typeof(OSVERSIONINFOEX)) };
 
             if (!GetVersionEx(ref osVersionInfo))
             {
-                this._version = "Unknown";
-                this._servicePack = 0;
+                _version = "Unknown";
+                _servicePack = 0;
                 return;
             }
 
@@ -298,8 +299,8 @@ namespace LittleSoftwareStats.OperatingSystem
                     break;
             }
 
-            this._version = osName;
-            this._servicePack = osVersionInfo.wServicePackMajor;
+            _version = osName;
+            _servicePack = osVersionInfo.wServicePackMajor;
         }
     } 
 }

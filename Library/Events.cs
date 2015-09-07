@@ -24,23 +24,23 @@ namespace LittleSoftwareStats
     {
         public Event this[int index]
         {
-            get { return (Event)this.InnerList[index]; }
-            set { this.InnerList[index] = value; }
+            get { return (Event)InnerList[index]; }
+            set { InnerList[index] = value; }
         }
 
         public int Add(Event eventData)
         {
-            return this.InnerList.Add(eventData);
+            return InnerList.Add(eventData);
         }
 
         public bool Contains(Event eventData)
         {
-            return this.InnerList.Contains(eventData);
+            return InnerList.Contains(eventData);
         }
 
         public int IndexOf(Event eventData)
         {
-            return this.InnerList.IndexOf(eventData);
+            return InnerList.IndexOf(eventData);
         }
 
     }
@@ -49,18 +49,18 @@ namespace LittleSoftwareStats
     {
         public DictionaryEntry this[int index]
         {
-            get { return (DictionaryEntry)this.InnerHashtable[index]; }
-            set { this.InnerHashtable[index] = value; }
+            get { return (DictionaryEntry)InnerHashtable[index]; }
+            set { InnerHashtable[index] = value; }
         }
 
         public Event(string eventCode, string sessionId, int flowId = 0) 
         {
-            this.Add("tp", eventCode);
-            this.Add("ss", sessionId);
-            this.Add("ts", Utils.GetUnixTime());
+            Add("tp", eventCode);
+            Add("ss", sessionId);
+            Add("ts", Utils.GetUnixTime());
 
             if (flowId != 0)
-                this.Add("fl", flowId);
+                Add("fl", flowId);
         }
 
         public void Add(string name, object value) 
@@ -68,7 +68,7 @@ namespace LittleSoftwareStats
             if (string.IsNullOrEmpty(name))
                 return;
 
-            this.InnerHashtable.Add(name, value);
+            InnerHashtable.Add(name, value);
         }
     }
 }

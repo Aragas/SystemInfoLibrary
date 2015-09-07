@@ -32,14 +32,14 @@ namespace LittleSoftwareStats
         {
             get
             {
-                if (string.IsNullOrEmpty(this._uniqueId))
+                if (string.IsNullOrEmpty(_uniqueId))
                 {
-                    this._identifierService = new MachineIdentifierProvider(new IMachineIdentifier[] { new MachineNameIdentifier(), new NetworkAdapterIdentifier(), new VolumeInfoIdentifier() });
+                    _identifierService = new MachineIdentifierProvider(new IMachineIdentifier[] { new MachineNameIdentifier(), new NetworkAdapterIdentifier(), new VolumeInfoIdentifier() });
 
-                    this._uniqueId = this._identifierService.MachineHash;
+                    _uniqueId = _identifierService.MachineHash;
                 }
 
-                return this._uniqueId;
+                return _uniqueId;
             }
         }
 
@@ -48,15 +48,12 @@ namespace LittleSoftwareStats
         {
             get
             {
-                if (!string.IsNullOrEmpty(this._sessionId))
+                if (!string.IsNullOrEmpty(_sessionId))
                 {
-                    return this._sessionId;
-                } 
-                else
-                {
-                    this._sessionId = Guid.NewGuid().ToString().Replace("-", "").ToUpper();
-                    return this._sessionId;
+                    return _sessionId;
                 }
+                _sessionId = Guid.NewGuid().ToString().Replace("-", "").ToUpper();
+                return _sessionId;
             }
         }
 
@@ -65,8 +62,8 @@ namespace LittleSoftwareStats
         {
             get
             {
-                this._flowNumber = this._flowNumber + 1;
-                return this._flowNumber;
+                _flowNumber = _flowNumber + 1;
+                return _flowNumber;
             }
         }
 
@@ -79,10 +76,10 @@ namespace LittleSoftwareStats
         /// <param name="appId">Application ID</param>
         /// <param name="appVer">Application Version</param>
         public void Start(string appId, string appVer) {
-            if (this.Started || !Config.Enabled)
+            if (Started || !Config.Enabled)
                 return;
 
-            Event e = new Event("strApp", this.SessionId);
+            Event e = new Event("strApp", SessionId);
 
             Config.AppId = appId;
             Config.AppVer = appVer;
@@ -91,7 +88,7 @@ namespace LittleSoftwareStats
             OperatingSystem.OperatingSystem osInfo = OperatingSystem.OperatingSystem.GetOperatingSystemInfo();
             Hardware.Hardware hwInfo = osInfo.Hardware;
 
-            e.Add("ID", this.UniqueId);
+            e.Add("ID", UniqueId);
             e.Add("aid", appId);
             e.Add("aver", appVer);
 
@@ -114,9 +111,9 @@ namespace LittleSoftwareStats
             e.Add("dtt", hwInfo.DiskTotal);
             e.Add("dfr", hwInfo.DiskFree);
 
-            this._array.Add(e);
+            _array.Add(e);
 
-            this.Started = true;
+            Started = true;
         }
 
         /// <summary>
@@ -124,26 +121,26 @@ namespace LittleSoftwareStats
         /// </summary>
         public void Stop()
         {
-            if (!this.Started)
+            if (!Started)
                 return;
 
-            this._array.Add(new Event("stApp", this.SessionId));
+            _array.Add(new Event("stApp", SessionId));
 
             try
             {
-                string data = this._cache.GetPostData(this._array);
+                string data = _cache.GetPostData(_array);
 
                 Utils.SendPostData(data);
-                this._cache.Delete();
+                _cache.Delete();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
 
-                this._cache.SaveCacheToFile(this._array);
+                _cache.SaveCacheToFile(_array);
             }
 
-            this.Started = false;
+            Started = false;
         }
 
         /// <summary>
@@ -153,13 +150,13 @@ namespace LittleSoftwareStats
         /// <param name="eventName">Event name</param>
         public void Event(string categoryName, string eventName)
         {
-            if (!this.Started)
+            if (!Started)
                 return;
 
-            Event e = new Event("ev", this.SessionId, this.FlowNumber) {{"ca", categoryName}, {"nm", eventName}};
+            Event e = new Event("ev", SessionId, FlowNumber) {{"ca", categoryName}, {"nm", eventName}};
 
 
-            this._array.Add(e);
+            _array.Add(e);
         }
 
         /// <summary>
@@ -170,10 +167,10 @@ namespace LittleSoftwareStats
         /// <param name="eventValue">Event Value</param>
         public void EventValue(string categoryName, string eventName, string eventValue)
         {
-            if (!this.Started)
+            if (!Started)
                 return;
 
-            Event e = new Event("evV", this.SessionId, this.FlowNumber)
+            Event e = new Event("evV", SessionId, FlowNumber)
             {
                 {"ca", categoryName},
                 {"nm", eventName},
@@ -181,7 +178,7 @@ namespace LittleSoftwareStats
             };
 
 
-            this._array.Add(e);
+            _array.Add(e);
         }
 
         /// <summary>
@@ -193,10 +190,10 @@ namespace LittleSoftwareStats
         /// <param name="eventCompleted">Did the event complete?</param>
         public void EventPeriod(string categoryName, string eventName, int eventDuration, bool eventCompleted)
         {
-            if (!this.Started)
+            if (!Started)
                 return;
 
-            Event e = new Event("evP", this.SessionId, this.FlowNumber)
+            Event e = new Event("evP", SessionId, FlowNumber)
             {
                 {"ca", categoryName},
                 {"nm", eventName},
@@ -204,7 +201,7 @@ namespace LittleSoftwareStats
                 {"ec", (eventCompleted) ? (1) : (0)}
             };
             
-            this._array.Add(e);
+            _array.Add(e);
         }
 
         /// <summary>
@@ -213,12 +210,12 @@ namespace LittleSoftwareStats
         /// <param name="logMessage">Message to log</param>
         public void Log(string logMessage)
         {
-            if (!this.Started)
+            if (!Started)
                 return;
 
-            Event e = new Event("lg", this.SessionId, this.FlowNumber) {{"ms", logMessage}};
+            Event e = new Event("lg", SessionId, FlowNumber) {{"ms", logMessage}};
             
-            this._array.Add(e);
+            _array.Add(e);
         }
 
         public enum Licenses { Free, Trial, Registered, Demo, Cracked };
@@ -229,10 +226,10 @@ namespace LittleSoftwareStats
         /// <param name="l">License type (Free, Trial, Registered, Demo, Cracked)</param>
         public void License(Licenses l)
         {
-            if (!this.Started)
+            if (!Started)
                 return;
 
-            Event e = new Event("ctD", this.SessionId, this.FlowNumber) {{"nm", "License"}};
+            Event e = new Event("ctD", SessionId, FlowNumber) {{"nm", "License"}};
             
             string licenseType = "";
             switch (l)
@@ -266,7 +263,7 @@ namespace LittleSoftwareStats
 
             e.Add("vl", licenseType);
 
-            this._array.Add(e);
+            _array.Add(e);
         }
 
         /// <summary>
@@ -276,12 +273,12 @@ namespace LittleSoftwareStats
         /// <param name="dataValue">Value</param>
         public void CustomData(string dataName, string dataValue)
         {
-            if (!this.Started)
+            if (!Started)
                 return;
 
-            Event e = new Event("ctD", this.SessionId, this.FlowNumber) {{"nm", dataName}, {"vl", dataValue}};
+            Event e = new Event("ctD", SessionId, FlowNumber) {{"nm", dataName}, {"vl", dataValue}};
             
-            this._array.Add(e);
+            _array.Add(e);
         }
 
         /// <summary>
@@ -290,10 +287,10 @@ namespace LittleSoftwareStats
         /// <param name="ex">Exception</param>
         public void Exception(Exception ex)
         {
-            if (!this.Started)
+            if (!Started)
                 return;
 
-            Event e = new Event("exC", this.SessionId, this.FlowNumber)
+            Event e = new Event("exC", SessionId, FlowNumber)
             {
                 {"msg", ex.Message},
                 {"stk", ex.StackTrace},
@@ -301,7 +298,7 @@ namespace LittleSoftwareStats
                 {"tgs", ex.TargetSite}
             };
             
-            this._array.Add(e);
+            _array.Add(e);
         }
 
         /// <summary>
@@ -313,10 +310,10 @@ namespace LittleSoftwareStats
         /// <param name="targetSite">Target Site</param>
         public void Exception(string exceptionMsg, string stackTrace, string exceptionSrc, string targetSite)
         {
-            if (!this.Started)
+            if (!Started)
                 return;
 
-            Event e = new Event("exC", this.SessionId, this.FlowNumber)
+            Event e = new Event("exC", SessionId, FlowNumber)
             {
                 {"msg", exceptionMsg},
                 {"stk", stackTrace},
@@ -324,7 +321,7 @@ namespace LittleSoftwareStats
                 {"tgs", targetSite}
             };
             
-            this._array.Add(e);
+            _array.Add(e);
         }
 
         /// <summary>
@@ -332,17 +329,17 @@ namespace LittleSoftwareStats
         /// </summary>
         public void Install()
         {
-            if (!this.Started)
+            if (!Started)
                 return;
 
-            Event e = new Event("ist", this.SessionId, this.FlowNumber)
+            Event e = new Event("ist", SessionId, FlowNumber)
             {
-                {"ID", this.UniqueId},
+                {"ID", UniqueId},
                 {"aid", Config.AppId},
                 {"aver", Config.AppVer}
             };
             
-            this._array.Add(e);
+            _array.Add(e);
         }
 
         /// <summary>
@@ -350,12 +347,12 @@ namespace LittleSoftwareStats
         /// </summary>
         public void Uninstall()
         {
-            if (!this.Started)
+            if (!Started)
                 return;
 
-            Event e = new Event("ust", this.SessionId, this.FlowNumber) {{"aid", Config.AppId}, {"aver", Config.AppVer}};
+            Event e = new Event("ust", SessionId, FlowNumber) {{"aid", Config.AppId}, {"aver", Config.AppVer}};
             
-            this._array.Add(e);
+            _array.Add(e);
         }
     }
 }
