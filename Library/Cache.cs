@@ -49,7 +49,7 @@ namespace LittleSoftwareStats
         internal string GetPostData(Events events)
         {
             string cachedData = GetCacheData();
-            string data = "";
+            string data;
             string output = "";
 
             if (Config.ApiFormat == "json")
@@ -93,7 +93,7 @@ namespace LittleSoftwareStats
 
         internal void SaveCacheToFile(Events events)
         {
-            string data = "";
+            string data;
 
             if (Config.ApiFormat == "json")
                 data = Utils.SerializeAsJSON(events);
