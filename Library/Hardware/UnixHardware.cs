@@ -95,8 +95,10 @@ namespace LittleSoftwareStats.Hardware
                 }
                 catch
                 {
-                    return 32;
+                    // ignored
                 }
+
+                return 32;
             }
         }
 

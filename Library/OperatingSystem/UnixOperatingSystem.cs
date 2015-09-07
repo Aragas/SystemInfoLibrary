@@ -104,8 +104,10 @@ namespace LittleSoftwareStats.OperatingSystem
                 }
                 catch
                 {
-                    return 32;
+                    // ignored
                 }
+
+                return 32;
             }
         }
     }
