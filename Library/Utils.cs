@@ -33,13 +33,18 @@ namespace LittleSoftwareStats
     {
         public static string GetCommandExecutionOutput(string command, string arguments)
         {
-            var proc = new Process();
+            var proc = new Process()
+            {
+                StartInfo = new ProcessStartInfo()
+                {
+                    UseShellExecute = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    FileName = command,
+                    Arguments = arguments
+                }
+            };
 
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.RedirectStandardOutput = true;
-            proc.StartInfo.RedirectStandardError = true;
-            proc.StartInfo.FileName = command;
-            proc.StartInfo.Arguments = arguments;
             proc.Start();
 
             string output = proc.StandardOutput.ReadToEnd();
@@ -63,10 +68,7 @@ namespace LittleSoftwareStats
             {
                 if (regKey != null)
                 {
-                    if (defaultValue != null)
-                        value = regKey.GetValue(valueName, defaultValue);
-                    else
-                        value = regKey.GetValue(valueName);
+                    value = defaultValue != null ? regKey.GetValue(valueName, defaultValue) : regKey.GetValue(valueName);
                 }
             }
 
@@ -75,10 +77,12 @@ namespace LittleSoftwareStats
 
         public static string SerializeAsXml(Events events)
         {
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.OmitXmlDeclaration = true;
-            settings.ConformanceLevel = ConformanceLevel.Fragment;
-            settings.CloseOutput = false;
+            XmlWriterSettings settings = new XmlWriterSettings()
+            {
+                OmitXmlDeclaration = true,
+                ConformanceLevel = ConformanceLevel.Fragment,
+                CloseOutput = false
+            };
 
             StringBuilder sb = new StringBuilder();
             XmlWriter xmlWriter = XmlTextWriter.Create(sb, settings);
