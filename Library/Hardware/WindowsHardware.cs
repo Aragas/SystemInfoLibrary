@@ -99,8 +99,9 @@ namespace LittleSoftwareStats.Hardware
 
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT Name, Manufacturer, Architecture FROM Win32_Processor");
 
-            foreach (ManagementObject sysItem in searcher.Get())
+            foreach (var o in searcher.Get())
             {
+                var sysItem = (ManagementObject) o;
                 try
                 {
                     _cpuName = sysItem["Name"].ToString();
