@@ -23,8 +23,8 @@ namespace LittleSoftwareStats
 {
     public class Watcher
     {
-        private Events _array = new Events();
-        private Cache _cache = new Cache();
+        private readonly Events _array = new Events();
+        private readonly Cache _cache = new Cache();
 
         private IMachineIdentifierProvider _identifierService;
         private string _uniqueId;

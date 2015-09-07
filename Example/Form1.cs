@@ -23,7 +23,7 @@ namespace LittleSoftwareStatsNET
 {
     public partial class Form1 : Form
     {
-        LittleSoftwareStats.Watcher _watcher = new LittleSoftwareStats.Watcher();
+        private readonly LittleSoftwareStats.Watcher _watcher = new LittleSoftwareStats.Watcher();
 
         public Form1()
         {

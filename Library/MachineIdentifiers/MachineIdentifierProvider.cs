@@ -24,12 +24,13 @@ namespace LittleSoftwareStats.MachineIdentifiers
 {
     public class MachineIdentifierProvider : IMachineIdentifierProvider
     {
-        public List<IMachineIdentifier> MachineIdentifiers { get; private set; }
+        public List<IMachineIdentifier> MachineIdentifiers { get; }
 
         public MachineIdentifierProvider()
         {
             MachineIdentifiers = new List<IMachineIdentifier>();
         }
+
         public MachineIdentifierProvider(IMachineIdentifier[] machineIdentifiers)
             : this()
         {

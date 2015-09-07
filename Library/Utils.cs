@@ -216,8 +216,6 @@ namespace LittleSoftwareStats
             request.Method = "POST";
             request.Timeout = Config.ApiTimeout;
 
-            Stream dataStream;
-
 #if DEBUG
             Console.WriteLine(postData);
 #endif
@@ -231,6 +229,8 @@ namespace LittleSoftwareStats
             try
             {
                 // Send the request
+                Stream dataStream;
+
                 using (dataStream = request.GetRequestStream())
                 {
                     dataStream.Write(byteArray, 0, byteArray.Length);
