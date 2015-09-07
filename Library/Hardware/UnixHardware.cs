@@ -17,6 +17,7 @@
 */
 
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -168,9 +169,7 @@ namespace LittleSoftwareStats.Hardware
                     Regex regex = new Regex(@"^/[\w/]*\s*(?<total>\d+)\s*(?<used>\d+)\s*(?<available>\d+)");
                     MatchCollection matches = regex.Matches(output);
 
-                    long total = 0;
-                    foreach (Match match in matches)
-                        total += long.Parse(match.Groups["total"].Value);
+                    long total = matches.Cast<Match>().Sum(match => long.Parse(match.Groups["total"].Value));
 
                     // Convert from KB -> MB
                     return total/1024;
@@ -192,9 +191,7 @@ namespace LittleSoftwareStats.Hardware
                     Regex regex = new Regex(@"^/[\w/]*\s*(?<total>\d+)\s*(?<used>\d+)\s*(?<available>\d+)");
                     MatchCollection matches = regex.Matches(output);
 
-                    long total = 0;
-                    foreach (Match match in matches)
-                        total += long.Parse(match.Groups["available"].Value);
+                    long total = matches.Cast<Match>().Sum(match => long.Parse(match.Groups["available"].Value));
 
                     // Convert from KB -> MB
                     return total/1024;
