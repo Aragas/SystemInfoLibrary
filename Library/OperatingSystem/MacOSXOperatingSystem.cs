@@ -22,10 +22,7 @@ namespace LittleSoftwareStats.OperatingSystem
 {
     internal class MacOsxOperatingSystem : UnixOperatingSystem
     {
-        public override int Architecture
-        {
-            get { return 64; }
-        }
+        public override int Architecture => 64;
 
         public override string Version
         {
@@ -40,12 +37,7 @@ namespace LittleSoftwareStats.OperatingSystem
         Hardware.Hardware _hardware;
         public override Hardware.Hardware Hardware
         {
-            get
-            {
-                if (_hardware == null)
-                    _hardware = new Hardware.MacOsxHardware();
-                return _hardware;
-            }
+            get { return _hardware ?? (_hardware = new Hardware.MacOsxHardware()); }
         }
 
     }
