@@ -321,8 +321,6 @@ namespace LittleSoftwareStats.OperatingSystem
 
             this._version = osName;
             this._servicePack = osVersionInfo.wServicePackMajor;
-
-            return;
         }
     } 
 }
