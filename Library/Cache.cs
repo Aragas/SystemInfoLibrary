@@ -45,10 +45,7 @@ namespace LittleSoftwareStats
             string data;
             string output = "";
 
-            if (Config.ApiFormat == "json")
-                data = Utils.SerializeAsJson(events);
-            else
-                data = Utils.SerializeAsXml(events);
+            data = Config.ApiFormat == "json" ? Utils.SerializeAsJson(events) : Utils.SerializeAsXml(events);
 
             if (string.IsNullOrEmpty(cachedData))
             {
@@ -88,10 +85,7 @@ namespace LittleSoftwareStats
         {
             string data;
 
-            if (Config.ApiFormat == "json")
-                data = Utils.SerializeAsJson(events);
-            else
-                data = Utils.SerializeAsXml(events);
+            data = Config.ApiFormat == "json" ? Utils.SerializeAsJson(events) : Utils.SerializeAsXml(events);
 
             data += "\n" + GetCacheData();
 
