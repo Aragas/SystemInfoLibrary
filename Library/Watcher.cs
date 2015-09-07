@@ -70,11 +70,7 @@ namespace LittleSoftwareStats
             }
         }
 
-        private bool _started;
-        public bool Started
-        {
-            get { return this._started; }
-        }
+        public bool Started { get; private set; }
 
         /// <summary>
         /// Starts tracking software
@@ -120,7 +116,7 @@ namespace LittleSoftwareStats
 
             this._array.Add(e);
 
-            this._started = true;
+            this.Started = true;
         }
 
         /// <summary>
@@ -147,7 +143,7 @@ namespace LittleSoftwareStats
                 this._cache.SaveCacheToFile(this._array);
             }
 
-            this._started = false;
+            this.Started = false;
         }
 
         /// <summary>
@@ -160,10 +156,8 @@ namespace LittleSoftwareStats
             if (!this.Started)
                 return;
 
-            Event e = new Event("ev", this.SessionId, this.FlowNumber);
+            Event e = new Event("ev", this.SessionId, this.FlowNumber) {{"ca", categoryName}, {"nm", eventName}};
 
-            e.Add("ca", categoryName);
-            e.Add("nm", eventName);
 
             this._array.Add(e);
         }
@@ -179,11 +173,13 @@ namespace LittleSoftwareStats
             if (!this.Started)
                 return;
 
-            Event e = new Event("evV", this.SessionId, this.FlowNumber);
+            Event e = new Event("evV", this.SessionId, this.FlowNumber)
+            {
+                {"ca", categoryName},
+                {"nm", eventName},
+                {"vl", eventValue}
+            };
 
-            e.Add("ca", categoryName);
-            e.Add("nm", eventName);
-            e.Add("vl", eventValue);
 
             this._array.Add(e);
         }
@@ -200,13 +196,14 @@ namespace LittleSoftwareStats
             if (!this.Started)
                 return;
 
-            Event e = new Event("evP", this.SessionId, this.FlowNumber);
-
-            e.Add("ca", categoryName);
-            e.Add("nm", eventName);
-            e.Add("tm", eventDuration);
-            e.Add("ec", (eventCompleted) ? (1) : (0));
-
+            Event e = new Event("evP", this.SessionId, this.FlowNumber)
+            {
+                {"ca", categoryName},
+                {"nm", eventName},
+                {"tm", eventDuration},
+                {"ec", (eventCompleted) ? (1) : (0)}
+            };
+            
             this._array.Add(e);
         }
 
@@ -219,10 +216,8 @@ namespace LittleSoftwareStats
             if (!this.Started)
                 return;
 
-            Event e = new Event("lg", this.SessionId, this.FlowNumber);
-
-            e.Add("ms", logMessage);
-
+            Event e = new Event("lg", this.SessionId, this.FlowNumber) {{"ms", logMessage}};
+            
             this._array.Add(e);
         }
 
@@ -237,10 +232,8 @@ namespace LittleSoftwareStats
             if (!this.Started)
                 return;
 
-            Event e = new Event("ctD", this.SessionId, this.FlowNumber);
-
-            e.Add("nm", "License");
-
+            Event e = new Event("ctD", this.SessionId, this.FlowNumber) {{"nm", "License"}};
+            
             string licenseType = "";
             switch (l)
             {
@@ -286,11 +279,8 @@ namespace LittleSoftwareStats
             if (!this.Started)
                 return;
 
-            Event e = new Event("ctD", this.SessionId, this.FlowNumber);
-
-            e.Add("nm", dataName);
-            e.Add("vl", dataValue);
-
+            Event e = new Event("ctD", this.SessionId, this.FlowNumber) {{"nm", dataName}, {"vl", dataValue}};
+            
             this._array.Add(e);
         }
 
@@ -303,13 +293,14 @@ namespace LittleSoftwareStats
             if (!this.Started)
                 return;
 
-            Event e = new Event("exC", this.SessionId, this.FlowNumber);
-
-            e.Add("msg", ex.Message);
-            e.Add("stk", ex.StackTrace);
-            e.Add("src", ex.Source);
-            e.Add("tgs", ex.TargetSite);
-
+            Event e = new Event("exC", this.SessionId, this.FlowNumber)
+            {
+                {"msg", ex.Message},
+                {"stk", ex.StackTrace},
+                {"src", ex.Source},
+                {"tgs", ex.TargetSite}
+            };
+            
             this._array.Add(e);
         }
 
@@ -325,13 +316,14 @@ namespace LittleSoftwareStats
             if (!this.Started)
                 return;
 
-            Event e = new Event("exC", this.SessionId, this.FlowNumber);
-
-            e.Add("msg", exceptionMsg);
-            e.Add("stk", stackTrace);
-            e.Add("src", exceptionSrc);
-            e.Add("tgs", targetSite);
-
+            Event e = new Event("exC", this.SessionId, this.FlowNumber)
+            {
+                {"msg", exceptionMsg},
+                {"stk", stackTrace},
+                {"src", exceptionSrc},
+                {"tgs", targetSite}
+            };
+            
             this._array.Add(e);
         }
 
@@ -343,12 +335,13 @@ namespace LittleSoftwareStats
             if (!this.Started)
                 return;
 
-            Event e = new Event("ist", this.SessionId, this.FlowNumber);
-
-            e.Add("ID", this.UniqueId);
-            e.Add("aid", Config.AppId);
-            e.Add("aver", Config.AppVer);
-
+            Event e = new Event("ist", this.SessionId, this.FlowNumber)
+            {
+                {"ID", this.UniqueId},
+                {"aid", Config.AppId},
+                {"aver", Config.AppVer}
+            };
+            
             this._array.Add(e);
         }
 
@@ -360,11 +353,8 @@ namespace LittleSoftwareStats
             if (!this.Started)
                 return;
 
-            Event e = new Event("ust", this.SessionId, this.FlowNumber);
-
-            e.Add("aid", Config.AppId);
-            e.Add("aver", Config.AppVer);
-
+            Event e = new Event("ust", this.SessionId, this.FlowNumber) {{"aid", Config.AppId}, {"aver", Config.AppVer}};
+            
             this._array.Add(e);
         }
     }
