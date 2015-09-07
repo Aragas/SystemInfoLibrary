@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
 
@@ -25,17 +26,7 @@ namespace LittleSoftwareStats.MachineIdentifiers
     {
         private byte[] _identifierHash;
 
-        virtual public byte[] IdentifierHash 
-        {
-            get
-            {
-                if (_identifierHash == null)
-                {
-                    _identifierHash = GetIdentifierHash();
-                }
-                return _identifierHash;
-            }
-        }
+        virtual public byte[] IdentifierHash => _identifierHash ?? (_identifierHash = GetIdentifierHash());
 
         abstract protected byte[] GetIdentifierHash();
 
@@ -50,12 +41,7 @@ namespace LittleSoftwareStats.MachineIdentifiers
             if (IdentifierHash.Length != hash.Length)
                 return false;
 
-            for (int n = 0; n < IdentifierHash.Length; n++)
-            {
-                if (IdentifierHash[n] != hash[n])
-                    return false;
-            }
-            return true;
+            return !IdentifierHash.Where((t, n) => t != hash[n]).Any();
         }
 
         protected byte[] ComputeHash(string value)
