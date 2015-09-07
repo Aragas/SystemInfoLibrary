@@ -23,10 +23,7 @@ namespace LittleSoftwareStats
 {
     public class Cache
     {
-        private string FileName
-        {
-            get { return string.Format(@"{0}\{1}.{2}", Path.GetTempPath(), Config.AppId, Config.ApiFormat); }
-        }
+        private string FileName => $@"{Path.GetTempPath()}\{Config.AppId}.{Config.ApiFormat}";
 
         internal string GetCacheData()
         {
