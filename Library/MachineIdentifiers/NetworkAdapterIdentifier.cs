@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.Management;
 using System.Net.NetworkInformation;
 
 namespace LittleSoftwareStats.MachineIdentifiers
