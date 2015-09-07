@@ -46,7 +46,8 @@ namespace LittleSoftwareStats.OperatingSystem
                         if (invokeGetDisplayName != null)
                         {
                             string displayName = invokeGetDisplayName.Invoke(null, null) as string;
-                            _frameworkVersion = new Version(displayName.Substring(0, displayName.IndexOf(" ")));
+                            if (displayName != null)
+                                _frameworkVersion = new Version(displayName.Substring(0, displayName.IndexOf(" ")));
                         }
                     }
                     catch
