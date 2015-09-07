@@ -35,10 +35,6 @@ namespace LittleSoftwareStats.OperatingSystem
         }
 
         Hardware.Hardware _hardware;
-        public override Hardware.Hardware Hardware
-        {
-            get { return _hardware ?? (_hardware = new Hardware.MacOsxHardware()); }
-        }
-
+        public override Hardware.Hardware Hardware => _hardware ?? (_hardware = new Hardware.MacOsxHardware());
     }
 }

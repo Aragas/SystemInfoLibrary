@@ -64,10 +64,7 @@ namespace LittleSoftwareStats.OperatingSystem
             }
         }
 
-        public override int FrameworkSP
-        {
-            get { return 0; }
-        }
+        public override int FrameworkSP => 0;
 
         private Version _javaVersion;
         public override Version JavaVersion

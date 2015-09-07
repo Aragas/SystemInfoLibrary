@@ -90,10 +90,7 @@ namespace LittleSoftwareStats.OperatingSystem
         }
         
         readonly Version _frameworkVersion;
-        public override Version FrameworkVersion
-        {
-            get { return this._frameworkVersion; }
-        }
+        public override Version FrameworkVersion => this._frameworkVersion;
 
         readonly int _frameworkSP;
         public override int FrameworkSP
@@ -102,10 +99,7 @@ namespace LittleSoftwareStats.OperatingSystem
         }
 
         readonly Version _javaVersion;
-        public override Version JavaVersion
-        {
-            get { return this._javaVersion; }
-        }
+        public override Version JavaVersion => this._javaVersion;
 
         public override int Architecture
         {
@@ -129,16 +123,10 @@ namespace LittleSoftwareStats.OperatingSystem
         }
 
         private string _version;
-        public override string Version
-        {
-            get { return this._version; }
-        }
+        public override string Version => this._version;
 
         private int _servicePack;
-        public override int ServicePack
-        {
-            get { return this._servicePack; }
-        }
+        public override int ServicePack => this._servicePack;
 
         public WindowsOperatingSystem()
         {
