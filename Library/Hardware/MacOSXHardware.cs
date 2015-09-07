@@ -20,9 +20,9 @@ using System.Text.RegularExpressions;
 
 namespace LittleSoftwareStats.Hardware
 {
-    internal class MacOSXHardware : UnixHardware
+    internal class MacOsxHardware : UnixHardware
     {
-        public MacOSXHardware()
+        public MacOsxHardware()
         {
         }
 
