@@ -20,7 +20,7 @@ using System;
 
 namespace LittleSoftwareStats.MachineIdentifiers
 {
-    public class MachineNameIdentifier : MachineIdentifierBase, IMachineIdentifier
+    public class MachineNameIdentifier : MachineIdentifierBase
     {
         protected override byte[] GetIdentifierHash()
         {

@@ -20,7 +20,7 @@ using System.Net.NetworkInformation;
 
 namespace LittleSoftwareStats.MachineIdentifiers
 {
-    public class NetworkAdapterIdentifier : MachineIdentifierBase, IMachineIdentifier
+    public class NetworkAdapterIdentifier : MachineIdentifierBase
     {
         protected override byte[] GetIdentifierHash()
         {

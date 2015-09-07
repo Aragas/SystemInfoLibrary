@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 
 namespace LittleSoftwareStats.MachineIdentifiers
 {
-    public class VolumeInfoIdentifier : MachineIdentifierBase, IMachineIdentifier
+    public class VolumeInfoIdentifier : MachineIdentifierBase
     {
         [DllImport("kernel32.dll")]
         private static extern long GetVolumeInformation(string pathName, StringBuilder volumeNameBuffer, UInt32 volumeNameSize, ref UInt32 volumeSerialNumber, ref UInt32 maximumComponentLength, ref UInt32 fileSystemFlags, StringBuilder fileSystemNameBuffer, UInt32 fileSystemNameSize);
