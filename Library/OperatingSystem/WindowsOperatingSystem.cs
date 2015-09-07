@@ -88,7 +88,7 @@ namespace LittleSoftwareStats.OperatingSystem
 
         public override Version JavaVersion { get; }
 
-        public override int Architecture
+        public override sealed int Architecture
         {
             get
             {
