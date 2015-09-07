@@ -23,7 +23,7 @@ namespace LittleSoftwareStats.MachineIdentifiers
 {
     abstract public class MachineIdentifierBase : IMachineIdentifier
     {
-        private byte[] _identifierHash = null;
+        private byte[] _identifierHash;
 
         virtual public byte[] IdentifierHash 
         {

@@ -80,25 +80,25 @@ namespace LittleSoftwareStats.Hardware
             get { return Convert.ToDouble(Utils.GetRegistryValue(Registry.LocalMachine, @"HARDWARE\DESCRIPTION\System\CentralProcessor\0", "~MHz", 0)); }
         }
 
-        readonly long _diskFree = 0;
+        readonly long _diskFree;
         public override long DiskFree
         {
             get { return this._diskFree; }
         }
 
-        readonly long _diskTotal = 0;
+        readonly long _diskTotal;
         public override long DiskTotal
         {
             get { return this._diskTotal; }
         }
 
-        readonly double _memoryFree = 0;
+        readonly double _memoryFree;
         public override double MemoryFree
         {
             get { return this._memoryFree; }
         }
 
-        readonly double _memoryTotal = 0;
+        readonly double _memoryTotal;
         public override double MemoryTotal
         {
             get { return this._memoryTotal; }

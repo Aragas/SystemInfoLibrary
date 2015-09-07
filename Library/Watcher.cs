@@ -60,7 +60,7 @@ namespace LittleSoftwareStats
             }
         }
 
-        protected int _flowNumber = 0;
+        protected int _flowNumber;
         protected int FlowNumber
         {
             get
@@ -70,7 +70,7 @@ namespace LittleSoftwareStats
             }
         }
 
-        private bool _started = false;
+        private bool _started;
         public bool Started
         {
             get { return this._started; }
