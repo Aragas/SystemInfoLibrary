@@ -24,25 +24,11 @@ namespace LittleSoftwareStats.OperatingSystem
     internal class UnixOperatingSystem : OperatingSystem
     {
         Hardware.Hardware _hardware;
-        public override Hardware.Hardware Hardware
-        {
-            get
-            {
-                if (_hardware == null)
-                    _hardware = new Hardware.UnixHardware();
-                return _hardware;
-            }
-        }
+        public override Hardware.Hardware Hardware => _hardware ?? (_hardware = new Hardware.UnixHardware());
 
-        public override string Version
-        {
-            get { return Utils.GetCommandExecutionOutput("uname", "-rs"); }
-        }
+        public override string Version => Utils.GetCommandExecutionOutput("uname", "-rs");
 
-        public override int ServicePack
-        {
-            get { return 0; }
-        }
+        public override int ServicePack => 0;
 
         private Version _frameworkVersion;
         public override Version FrameworkVersion
@@ -54,14 +40,12 @@ namespace LittleSoftwareStats.OperatingSystem
                     try
                     {
                         Type type = Type.GetType("Mono.Runtime");
-                        if (type != null)
+                        
+                        MethodInfo invokeGetDisplayName = type?.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static);
+                        if (invokeGetDisplayName != null)
                         {
-                            MethodInfo invokeGetDisplayName = type.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static);
-                            if (invokeGetDisplayName != null)
-                            {
-                                string displayName = invokeGetDisplayName.Invoke(null, null) as string;
-                                this._frameworkVersion = new Version(displayName.Substring(0, displayName.IndexOf(" ")));
-                            }
+                            string displayName = invokeGetDisplayName.Invoke(null, null) as string;
+                            this._frameworkVersion = new Version(displayName.Substring(0, displayName.IndexOf(" ")));
                         }
                     }
                     catch
@@ -90,18 +74,18 @@ namespace LittleSoftwareStats.OperatingSystem
         {
             get
             {
-                if (this._javaVersion == null)
+                if (this._javaVersion != null)
+                    return this._javaVersion;
+
+                try
                 {
-                    try
-                    {
-                        string[] j = Utils.GetCommandExecutionOutput("java", "-version 2>&1").Split('\n');
-                        j = j[0].Split('"');
-                        this._javaVersion = new Version(j[1]);
-                    }
-                    catch
-                    {
-                        this._javaVersion = new Version();
-                    }
+                    string[] j = Utils.GetCommandExecutionOutput("java", "-version 2>&1").Split('\n');
+                    j = j[0].Split('"');
+                    this._javaVersion = new Version(j[1]);
+                }
+                catch
+                {
+                    this._javaVersion = new Version();
                 }
 
                 return this._javaVersion;
