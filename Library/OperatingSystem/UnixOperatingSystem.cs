@@ -64,7 +64,10 @@ namespace LittleSoftwareStats.OperatingSystem
                             }
                         }
                     }
-                    catch { }
+                    catch
+                    {
+                        // ignored
+                    }
 
                     if (this._frameworkVersion == null)
                     {
@@ -115,9 +118,10 @@ namespace LittleSoftwareStats.OperatingSystem
                     if (arch.Contains("64") || arch.Contains("686"))
                         return 64;
                 }
-                catch { }
-
-                return 32;
+                catch
+                {
+                    return 32;
+                }
             }
         }
     }

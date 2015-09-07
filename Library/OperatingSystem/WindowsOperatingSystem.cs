@@ -188,8 +188,11 @@ namespace LittleSoftwareStats.OperatingSystem
                     regNet.Close();
                 }
             }
-            catch { }
-            
+            catch
+            {
+                // ignored
+            }
+
             // Get Java version
             this._javaVersion = new Version();
 
@@ -204,7 +207,10 @@ namespace LittleSoftwareStats.OperatingSystem
 
                 this._javaVersion = new Version(javaVersion);
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
         }
 
         private void GetOsInfo()

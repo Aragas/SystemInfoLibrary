@@ -41,7 +41,11 @@ namespace LittleSoftwareStats.MachineIdentifiers
                 }
 
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
+
             return ComputeHash(identifier);
         }
     }

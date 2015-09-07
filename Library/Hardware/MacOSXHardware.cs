@@ -24,16 +24,17 @@ namespace LittleSoftwareStats.Hardware
     {
         public override string CpuName 
         {
-            get { 
+            get {
                 try
                 {
                     Regex regex = new Regex(@"Processor Name\s*:\\s*(?<processor>[\w\s\d\.]+)");
                     MatchCollection matches = regex.Matches(Utils.SystemProfilerCommandOutput);
                     return matches[0].Groups["processor"].Value;
                 }
-                catch { }
-
-                return "Generic"; 
+                catch
+                {
+                    return "Generic";
+                }
             }
         }
 

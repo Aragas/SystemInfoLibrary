@@ -35,9 +35,10 @@ namespace LittleSoftwareStats.Hardware
                     MatchCollection matches = regex.Matches(output);
                     return matches[0].Groups["ModelName"].Value;
                 }
-                catch { }
-
-                return "Unknown";
+                catch
+                {
+                    return "Unknown";
+                }
             }
         }
 
@@ -52,9 +53,10 @@ namespace LittleSoftwareStats.Hardware
                     MatchCollection matches = regex.Matches(output);
                     return matches[0].Groups[1].Value;
                 }
-                catch { }
-
-                return "Unknown";
+                catch
+                {
+                    return "Unknown";
+                }
             }
         }
 
@@ -68,11 +70,12 @@ namespace LittleSoftwareStats.Hardware
                     Regex regex = new Regex(@"(?:bogomips\s+:\s*)(?<bogomips>\w*)");
                     MatchCollection matches = regex.Matches(output);
                     int bogomips = int.Parse(matches[0].Groups[1].Value);
-                    return bogomips / CpuCores;
+                    return bogomips/CpuCores;
                 }
-                catch { }
-
-                return 0;
+                catch
+                {
+                    return 0;
+                }
             }
         }
 
@@ -89,9 +92,10 @@ namespace LittleSoftwareStats.Hardware
                     if (flags.Contains(" lm"))
                         return 64;
                 }
-                catch { }
-
-                return 32;
+                catch
+                {
+                    return 32;
+                }
             }
         }
 
@@ -106,10 +110,11 @@ namespace LittleSoftwareStats.Hardware
                     MatchCollection matches = regex.Matches(output);
                     return Int32.Parse(matches[0].Groups[1].Value);
                 }
-                catch { }
-
-                // There has to be at least 1 core, cause how would we be able reach this ???
-                return 1;
+                catch
+                {
+                    // There has to be at least 1 core, cause how would we be able reach this ???
+                    return 1;
+                }
             }
         }
 
@@ -124,11 +129,12 @@ namespace LittleSoftwareStats.Hardware
                     MatchCollection matches = regex.Matches(output);
 
                     // Convert from KB -> MB
-                    return double.Parse(matches[0].Groups[1].Value) / 1024;
+                    return double.Parse(matches[0].Groups[1].Value)/1024;
                 }
-                catch { }
-
-                return 0;
+                catch
+                {
+                    return 0;
+                }
             }
         }
 
@@ -143,10 +149,12 @@ namespace LittleSoftwareStats.Hardware
                     MatchCollection matches = regex.Matches(output);
 
                     // Convert from KB -> MB
-                    return double.Parse(matches[0].Groups[1].Value) / 1024;
+                    return double.Parse(matches[0].Groups[1].Value)/1024;
                 }
-                catch { }
-                return 0;
+                catch
+                {
+                    return 0;
+                }
             }
         }
 
@@ -165,11 +173,12 @@ namespace LittleSoftwareStats.Hardware
                         total += long.Parse(match.Groups["total"].Value);
 
                     // Convert from KB -> MB
-                    return total / 1024;
+                    return total/1024;
                 }
-                catch { }
-
-                return -1;
+                catch
+                {
+                    return -1;
+                }
             }
         }
 
@@ -188,11 +197,12 @@ namespace LittleSoftwareStats.Hardware
                         total += long.Parse(match.Groups["available"].Value);
 
                     // Convert from KB -> MB
-                    return total / 1024;
+                    return total/1024;
                 }
-                catch { }
-
-                return 0;
+                catch
+                {
+                    return 0;
+                }
             }
         }
 
@@ -206,9 +216,10 @@ namespace LittleSoftwareStats.Hardware
                     int deskWidth = Screen.PrimaryScreen.Bounds.Width;
                     return deskWidth + "x" + deskHeight;
                 }
-                catch { }
-
-                return "800x600";
+                catch
+                {
+                    return "800x600";
+                }
             }
         } 
     }

@@ -43,7 +43,10 @@ namespace LittleSoftwareStats.MachineIdentifiers
                     GetVolumeInformation(null, volLabel, (UInt32)volLabel.Capacity, ref serNum, ref maxCompLen, ref volFlags, fsName, (UInt32)fsName.Capacity);
                     identifier = serNum.ToString();
                 }
-                catch { }
+                catch
+                {
+                    // ignored
+                }
             }
             
             return ComputeHash(identifier);
