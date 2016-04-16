@@ -23,40 +23,36 @@ namespace LittleSoftwareStats.OperatingSystem
 {
     internal abstract class OperatingSystem
     {
-        abstract public Version FrameworkVersion { get; }
-        abstract public int FrameworkSP { get; }
-        abstract public Version JavaVersion { get; }
+        public abstract Version FrameworkVersion { get; }
+        public abstract int FrameworkSP { get; }
+        public abstract Version JavaVersion { get; }
 
-        abstract public int Architecture { get; }
-        abstract public string Version { get; }
-        abstract public int ServicePack { get; }
+        public abstract int Architecture { get; }
+        public abstract string Version { get; }
+        public abstract int ServicePack { get; }
 
-        abstract public Hardware.Hardware Hardware { get; }
+        public abstract Hardware.Hardware Hardware { get; }
 
         public int Lcid
         {
             get
             {
-                try
-                {
-                    return Thread.CurrentThread.CurrentCulture.LCID;
-                }
-                catch
-                {
-                    // Just return 1033 (English - USA)
-                    return 1033;
-                }
+                try { return Thread.CurrentThread.CurrentCulture.LCID; }
+                catch { return 1033; } // Just return 1033 (English - USA)
             }
         }
 
         public static OperatingSystem GetOperatingSystemInfo()
         {
-            if (Environment.OSVersion.Platform == PlatformID.Unix)
-                return new UnixOperatingSystem();
-            else if (Environment.OSVersion.Platform == PlatformID.MacOSX)
-                return new MacOsxOperatingSystem();
-            else
-                return new WindowsOperatingSystem();
+            switch (Environment.OSVersion.Platform)
+            {
+                case PlatformID.Unix:
+                    return new UnixOperatingSystem();
+                case PlatformID.MacOSX:
+                    return new MacOsxOperatingSystem();
+                default:
+                    return new WindowsOperatingSystem();
+            }
         }
     }
 }

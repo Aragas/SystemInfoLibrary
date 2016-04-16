@@ -16,11 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace LittleSoftwareStats.MachineIdentifiers
+using System.Text.RegularExpressions;
+
+namespace LittleSoftwareStats.OperatingSystem
 {
-    public interface IMachineIdentifierProvider
+    internal class MacOsxOperatingSystem : UnixOperatingSystem
     {
-        string MachineHash { get; }
-        bool Match(byte[] machineHash);
+        public override int Architecture => 64;
+
+        public override string Version
+        {
+            get
+            {
+                var regex = new Regex(@"System Version:\s(?<version>[\w\s\d\.]*)\s");
+                var matches = regex.Matches(Utils.SystemProfilerCommandOutput);
+                return matches[0].Groups["version"].Value;
+            }
+        }
+
+        Hardware.Hardware _hardware;
+        public override Hardware.Hardware Hardware => _hardware ?? (_hardware = new Hardware.MacOsxHardware());
     }
 }

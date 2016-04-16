@@ -27,14 +27,11 @@ namespace LittleSoftwareStats.Hardware
             get {
                 try
                 {
-                    Regex regex = new Regex(@"Processor Name\s*:\\s*(?<processor>[\w\s\d\.]+)");
-                    MatchCollection matches = regex.Matches(Utils.SystemProfilerCommandOutput);
+                    var regex = new Regex(@"Processor Name\s*:\\s*(?<processor>[\w\s\d\.]+)");
+                    var matches = regex.Matches(Utils.SystemProfilerCommandOutput);
                     return matches[0].Groups["processor"].Value;
                 }
-                catch
-                {
-                    return "Generic";
-                }
+                catch { return "Generic"; }
             }
         }
 
@@ -42,11 +39,9 @@ namespace LittleSoftwareStats.Hardware
         {
             get
             {
-                Regex regex = new Regex(@"hw\.cpu64bit_capable\s*(:|=)\s*(?<capable>\d+)");
-                MatchCollection matches = regex.Matches(Utils.SysctlCommandOutput);
-                if (matches[0].Groups["cpus"].Value == "1")
-                    return 64;
-                return 32;
+                var regex = new Regex(@"hw\.cpu64bit_capable\s*(:|=)\s*(?<capable>\d+)");
+                var matches = regex.Matches(Utils.SysctlCommandOutput);
+                return matches[0].Groups["cpus"].Value == "1" ? 64 : 32;
             }
         }
 
@@ -54,8 +49,8 @@ namespace LittleSoftwareStats.Hardware
         {
             get 
             {
-                Regex regex = new Regex(@"hw\.availcpu\s*(:|=)\s*(?<cpus>\d+)");
-                MatchCollection matches = regex.Matches(Utils.SysctlCommandOutput);
+                var regex = new Regex(@"hw\.availcpu\s*(:|=)\s*(?<cpus>\d+)");
+                var matches = regex.Matches(Utils.SysctlCommandOutput);
                 return int.Parse(matches[0].Groups["cpus"].Value);
             }
         }
@@ -66,11 +61,9 @@ namespace LittleSoftwareStats.Hardware
         {
             get
             {
-                Regex regex = new Regex(@"hw\.cpufrequency\s*(:|=)\s*(?<cpu_frequency>\d+)");
-                MatchCollection matches = regex.Matches(Utils.SysctlCommandOutput);
-
-                // Convert from B -> MB
-                return double.Parse(matches[0].Groups["cpu_frequency"].Value) / 1024 / 1024;
+                var regex = new Regex(@"hw\.cpufrequency\s*(:|=)\s*(?<cpu_frequency>\d+)");
+                var matches = regex.Matches(Utils.SysctlCommandOutput);
+                return double.Parse(matches[0].Groups["cpu_frequency"].Value) / 1024 / 1024; // Convert from B -> MB
             }
         }
 
@@ -78,11 +71,9 @@ namespace LittleSoftwareStats.Hardware
         {
             get 
             {
-                Regex regex = new Regex(@"hw\.memsize\s*(:|=)\s*(?<memory>\d+)");
-                MatchCollection matches = regex.Matches(Utils.SysctlCommandOutput);
-
-                // Convert from B -> MB
-                return double.Parse(matches[0].Groups["memory"].Value) / 1024 / 1024;
+                var regex = new Regex(@"hw\.memsize\s*(:|=)\s*(?<memory>\d+)");
+                var matches = regex.Matches(Utils.SysctlCommandOutput);
+                return double.Parse(matches[0].Groups["memory"].Value) / 1024 / 1024; // Convert from B -> MB
             }
         }
     }

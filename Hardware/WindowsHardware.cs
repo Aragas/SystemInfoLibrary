@@ -18,16 +18,18 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+
 using Microsoft.Win32;
 
 namespace LittleSoftwareStats.Hardware
 {
     internal class WindowsHardware : Hardware
     {
-#region P/Invoke signatures
+        #region P/Invoke signatures
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         private class MEMORYSTATUSEX
         {
@@ -41,21 +43,18 @@ namespace LittleSoftwareStats.Hardware
             public ulong ullAvailVirtual;
             public ulong ullAvailExtendedVirtual;
 
-            public MEMORYSTATUSEX()
-            {
-                dwLength = (uint)Marshal.SizeOf(typeof(MEMORYSTATUSEX));
-            }
+            public MEMORYSTATUSEX() { dwLength = (uint) Marshal.SizeOf(typeof (MEMORYSTATUSEX)); }
         }
 
 
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         static extern bool GlobalMemoryStatusEx([In, Out] MEMORYSTATUSEX lpBuffer);
-#endregion
+        #endregion
 
         public override string CpuBrand { get; } = "";
 
-        readonly string _cpuName = "";
+        private readonly string _cpuName = "";
         public override string CpuName => _cpuName;
 
         public override int CpuArchitecture { get; }
@@ -64,44 +63,40 @@ namespace LittleSoftwareStats.Hardware
 
         public override double CpuFrequency => Convert.ToDouble(Utils.GetRegistryValue(Registry.LocalMachine, @"HARDWARE\DESCRIPTION\System\CentralProcessor\0", "~MHz", 0));
 
-        readonly long _diskFree;
+        private readonly long _diskFree;
         public override long DiskFree => _diskFree;
 
-        readonly long _diskTotal;
+        private readonly long _diskTotal;
         public override long DiskTotal => _diskTotal;
 
         public override double MemoryFree { get; }
 
         public override double MemoryTotal { get; }
 
-        public override string ScreenResolution => Screen.PrimaryScreen.Bounds.Width + "x" + Screen.PrimaryScreen.Bounds.Height;
+        public override string ScreenResolution => $"{Screen.PrimaryScreen.Bounds.Width}x{Screen.PrimaryScreen.Bounds.Height}";
 
         public WindowsHardware()
         {
             // Get memory
-            MEMORYSTATUSEX memStatus = new MEMORYSTATUSEX();
+            var memStatus = new MEMORYSTATUSEX();
             if (GlobalMemoryStatusEx(memStatus))
             {
                 // Convert from bytes -> megabytes
-                MemoryTotal = memStatus.ullTotalPhys / 1024 / 1024;
-                MemoryFree = memStatus.ullAvailPhys / 1024 / 1024;
+                MemoryTotal = (double) memStatus.ullTotalPhys / (double) 1024 / (double) 1024;
+                MemoryFree = (double) memStatus.ullAvailPhys / (double) 1024 / (double) 1024;
             }
 
             // Get disk space
-            foreach (DriveInfo di in DriveInfo.GetDrives())
+            foreach (var di in DriveInfo.GetDrives().Where(di => di.IsReady && di.DriveType == DriveType.Fixed))
             {
-                if (di.IsReady && di.DriveType == DriveType.Fixed)
-                {
-                    _diskFree += di.TotalFreeSpace / 1024 / 1024;
-                    _diskTotal += di.TotalSize / 1024 / 1024;
-                }
+                _diskFree += di.TotalFreeSpace / 1024 / 1024;
+                _diskTotal += di.TotalSize / 1024 / 1024;
             }
 
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT Name, Manufacturer, Architecture FROM Win32_Processor");
+            var searcher = new ManagementObjectSearcher("SELECT Name, Manufacturer, Architecture FROM Win32_Processor");
 
-            foreach (var o in searcher.Get())
+            foreach (var sysItem in searcher.Get().Cast<ManagementObject>())
             {
-                var sysItem = (ManagementObject) o;
                 try
                 {
                     _cpuName = sysItem["Name"].ToString();
@@ -113,32 +108,20 @@ namespace LittleSoftwareStats.Hardware
                         _cpuName = _cpuName.Replace(" ", "");
                     }
                 }
-                catch
-                {
-                    _cpuName = "Unknown";
-                }
+                catch { _cpuName = "Unknown"; }
+
+                try { CpuBrand = sysItem["Manufacturer"].ToString(); }
+                catch { CpuBrand = "Unknown"; }
 
                 try
                 {
-                    CpuBrand = sysItem["Manufacturer"].ToString();
-                }
-                catch
-                {
-                    CpuBrand = "Unknown";
-                }
-
-                try
-                {
-                    int arch = Convert.ToInt32(sysItem["Architecture"].ToString());
+                    var arch = Convert.ToInt32(sysItem["Architecture"].ToString());
                     if (arch == 6 || arch == 9)
                         CpuArchitecture = 64;
                     else
                         CpuArchitecture = 32;
                 }
-                catch
-                {
-                    CpuArchitecture = 32;
-                }
+                catch { CpuArchitecture = 32; }
             }
         }
     } 

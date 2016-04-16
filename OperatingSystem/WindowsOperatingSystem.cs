@@ -18,26 +18,28 @@
 
 using System;
 using System.Runtime.InteropServices;
+
 using LittleSoftwareStats.Hardware;
+
 using Microsoft.Win32;
 
 namespace LittleSoftwareStats.OperatingSystem
 {
     internal class WindowsOperatingSystem : OperatingSystem
     {
-#region P/Invoke Signatures
-        public const byte VER_NT_WORKSTATION = 1;
+        #region P/Invoke Signatures
+        private const byte VER_NT_WORKSTATION = 1;
 
-        public const ushort VER_SUITE_WH_SERVER = 32768;
+        private const ushort VER_SUITE_WH_SERVER = 32768;
 
-        public const ushort PROCESSOR_ARCHITECTURE_INTEL = 0;
-        public const ushort PROCESSOR_ARCHITECTURE_IA64 = 6;
-        public const ushort PROCESSOR_ARCHITECTURE_AMD64 = 9;
+        private const ushort PROCESSOR_ARCHITECTURE_INTEL = 0;
+        private const ushort PROCESSOR_ARCHITECTURE_IA64 = 6;
+        private const ushort PROCESSOR_ARCHITECTURE_AMD64 = 9;
 
-        public const int SM_SERVERR2 = 89;
+        private const int SM_SERVERR2 = 89;
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct OSVERSIONINFOEX
+        private struct OSVERSIONINFOEX
         {
             public uint dwOSVersionInfoSize;
             public uint dwMajorVersion;
@@ -54,7 +56,7 @@ namespace LittleSoftwareStats.OperatingSystem
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct SYSTEM_INFO
+        private struct SYSTEM_INFO
         {
             public uint wProcessorArchitecture;
             public uint wReserved;
@@ -70,16 +72,16 @@ namespace LittleSoftwareStats.OperatingSystem
         }
 
         [DllImport("kernel32.dll")]
-        internal static extern bool GetVersionEx(ref OSVERSIONINFOEX osVersionInfo);
+        private static extern bool GetVersionEx(ref OSVERSIONINFOEX osVersionInfo);
 
         [DllImport("kernel32.dll")]
-        internal static extern void GetSystemInfo(ref SYSTEM_INFO pSI);
+        private static extern void GetSystemInfo(ref SYSTEM_INFO pSI);
 
         [DllImport("user32.dll")]
-        internal static extern int GetSystemMetrics(int nIndex);
-#endregion
+        private static extern int GetSystemMetrics(int nIndex);
+        #endregion
 
-        Hardware.Hardware _hardware;
+        private Hardware.Hardware _hardware;
         public override Hardware.Hardware Hardware => _hardware ?? (_hardware = new WindowsHardware());
 
         public override Version FrameworkVersion { get; }
@@ -88,11 +90,11 @@ namespace LittleSoftwareStats.OperatingSystem
 
         public override Version JavaVersion { get; }
 
-        public override sealed int Architecture
+        public sealed override int Architecture
         {
             get
             {
-                string arch = (string)Utils.GetRegistryValue(Registry.LocalMachine, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "PROCESSOR_ARCHITECTURE");
+                var arch = (string) Utils.GetRegistryValue(Registry.LocalMachine, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "PROCESSOR_ARCHITECTURE");
 
                 switch (arch.ToLower())
                 {
@@ -105,7 +107,7 @@ namespace LittleSoftwareStats.OperatingSystem
 
                 // Just use IntPtr size
                 // (note: will always return 32 bit if process is not 64 bit)
-                return (IntPtr.Size == 8) ? (64) : (32);
+                return IntPtr.Size == 8 ? 64 : 32;
             }
         }
 
@@ -126,71 +128,60 @@ namespace LittleSoftwareStats.OperatingSystem
 
             try
             {
-                RegistryKey regNet = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\NET Framework Setup\NDP");
+                var regNet = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\NET Framework Setup\NDP");
 
                 if (regNet != null)
                 {
                     if (regNet.OpenSubKey("v4") != null)
-                    {
                         FrameworkVersion = new Version(4, 0);
-                    }
                     else if (regNet.OpenSubKey("v3.5") != null)
                     {
                         FrameworkVersion = new Version(3, 5);
-                        FrameworkSP = (int)regNet.GetValue("SP", 0);
+                        FrameworkSP = (int) regNet.GetValue("SP", 0);
                     }
                     else if (regNet.OpenSubKey("v3.0") != null)
                     {
                         FrameworkVersion = new Version(3, 0);
-                        FrameworkSP = (int)regNet.GetValue("SP", 0);
+                        FrameworkSP = (int) regNet.GetValue("SP", 0);
                     }
                     else if (regNet.OpenSubKey("v2.0.50727") != null)
                     {
                         FrameworkVersion = new Version(2, 0, 50727);
-                        FrameworkSP = (int)regNet.GetValue("SP", 0);
+                        FrameworkSP = (int) regNet.GetValue("SP", 0);
                     }
                     else if (regNet.OpenSubKey("v1.1.4322") != null)
                     {
                         FrameworkVersion = new Version(1, 1, 4322);
-                        FrameworkSP = (int)regNet.GetValue("SP", 0);
+                        FrameworkSP = (int) regNet.GetValue("SP", 0);
                     }
                     else if (regNet.OpenSubKey("v1.0") != null)
                     {
                         FrameworkVersion = new Version(1, 0);
-                        FrameworkSP = (int)regNet.GetValue("SP", 0);
+                        FrameworkSP = (int) regNet.GetValue("SP", 0);
                     }
 
                     regNet.Close();
                 }
             }
-            catch
-            {
-                // ignored
-            }
+            catch { /* ignored */ }
 
             // Get Java version
             JavaVersion = new Version();
 
             try
             {
-                string javaVersion;
-
-                if (Architecture == 32)
-                    javaVersion = (string)Utils.GetRegistryValue(Registry.LocalMachine, @"Software\JavaSoft\Java Runtime Environment", "CurrentVersion", "");
-                else
-                    javaVersion = (string)Utils.GetRegistryValue(Registry.LocalMachine, @"Software\Wow6432Node\JavaSoft\Java Runtime Environment", "CurrentVersion", "");
+                var javaVersion = Architecture == 32
+                    ? (string) Utils.GetRegistryValue(Registry.LocalMachine, @"Software\JavaSoft\Java Runtime Environment", "CurrentVersion", "")
+                    : (string) Utils.GetRegistryValue(Registry.LocalMachine, @"Software\Wow6432Node\JavaSoft\Java Runtime Environment", "CurrentVersion", "");
 
                 JavaVersion = new Version(javaVersion);
             }
-            catch
-            {
-                // ignored
-            }
+            catch { /* ignored */ }
         }
 
         private void GetOsInfo()
         {
-            OSVERSIONINFOEX osVersionInfo = new OSVERSIONINFOEX { dwOSVersionInfoSize = (uint)Marshal.SizeOf(typeof(OSVERSIONINFOEX)) };
+            var osVersionInfo = new OSVERSIONINFOEX { dwOSVersionInfoSize = (uint)Marshal.SizeOf(typeof(OSVERSIONINFOEX)) };
 
             if (!GetVersionEx(ref osVersionInfo))
             {
@@ -199,7 +190,7 @@ namespace LittleSoftwareStats.OperatingSystem
                 return;
             }
 
-            string osName = "";
+            var osName = "";
 
             SYSTEM_INFO systemInfo = new SYSTEM_INFO();
             GetSystemInfo(ref systemInfo);
@@ -215,8 +206,7 @@ namespace LittleSoftwareStats.OperatingSystem
                                     switch (osVersionInfo.dwMinorVersion)
                                     {
                                         case 0:
-                                            if (osVersionInfo.szCSDVersion == "B" ||
-                                                osVersionInfo.szCSDVersion == "C")
+                                            if (osVersionInfo.szCSDVersion == "B" || osVersionInfo.szCSDVersion == "C")
                                                 osName += "Windows 95 R2";
                                             else
                                                 osName += "Windows 95";
@@ -290,6 +280,17 @@ namespace LittleSoftwareStats.OperatingSystem
                                             break;
 										case 3:
                                             osName += osVersionInfo.wProductType == VER_NT_WORKSTATION ? "Windows 8.1" : "Windows Server 2012 R2";
+                                            break;
+                                    }
+                                }
+                                break;
+
+                            case 10:
+                                {
+                                    switch (osVersionInfo.dwMinorVersion)
+                                    {
+                                        case 0:
+                                            osName += osVersionInfo.wProductType == VER_NT_WORKSTATION ? "Windows 10" : "Windows Server 2016 Technical Preview";
                                             break;
                                     }
                                 }
