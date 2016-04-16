@@ -19,9 +19,11 @@
 using System;
 using System.Threading;
 
-namespace LittleSoftwareStats.OperatingSystem
+using SystemInfoLibrary.Hardware;
+
+namespace SystemInfoLibrary.OperatingSystem
 {
-    internal abstract class OperatingSystem
+    public abstract class OperatingSystemInfo
     {
         public abstract Version FrameworkVersion { get; }
         public abstract int FrameworkSP { get; }
@@ -31,7 +33,7 @@ namespace LittleSoftwareStats.OperatingSystem
         public abstract string Version { get; }
         public abstract int ServicePack { get; }
 
-        public abstract Hardware.Hardware Hardware { get; }
+        public abstract HardwareInfo Hardware { get; }
 
         public int Lcid
         {
@@ -42,16 +44,16 @@ namespace LittleSoftwareStats.OperatingSystem
             }
         }
 
-        public static OperatingSystem GetOperatingSystemInfo()
+        public static OperatingSystemInfo GetOperatingSystemInfo()
         {
             switch (Environment.OSVersion.Platform)
             {
                 case PlatformID.Unix:
-                    return new UnixOperatingSystem();
+                    return new UnixOperatingSystemInfo();
                 case PlatformID.MacOSX:
-                    return new MacOsxOperatingSystem();
+                    return new MacOsxOperatingSystemInfo();
                 default:
-                    return new WindowsOperatingSystem();
+                    return new WindowsOperatingSystemInfo();
             }
         }
     }

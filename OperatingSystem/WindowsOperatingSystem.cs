@@ -19,13 +19,13 @@
 using System;
 using System.Runtime.InteropServices;
 
-using LittleSoftwareStats.Hardware;
+using SystemInfoLibrary.Hardware;
 
 using Microsoft.Win32;
 
-namespace LittleSoftwareStats.OperatingSystem
+namespace SystemInfoLibrary.OperatingSystem
 {
-    internal class WindowsOperatingSystem : OperatingSystem
+    internal class WindowsOperatingSystemInfo : OperatingSystemInfo
     {
         #region P/Invoke Signatures
         private const byte VER_NT_WORKSTATION = 1;
@@ -81,8 +81,8 @@ namespace LittleSoftwareStats.OperatingSystem
         private static extern int GetSystemMetrics(int nIndex);
         #endregion
 
-        private Hardware.Hardware _hardware;
-        public override Hardware.Hardware Hardware => _hardware ?? (_hardware = new WindowsHardware());
+        private HardwareInfo _hardware;
+        public override HardwareInfo Hardware => _hardware ?? (_hardware = new WindowsHardwareInfo());
 
         public override Version FrameworkVersion { get; }
 
@@ -117,7 +117,7 @@ namespace LittleSoftwareStats.OperatingSystem
         private int _servicePack;
         public override int ServicePack => _servicePack;
 
-        public WindowsOperatingSystem()
+        public WindowsOperatingSystemInfo()
         {
             // Get OS Info
             GetOsInfo();

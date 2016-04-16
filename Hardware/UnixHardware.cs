@@ -20,9 +20,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace LittleSoftwareStats.Hardware
+namespace SystemInfoLibrary.Hardware
 {
-    internal class UnixHardware : Hardware
+    internal class UnixHardwareInfo : HardwareInfo
     {
         public override string CpuName
         {

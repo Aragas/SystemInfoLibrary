@@ -43,7 +43,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Hardware\Hardware.cs" />
+    <Compile Include="Hardware\HardwareInfo.cs" />
     <Compile Include="Hardware\MacOSXHardware.cs" />
     <Compile Include="Hardware\UnixHardware.cs" />
     <Compile Include="Hardware\WindowsHardware.cs" />

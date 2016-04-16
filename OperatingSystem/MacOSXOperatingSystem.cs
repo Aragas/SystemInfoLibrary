@@ -18,9 +18,11 @@
 
 using System.Text.RegularExpressions;
 
-namespace LittleSoftwareStats.OperatingSystem
+using SystemInfoLibrary.Hardware;
+
+namespace SystemInfoLibrary.OperatingSystem
 {
-    internal class MacOsxOperatingSystem : UnixOperatingSystem
+    internal class MacOsxOperatingSystemInfo : UnixOperatingSystemInfo
     {
         public override int Architecture => 64;
 
@@ -34,7 +36,7 @@ namespace LittleSoftwareStats.OperatingSystem
             }
         }
 
-        Hardware.Hardware _hardware;
-        public override Hardware.Hardware Hardware => _hardware ?? (_hardware = new Hardware.MacOsxHardware());
+        HardwareInfo _hardware;
+        public override HardwareInfo Hardware => _hardware ?? (_hardware = new MacOSXHardwareInfo());
     }
 }

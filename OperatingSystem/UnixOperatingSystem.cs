@@ -19,14 +19,14 @@
 using System;
 using System.Reflection;
 
-using LittleSoftwareStats.Hardware;
+using SystemInfoLibrary.Hardware;
 
-namespace LittleSoftwareStats.OperatingSystem
+namespace SystemInfoLibrary.OperatingSystem
 {
-    internal class UnixOperatingSystem : OperatingSystem
+    internal class UnixOperatingSystemInfo : OperatingSystemInfo
     {
-        private Hardware.Hardware _hardware;
-        public override Hardware.Hardware Hardware => _hardware ?? (_hardware = new UnixHardware());
+        private HardwareInfo _hardware;
+        public override HardwareInfo Hardware => _hardware ?? (_hardware = new UnixHardwareInfo());
 
         public override string Version => Utils.GetCommandExecutionOutput("uname", "-rs");
 

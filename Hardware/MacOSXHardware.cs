@@ -18,9 +18,9 @@
 
 using System.Text.RegularExpressions;
 
-namespace LittleSoftwareStats.Hardware
+namespace SystemInfoLibrary.Hardware
 {
-    internal class MacOsxHardware : UnixHardware
+    internal class MacOSXHardwareInfo : UnixHardwareInfo
     {
         public override string CpuName 
         {

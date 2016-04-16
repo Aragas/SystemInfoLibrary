@@ -25,9 +25,9 @@ using System.Windows.Forms;
 
 using Microsoft.Win32;
 
-namespace LittleSoftwareStats.Hardware
+namespace SystemInfoLibrary.Hardware
 {
-    internal class WindowsHardware : Hardware
+    internal class WindowsHardwareInfo : HardwareInfo
     {
         #region P/Invoke signatures
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
@@ -75,7 +75,7 @@ namespace LittleSoftwareStats.Hardware
 
         public override string ScreenResolution => $"{Screen.PrimaryScreen.Bounds.Width}x{Screen.PrimaryScreen.Bounds.Height}";
 
-        public WindowsHardware()
+        public WindowsHardwareInfo()
         {
             // Get memory
             var memStatus = new MEMORYSTATUSEX();
@@ -94,7 +94,6 @@ namespace LittleSoftwareStats.Hardware
             }
 
             var searcher = new ManagementObjectSearcher("SELECT Name, Manufacturer, Architecture FROM Win32_Processor");
-
             foreach (var sysItem in searcher.Get().Cast<ManagementObject>())
             {
                 try
@@ -104,8 +103,9 @@ namespace LittleSoftwareStats.Hardware
                     if (!string.IsNullOrEmpty(_cpuName))
                     {
                         _cpuName = _cpuName.Replace("(TM)", "");
+                        _cpuName = _cpuName.Replace("(tm)", "");
                         _cpuName = _cpuName.Replace("(R)", "");
-                        _cpuName = _cpuName.Replace(" ", "");
+                        _cpuName = _cpuName.Replace("(r)", "");
                     }
                 }
                 catch { _cpuName = "Unknown"; }

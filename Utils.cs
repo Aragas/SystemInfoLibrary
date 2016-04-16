@@ -16,12 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
 using System.Diagnostics;
 
 using Microsoft.Win32;
 
-namespace LittleSoftwareStats
+namespace SystemInfoLibrary
 {
     internal static class Utils
     {
@@ -46,8 +45,6 @@ namespace LittleSoftwareStats
                 output = proc.StandardError.ReadToEnd();
             return output;
         }
-
-        public static int GetUnixTime() => (int) (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
 
         public static object GetRegistryValue(RegistryKey regRoot, string regPath, string valueName, object defaultValue = null)
         {

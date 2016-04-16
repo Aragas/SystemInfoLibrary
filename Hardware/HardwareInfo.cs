@@ -16,9 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace LittleSoftwareStats.Hardware
+namespace SystemInfoLibrary.Hardware
 {
-    internal abstract class Hardware
+    public abstract class HardwareInfo
     {
         public abstract string CpuName { get; }
         public abstract int CpuArchitecture { get; }
