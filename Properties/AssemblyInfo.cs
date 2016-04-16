@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Little Software Stats")]
-[assembly: AssemblyDescription("Little Software Stats is a web application that allows users to monitor their software")]
+[assembly: AssemblyTitle("SystemInfoLibrary")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Little Apps")]
-[assembly: AssemblyProduct("NET Library")]
-[assembly: AssemblyCopyright("Copyright ©  2012 Little Apps.")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct(".NET Library")]
+[assembly: AssemblyCopyright("Copyright ©  2012 Little Apps")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
