@@ -24,7 +24,7 @@ namespace SystemInfoLibrary.OperatingSystem
 {
     internal class MacOsxOperatingSystemInfo : UnixOperatingSystemInfo
     {
-        public override int Architecture => 64;
+        public override int Architecture { get { return 64; } }
 
         public override string Version
         {
@@ -37,6 +37,6 @@ namespace SystemInfoLibrary.OperatingSystem
         }
 
         HardwareInfo _hardware;
-        public override HardwareInfo Hardware => _hardware ?? (_hardware = new MacOSXHardwareInfo());
+        public override HardwareInfo Hardware { get { return _hardware ?? (_hardware = new MacOSXHardwareInfo()); } }
     }
 }

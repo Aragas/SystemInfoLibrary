@@ -22,9 +22,10 @@ namespace SystemInfoLibrary.Hardware
 {
     internal class MacOSXHardwareInfo : UnixHardwareInfo
     {
-        public override string CpuName 
+        public override string CPUName 
         {
-            get {
+            get
+            {
                 try
                 {
                     var regex = new Regex(@"Processor Name\s*:\\s*(?<processor>[\w\s\d\.]+)");
@@ -34,26 +35,26 @@ namespace SystemInfoLibrary.Hardware
                 catch { return "Generic"; }
             }
         }
-        public override int CpuArchitecture
+        public override string CPUArchitecture
         {
             get
             {
                 var regex = new Regex(@"hw\.cpu64bit_capable\s*(:|=)\s*(?<capable>\d+)");
                 var matches = regex.Matches(Utils.SysctlCommandOutput);
-                return matches[0].Groups["cpus"].Value == "1" ? 64 : 32;
+                return matches[0].Groups["cpus"].Value == "1" ? "64" : "32";
             }
         }
-        public override int CpuCores
+        public override int CPUCores
         {
             get 
             {
-                var regex = new Regex(@"hw\.availcpu\s*(:|=)\s*(?<cpus>\d+)");
+                var regex = new Regex(@"hw\.logicalcpu\s*(:|=)\s*(?<cpus>\d+)");
                 var matches = regex.Matches(Utils.SysctlCommandOutput);
                 return int.Parse(matches[0].Groups["cpus"].Value);
             }
         }
-        public override string CpuBrand => "GenuineIntel";
-        public override double CpuFrequency 
+        public override string CPUBrand { get { return "GenuineIntel"; } }
+        public override double CPUFrequency 
         {
             get
             {
@@ -63,7 +64,7 @@ namespace SystemInfoLibrary.Hardware
             }
         }
 
-        public override ulong MemoryTotal
+        public override ulong RAMMemoryTotal
         {
             get 
             {

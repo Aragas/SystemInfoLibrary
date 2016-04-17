@@ -24,13 +24,22 @@ namespace SystemInfoLibrary
 {
     internal static class Utils
     {
+        public static string FilterCPUName(string name)
+        {
+            return name
+                .Replace("(TM)", "")
+                .Replace("(tm)", "")
+                .Replace("(R)", "")
+                .Replace("(r)", "");
+        }
+
         public static string GetCommandExecutionOutput(string command, string arguments)
         {
             var proc = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    UseShellExecute = true,
+                    UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     FileName = command,

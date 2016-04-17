@@ -20,18 +20,20 @@ namespace SystemInfoLibrary.Hardware
 {
     public abstract class HardwareInfo
     {
-        public abstract string CpuName { get; }
-        public abstract int CpuArchitecture { get; }
-        public abstract int CpuCores { get; }
-        public abstract string CpuBrand { get; }
-        public abstract double CpuFrequency { get; }
+        public abstract string CPUName { get; }
+        public abstract string CPUArchitecture { get; }
+        public abstract string CPUBrand { get; }
+        public abstract int CPUCores { get; }
+        public abstract double CPUFrequency { get; }
 
-        public abstract ulong MemoryTotal { get; }
-        public abstract ulong MemoryFree { get; }
+        public abstract string GPUName { get; }
+        public abstract string GPUArchitecture { get; }
+        public abstract string GPUBrand { get; }
+        public abstract string GPUResolution { get; }
+        public abstract int GPURefreshRate { get; }
+        public abstract ulong GPUMemoryTotal { get; }
 
-        public abstract long DiskTotal { get; }
-        public abstract long DiskFree { get; }
-
-        public abstract string ScreenResolution { get; }
+        public abstract ulong RAMMemoryTotal { get; }
+        public abstract ulong RAMMemoryFree { get; }
     }
 }

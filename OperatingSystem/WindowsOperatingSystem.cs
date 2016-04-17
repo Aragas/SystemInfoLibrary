@@ -82,13 +82,16 @@ namespace SystemInfoLibrary.OperatingSystem
         #endregion
 
         private HardwareInfo _hardware;
-        public override HardwareInfo Hardware => _hardware ?? (_hardware = new WindowsHardwareInfo());
+        public override HardwareInfo Hardware { get { return _hardware ?? (_hardware = new WindowsHardwareInfo()); } }
 
-        public override Version FrameworkVersion { get; }
+        private Version _frameworkVersion;
+        public override Version FrameworkVersion { get { return _frameworkVersion; } }
 
-        public override int FrameworkSP { get; }
+        private int _frameworkSP;
+        public override int FrameworkSP { get { return _frameworkSP; } }
 
-        public override Version JavaVersion { get; }
+        private Version _javaVersion;
+        public override Version JavaVersion { get { return _javaVersion; } }
 
         public sealed override int Architecture
         {
@@ -112,10 +115,10 @@ namespace SystemInfoLibrary.OperatingSystem
         }
 
         private string _version;
-        public override string Version => _version;
 
+        public override string Version { get { return _version; } }
         private int _servicePack;
-        public override int ServicePack => _servicePack;
+        public override int ServicePack { get { return _servicePack; } }
 
         public WindowsOperatingSystemInfo()
         {
@@ -123,9 +126,6 @@ namespace SystemInfoLibrary.OperatingSystem
             GetOsInfo();
 
             // Get .NET Framework version + SP
-            FrameworkVersion = new Version(); // 0.0
-            FrameworkSP = 0;
-
             try
             {
                 var regNet = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\NET Framework Setup\NDP");
@@ -133,31 +133,31 @@ namespace SystemInfoLibrary.OperatingSystem
                 if (regNet != null)
                 {
                     if (regNet.OpenSubKey("v4") != null)
-                        FrameworkVersion = new Version(4, 0);
+                        _frameworkVersion = new Version(4, 0);
                     else if (regNet.OpenSubKey("v3.5") != null)
                     {
-                        FrameworkVersion = new Version(3, 5);
-                        FrameworkSP = (int) regNet.GetValue("SP", 0);
+                        _frameworkVersion = new Version(3, 5);
+                        _frameworkSP = (int) regNet.GetValue("SP", 0);
                     }
                     else if (regNet.OpenSubKey("v3.0") != null)
                     {
-                        FrameworkVersion = new Version(3, 0);
-                        FrameworkSP = (int) regNet.GetValue("SP", 0);
+                        _frameworkVersion = new Version(3, 0);
+                        _frameworkSP = (int) regNet.GetValue("SP", 0);
                     }
                     else if (regNet.OpenSubKey("v2.0.50727") != null)
                     {
-                        FrameworkVersion = new Version(2, 0, 50727);
-                        FrameworkSP = (int) regNet.GetValue("SP", 0);
+                        _frameworkVersion = new Version(2, 0, 50727);
+                        _frameworkSP = (int) regNet.GetValue("SP", 0);
                     }
                     else if (regNet.OpenSubKey("v1.1.4322") != null)
                     {
-                        FrameworkVersion = new Version(1, 1, 4322);
-                        FrameworkSP = (int) regNet.GetValue("SP", 0);
+                        _frameworkVersion = new Version(1, 1, 4322);
+                        _frameworkSP = (int) regNet.GetValue("SP", 0);
                     }
                     else if (regNet.OpenSubKey("v1.0") != null)
                     {
-                        FrameworkVersion = new Version(1, 0);
-                        FrameworkSP = (int) regNet.GetValue("SP", 0);
+                        _frameworkVersion = new Version(1, 0);
+                        _frameworkSP = (int) regNet.GetValue("SP", 0);
                     }
 
                     regNet.Close();
@@ -166,7 +166,7 @@ namespace SystemInfoLibrary.OperatingSystem
             catch { /* ignored */ }
 
             // Get Java version
-            JavaVersion = new Version();
+            _javaVersion = new Version();
 
             try
             {
@@ -174,7 +174,7 @@ namespace SystemInfoLibrary.OperatingSystem
                     ? (string) Utils.GetRegistryValue(Registry.LocalMachine, @"Software\JavaSoft\Java Runtime Environment", "CurrentVersion", "")
                     : (string) Utils.GetRegistryValue(Registry.LocalMachine, @"Software\Wow6432Node\JavaSoft\Java Runtime Environment", "CurrentVersion", "");
 
-                JavaVersion = new Version(javaVersion);
+                _javaVersion = new Version(javaVersion);
             }
             catch { /* ignored */ }
         }

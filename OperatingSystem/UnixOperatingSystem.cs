@@ -26,11 +26,11 @@ namespace SystemInfoLibrary.OperatingSystem
     internal class UnixOperatingSystemInfo : OperatingSystemInfo
     {
         private HardwareInfo _hardware;
-        public override HardwareInfo Hardware => _hardware ?? (_hardware = new UnixHardwareInfo());
+        public override HardwareInfo Hardware { get { return _hardware ?? (_hardware = new UnixHardwareInfo()); } }
 
-        public override string Version => Utils.GetCommandExecutionOutput("uname", "-rs");
+        public override string Version { get { return Utils.GetCommandExecutionOutput("uname", "-rs"); } }
 
-        public override int ServicePack => 0;
+        public override int ServicePack { get { return 0; } }
 
         private Version _frameworkVersion;
         public override Version FrameworkVersion
@@ -43,8 +43,8 @@ namespace SystemInfoLibrary.OperatingSystem
                     {
                         var type = Type.GetType("Mono.Runtime");
 
-                        var invokeGetDisplayName = type?.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static);
-                        var displayName = invokeGetDisplayName?.Invoke(null, null) as string;
+                        var invokeGetDisplayName = type != null ? type.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static) : null;
+                        var displayName = invokeGetDisplayName != null ? invokeGetDisplayName.Invoke(null, null) as string : null;
                         if (displayName != null)
                             _frameworkVersion = new Version(displayName.Substring(0, displayName.IndexOf(" ", StringComparison.Ordinal)));
                     }
@@ -58,7 +58,7 @@ namespace SystemInfoLibrary.OperatingSystem
             }
         }
 
-        public override int FrameworkSP => 0;
+        public override int FrameworkSP { get { return 0; } }
 
         private Version _javaVersion;
         public override Version JavaVersion
