@@ -26,8 +26,8 @@ namespace SystemInfoLibrary.Hardware
         public abstract string CpuBrand { get; }
         public abstract double CpuFrequency { get; }
 
-        public abstract double MemoryTotal { get; }
-        public abstract double MemoryFree { get; }
+        public abstract ulong MemoryTotal { get; }
+        public abstract ulong MemoryFree { get; }
 
         public abstract long DiskTotal { get; }
         public abstract long DiskFree { get; }

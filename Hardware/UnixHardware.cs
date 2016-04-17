@@ -38,7 +38,6 @@ namespace SystemInfoLibrary.Hardware
                 catch { return "Unknown"; }
             }
         }
-
         public override string CpuBrand
         {
             get
@@ -53,7 +52,6 @@ namespace SystemInfoLibrary.Hardware
                 catch { return "Unknown"; }
             }
         }
-
         public override double CpuFrequency
         {
             get
@@ -69,7 +67,6 @@ namespace SystemInfoLibrary.Hardware
                 catch { return 0; }
             }
         }
-
         public override int CpuArchitecture
         {
             get
@@ -88,7 +85,6 @@ namespace SystemInfoLibrary.Hardware
                 return 32;
             }
         }
-
         public override int CpuCores
         {
             get
@@ -104,7 +100,7 @@ namespace SystemInfoLibrary.Hardware
             }
         }
 
-        public override double MemoryTotal
+        public override ulong MemoryTotal
         {
             get
             {
@@ -113,13 +109,12 @@ namespace SystemInfoLibrary.Hardware
                     var output = Utils.GetCommandExecutionOutput("cat", "/proc/meminfo");
                     var regex = new Regex(@"(?:MemTotal:\s*)(?<memtotal>\d+)");
                     var matches = regex.Matches(output);
-                    return double.Parse(matches[0].Groups[1].Value) / 1024; // Convert from KB -> MB
+                    return ulong.Parse(matches[0].Groups[1].Value);
                 }
                 catch { return 0; }
             }
         }
-
-        public override double MemoryFree
+        public override ulong MemoryFree
         {
             get
             {
@@ -128,7 +123,7 @@ namespace SystemInfoLibrary.Hardware
                     var output = Utils.GetCommandExecutionOutput("cat", "/proc/meminfo");
                     var regex = new Regex(@"(?:MemFree:\s*)(?<memtotal>\d+)");
                     var matches = regex.Matches(output);
-                    return double.Parse(matches[0].Groups[1].Value) / 1024; // Convert from KB -> MB
+                    return ulong.Parse(matches[0].Groups[1].Value);
                 }
                 catch { return 0; }
             }
@@ -149,7 +144,6 @@ namespace SystemInfoLibrary.Hardware
                 catch { return -1; }
             }
         }
-
         public override long DiskFree
         {
             get

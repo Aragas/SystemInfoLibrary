@@ -34,7 +34,6 @@ namespace SystemInfoLibrary.Hardware
                 catch { return "Generic"; }
             }
         }
-
         public override int CpuArchitecture
         {
             get
@@ -44,7 +43,6 @@ namespace SystemInfoLibrary.Hardware
                 return matches[0].Groups["cpus"].Value == "1" ? 64 : 32;
             }
         }
-
         public override int CpuCores
         {
             get 
@@ -54,9 +52,7 @@ namespace SystemInfoLibrary.Hardware
                 return int.Parse(matches[0].Groups["cpus"].Value);
             }
         }
-
         public override string CpuBrand => "GenuineIntel";
-
         public override double CpuFrequency 
         {
             get
@@ -67,13 +63,13 @@ namespace SystemInfoLibrary.Hardware
             }
         }
 
-        public override double MemoryTotal
+        public override ulong MemoryTotal
         {
             get 
             {
                 var regex = new Regex(@"hw\.memsize\s*(:|=)\s*(?<memory>\d+)");
                 var matches = regex.Matches(Utils.SysctlCommandOutput);
-                return double.Parse(matches[0].Groups["memory"].Value) / 1024 / 1024; // Convert from B -> MB
+                return ulong.Parse(matches[0].Groups["memory"].Value) / 1024; // Convert from B -> KB
             }
         }
     }

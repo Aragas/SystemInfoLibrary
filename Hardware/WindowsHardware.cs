@@ -56,22 +56,17 @@ namespace SystemInfoLibrary.Hardware
 
         private readonly string _cpuName = "";
         public override string CpuName => _cpuName;
-
         public override int CpuArchitecture { get; }
-
         public override int CpuCores => Environment.ProcessorCount;
-
         public override double CpuFrequency => Convert.ToDouble(Utils.GetRegistryValue(Registry.LocalMachine, @"HARDWARE\DESCRIPTION\System\CentralProcessor\0", "~MHz", 0));
 
         private readonly long _diskFree;
         public override long DiskFree => _diskFree;
-
         private readonly long _diskTotal;
         public override long DiskTotal => _diskTotal;
 
-        public override double MemoryFree { get; }
-
-        public override double MemoryTotal { get; }
+        public override ulong MemoryFree { get; }
+        public override ulong MemoryTotal { get; }
 
         public override string ScreenResolution => $"{Screen.PrimaryScreen.Bounds.Width}x{Screen.PrimaryScreen.Bounds.Height}";
 
@@ -81,9 +76,9 @@ namespace SystemInfoLibrary.Hardware
             var memStatus = new MEMORYSTATUSEX();
             if (GlobalMemoryStatusEx(memStatus))
             {
-                // Convert from bytes -> megabytes
-                MemoryTotal = (double) memStatus.ullTotalPhys / (double) 1024 / (double) 1024;
-                MemoryFree = (double) memStatus.ullAvailPhys / (double) 1024 / (double) 1024;
+                // Convert from bytes -> kilobytes
+                MemoryTotal = memStatus.ullTotalPhys / 1024;
+                MemoryFree = memStatus.ullAvailPhys / 1024;
             }
 
             // Get disk space
