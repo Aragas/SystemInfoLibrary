@@ -24,9 +24,9 @@ namespace SystemInfoLibrary.OperatingSystem
 {
     internal class MacOsxOperatingSystemInfo : UnixOperatingSystemInfo
     {
-        public override int Architecture { get { return 64; } }
+        public override string Architecture { get { return "x64"; } }
 
-        public override string Version
+        public override string Name
         {
             get
             {

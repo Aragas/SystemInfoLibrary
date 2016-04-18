@@ -22,7 +22,7 @@ namespace SystemInfoLibrary.Hardware
 {
     internal class MacOSXHardwareInfo : UnixHardwareInfo
     {
-        public override string CPUName 
+        public override string CPU_Name 
         {
             get
             {
@@ -35,16 +35,16 @@ namespace SystemInfoLibrary.Hardware
                 catch { return "Generic"; }
             }
         }
-        public override string CPUArchitecture
+        public override string CPU_Architecture
         {
             get
             {
                 var regex = new Regex(@"hw\.cpu64bit_capable\s*(:|=)\s*(?<capable>\d+)");
                 var matches = regex.Matches(Utils.SysctlCommandOutput);
-                return matches[0].Groups["cpus"].Value == "1" ? "64" : "32";
+                return matches[0].Groups["cpus"].Value == "1" ? "x64" : "x86";
             }
         }
-        public override int CPUCores
+        public override int CPU_Cores
         {
             get 
             {
@@ -53,8 +53,8 @@ namespace SystemInfoLibrary.Hardware
                 return int.Parse(matches[0].Groups["cpus"].Value);
             }
         }
-        public override string CPUBrand { get { return "GenuineIntel"; } }
-        public override double CPUFrequency 
+        public override string CPU_Brand { get { return "GenuineIntel"; } }
+        public override double CPU_Frequency 
         {
             get
             {
@@ -64,7 +64,7 @@ namespace SystemInfoLibrary.Hardware
             }
         }
 
-        public override ulong RAMMemoryTotal
+        public override ulong RAM_MemoryTotal
         {
             get 
             {

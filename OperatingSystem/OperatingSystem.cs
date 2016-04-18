@@ -25,17 +25,19 @@ namespace SystemInfoLibrary.OperatingSystem
 {
     public abstract class OperatingSystemInfo
     {
-        public abstract Version FrameworkVersion { get; }
-        public abstract int FrameworkSP { get; }
-        public abstract Version JavaVersion { get; }
+        /// <summary>
+        /// Could be 16-bit 32-bit, 64-bit, ARM.
+        /// </summary>
+        public abstract string Architecture { get; }
+        /// <summary>
+        /// Operating System name.
+        /// </summary>
+        public abstract string Name { get; }
 
-        public abstract int Architecture { get; }
-        public abstract string Version { get; }
-        public abstract int ServicePack { get; }
-
-        public abstract HardwareInfo Hardware { get; }
-
-        public int Lcid
+        /// <summary>
+        /// Locale ID assigned by <a href="https://msdn.microsoft.com/en-us/goglobal/bb964664.aspx">Microsoft</a>, in DEC.
+        /// </summary>
+        public int LocaleID
         {
             get
             {
@@ -43,6 +45,21 @@ namespace SystemInfoLibrary.OperatingSystem
                 catch { return 1033; } // Just return 1033 (English - USA)
             }
         }
+        
+        /// <summary>
+        /// .NET Framework version.
+        /// </summary>
+        public abstract Version FrameworkVersion { get; }
+        public bool IsMono { get { return Type.GetType ("Mono.Runtime") != null; } }
+        /// <summary>
+        /// Java version.
+        /// </summary>
+        public abstract Version JavaVersion { get; }
+
+
+        public abstract HardwareInfo Hardware { get; }
+
+
 
         public static OperatingSystemInfo GetOperatingSystemInfo()
         {

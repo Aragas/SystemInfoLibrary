@@ -17,14 +17,13 @@
 */
 
 using System;
+using System.Globalization;
 using System.Management;
-using System.Runtime.InteropServices;
 
 using Microsoft.Win32;
 
 namespace SystemInfoLibrary.Hardware
 {
-    internal enum CPUArchitectureType { x86 = 0, MIPS = 1, Alpha = 2, PowerPC = 3, ARM = 5, ia64 = 6, x64 = 9 };
     internal enum GPUArchitectureType
     {
         Other = 1, Unknown = 2, CGA = 3, EGA = 4, VGA = 5, SVGA = 6, MDA = 7, HGC = 8, MCGA = 9,
@@ -33,75 +32,58 @@ namespace SystemInfoLibrary.Hardware
 
     internal sealed class WindowsHardwareInfo : HardwareInfo
     {
-        #region P/Invoke signatures
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        private class MEMORYSTATUSEX
-        {
-            public uint dwLength;
-            public uint dwMemoryLoad;
-            public ulong ullTotalPhys;
-            public ulong ullAvailPhys;
-            public ulong ullTotalPageFile;
-            public ulong ullAvailPageFile;
-            public ulong ullTotalVirtual;
-            public ulong ullAvailVirtual;
-            public ulong ullAvailExtendedVirtual;
-
-            public MEMORYSTATUSEX() { dwLength = (uint) Marshal.SizeOf(typeof (MEMORYSTATUSEX)); }
-        }
-
-
-        [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern bool GlobalMemoryStatusEx([In, Out] MEMORYSTATUSEX lpBuffer);
-        #endregion
-
-        public override string CPUName
+        public override string CPU_Name
         {
             get
             {
                 var searcher = new ManagementObjectSearcher("SELECT Name FROM Win32_Processor");
                 foreach (var obj in searcher.Get())
                     return Utils.FilterCPUName(obj["Name"].ToString());
-                return string.Empty;
+				return "Unknown";
             }
         }
-        public override string CPUArchitecture
-        {
-            get
-            {
-                var searcher = new ManagementObjectSearcher("SELECT Architecture FROM Win32_Processor");
-                foreach (var obj in searcher.Get())
-                {
-                    var arc = int.Parse(obj["Architecture"].ToString());
-                    return Enum.GetName(typeof(CPUArchitectureType), arc);
-                }
-                return string.Empty;
-            }
-        }
-        public override string CPUBrand
+        public override string CPU_Brand
         {
             get
             {
                 var searcher = new ManagementObjectSearcher("SELECT Manufacturer FROM Win32_Processor");
                 foreach (var obj in searcher.Get())
                     return obj["Manufacturer"].ToString();
-                return string.Empty;
+				return "Unknown";
             }
         }
-        public override int CPUCores { get { return Environment.ProcessorCount; } }
-        public override double CPUFrequency { get { return Convert.ToDouble(Utils.GetRegistryValue(Registry.LocalMachine, @"HARDWARE\DESCRIPTION\System\CentralProcessor\0", "~MHz", 0)); } }
-        public override string GPUName
+        public override string CPU_Architecture
+        {
+            get
+            {
+                var searcher = new ManagementObjectSearcher("SELECT Architecture FROM Win32_Processor");
+                foreach (var obj in searcher.Get())
+                    return Enum.GetName(typeof(CPUArchitectureType), int.Parse(obj["Architecture"].ToString()));
+                return "Unknown";
+            }
+        }
+        public override int CPU_Cores
+        {
+            get
+            {
+                var searcher = new ManagementObjectSearcher("SELECT NumberOfCores FROM Win32_Processor");
+                foreach (var obj in searcher.Get())
+                    return int.Parse(obj["NumberOfCores"].ToString(), CultureInfo.InvariantCulture);
+                return 0;
+            }
+        }
+        public override double CPU_Frequency { get { return Convert.ToDouble(Utils.GetRegistryValue(Registry.LocalMachine, @"HARDWARE\DESCRIPTION\System\CentralProcessor\0", "~MHz", 0)); } }
+        public override string GPU_Name
         {
             get
             {
                 var searcher = new ManagementObjectSearcher("SELECT VideoProcessor FROM Win32_VideoController");
                 foreach (var obj in searcher.Get())
                     return obj["VideoProcessor"].ToString();
-                return string.Empty;
+				return "Unknown";
             }
         }
-        public override string GPUArchitecture
+        public override string GPU_Architecture
         {
             get
             {
@@ -111,30 +93,30 @@ namespace SystemInfoLibrary.Hardware
                     var arc = int.Parse(obj["VideoArchitecture"].ToString());
                     return Enum.GetName(typeof(GPUArchitectureType), arc);
                 }
-                return string.Empty;
+				return "Unknown";
             }
         }
-        public override string GPUBrand
+        public override string GPU_Brand
         {
             get
             {
                 var searcher = new ManagementObjectSearcher("SELECT Name FROM Win32_VideoController");
                 foreach (var obj in searcher.Get())
                     return obj["Name"].ToString();
-                return string.Empty;
+				return "Unknown";
             }
         }
-        public override string GPUResolution
+        public override string GPU_Resolution
         {
             get
             {
                 var searcher = new ManagementObjectSearcher("SELECT CurrentHorizontalResolution, CurrentVerticalResolution FROM Win32_VideoController");
                 foreach (var obj in searcher.Get())
                     return string.Format("{0}x{1}", obj["CurrentHorizontalResolution"], obj["CurrentVerticalResolution"]);
-                return string.Empty;
+				return "Unknown";
             }
         }
-        public override int GPURefreshRate
+        public override int GPU_RefreshRate
         {
             get
             {
@@ -144,7 +126,7 @@ namespace SystemInfoLibrary.Hardware
                 return 0;
             }
         }
-        public override ulong GPUMemoryTotal
+        public override ulong GPU_MemoryTotal
         {
             get
             {
@@ -155,19 +137,24 @@ namespace SystemInfoLibrary.Hardware
             }
         }
 
-        private ulong _ramMemoryFree;
-        public override ulong RAMMemoryFree { get { return _ramMemoryFree; } }
-        private ulong _ramMemoryTotal;
-        public override ulong RAMMemoryTotal { get { return _ramMemoryTotal; } }
-
-        public WindowsHardwareInfo()
+        public override ulong RAM_MemoryFree
         {
-            var memStatus = new MEMORYSTATUSEX();
-            if (GlobalMemoryStatusEx(memStatus))
+            get
             {
-                // Convert from bytes -> kilobytes
-                _ramMemoryFree = memStatus.ullTotalPhys / 1024;
-                _ramMemoryTotal = memStatus.ullAvailPhys / 1024;
+                var searcher = new ManagementObjectSearcher("SELECT FreePhysicalMemory FROM Win32_OperatingSystem");
+                foreach (var obj in searcher.Get())
+                    return ulong.Parse(obj["FreePhysicalMemory"].ToString());
+                return 0;
+            }
+        }
+        public override ulong RAM_MemoryTotal
+        {
+            get
+            {
+                var searcher = new ManagementObjectSearcher("SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem");
+                foreach (var obj in searcher.Get())
+                    return ulong.Parse(obj["TotalVisibleMemorySize"].ToString());
+                return 0;
             }
         }
     } 

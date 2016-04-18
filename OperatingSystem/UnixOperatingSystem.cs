@@ -18,6 +18,7 @@
 
 using System;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 using SystemInfoLibrary.Hardware;
 
@@ -25,75 +26,62 @@ namespace SystemInfoLibrary.OperatingSystem
 {
     internal class UnixOperatingSystemInfo : OperatingSystemInfo
     {
-        private HardwareInfo _hardware;
-        public override HardwareInfo Hardware { get { return _hardware ?? (_hardware = new UnixHardwareInfo()); } }
-
-        public override string Version { get { return Utils.GetCommandExecutionOutput("uname", "-rs"); } }
-
-        public override int ServicePack { get { return 0; } }
-
-        private Version _frameworkVersion;
-        public override Version FrameworkVersion
-        {
-            get
-            {
-                if (_frameworkVersion == null)
-                {
-                    try
-                    {
-                        var type = Type.GetType("Mono.Runtime");
-
-                        var invokeGetDisplayName = type != null ? type.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static) : null;
-                        var displayName = invokeGetDisplayName != null ? invokeGetDisplayName.Invoke(null, null) as string : null;
-                        if (displayName != null)
-                            _frameworkVersion = new Version(displayName.Substring(0, displayName.IndexOf(" ", StringComparison.Ordinal)));
-                    }
-                    catch { /* ignored */ }
-
-                    if (_frameworkVersion == null)
-                        _frameworkVersion = new Version(Environment.Version.Major, Environment.Version.Minor); // Just use CLR version
-                }
-
-                return _frameworkVersion;
-            }
-        }
-
-        public override int FrameworkSP { get { return 0; } }
-
-        private Version _javaVersion;
-        public override Version JavaVersion
-        {
-            get
-            {
-                if (_javaVersion != null)
-                    return _javaVersion;
-
-                try
-                {
-                    var j = Utils.GetCommandExecutionOutput("java", "-version 2>&1").Split('\n');
-                    j = j[0].Split('"');
-                    _javaVersion = new Version(j[1]);
-                }
-                catch { _javaVersion = new Version(); }
-
-                return _javaVersion;
-            }
-        }
-
-        public override int Architecture
+        public override string Architecture
         {
             get 
             {
                 try
                 {
                     var arch = Utils.GetCommandExecutionOutput("uname", "-m");
-                    if (arch.Contains("64") || arch.Contains("686"))
-                        return 64;
+                    if (arch.Contains("i386") || arch.Contains("i686"))
+                        return "32-bit";
+                    if (arch.Contains("x86_64"))
+                        return "64-bit";
                 }
                 catch { /* ignored */ }
 
-                return 32;
+                return "Unknown";
             }
         }
+		public override string Name { get { return Utils.GetCommandExecutionOutput("uname", "-rs").Replace("\n", ""); } }
+
+        public override Version FrameworkVersion
+        {
+            get
+            {
+				try
+				{
+					if (IsMono) 
+					{
+						var type = Type.GetType("Mono.Runtime");
+
+						var invokeGetDisplayName = type != null ? type.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static) : null;
+						var displayName = invokeGetDisplayName != null ? invokeGetDisplayName.Invoke(null, null) as string : null;
+						if (displayName != null)
+							return new Version(displayName.Substring(0, displayName.IndexOf(" ", StringComparison.Ordinal)));
+					}
+				}
+				catch { /* ignored */ }
+
+				return new Version(Environment.Version.Major, Environment.Version.Minor); 
+            }
+        }
+        public override Version JavaVersion
+        {
+            get
+            {
+                try
+                {
+                    var output = Utils.GetCommandExecutionOutput("java", "-version");
+                    var regex = new Regex(@"java version\s*""(.*)""");
+                    var matches = regex.Matches(output);
+                    return new Version(matches[0].Groups[1].Value.Replace("_", "."));
+                }
+                catch { return new Version(); }
+            }
+        }
+
+        private readonly HardwareInfo _hardware = new UnixHardwareInfo();
+        public override HardwareInfo Hardware { get { return _hardware; } }
     }
 }
