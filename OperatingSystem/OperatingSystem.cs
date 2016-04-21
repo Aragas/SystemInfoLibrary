@@ -60,15 +60,19 @@ namespace SystemInfoLibrary.OperatingSystem
         public abstract HardwareInfo Hardware { get; }
 
 
+        public abstract OperatingSystemInfo Update();
+
 
         public static OperatingSystemInfo GetOperatingSystemInfo()
         {
             switch (Environment.OSVersion.Platform)
             {
                 case PlatformID.Unix:
-                    return new UnixOperatingSystemInfo();
+                    return Utils.GetCommandExecutionOutput("uname", "").Contains("Darwin") 
+                        ? new MacOSXOperatingSystemInfo()
+                        : new UnixOperatingSystemInfo();
                 case PlatformID.MacOSX:
-                    return new MacOsxOperatingSystemInfo();
+                    return new MacOSXOperatingSystemInfo();
                 default:
                     return new WindowsOperatingSystemInfo();
             }

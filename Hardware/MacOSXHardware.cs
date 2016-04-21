@@ -16,62 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
+
+using SystemInfoLibrary.Hardware.CPU;
+using SystemInfoLibrary.Hardware.GPU;
+using SystemInfoLibrary.Hardware.RAM;
 
 namespace SystemInfoLibrary.Hardware
 {
-    internal class MacOSXHardwareInfo : UnixHardwareInfo
+    internal class MacOSXHardwareInfo : HardwareInfo
     {
-        public override string CPU_Name 
-        {
-            get
-            {
-                try
-                {
-                    var regex = new Regex(@"Processor Name\s*:\\s*(?<processor>[\w\s\d\.]+)");
-                    var matches = regex.Matches(Utils.SystemProfilerCommandOutput);
-                    return matches[0].Groups["processor"].Value;
-                }
-                catch { return "Generic"; }
-            }
-        }
-        public override string CPU_Architecture
-        {
-            get
-            {
-                var regex = new Regex(@"hw\.cpu64bit_capable\s*(:|=)\s*(?<capable>\d+)");
-                var matches = regex.Matches(Utils.SysctlCommandOutput);
-                return matches[0].Groups["cpus"].Value == "1" ? "x64" : "x86";
-            }
-        }
-        public override int CPU_Cores
-        {
-            get 
-            {
-                var regex = new Regex(@"hw\.logicalcpu\s*(:|=)\s*(?<cpus>\d+)");
-                var matches = regex.Matches(Utils.SysctlCommandOutput);
-                return int.Parse(matches[0].Groups["cpus"].Value);
-            }
-        }
-        public override string CPU_Brand { get { return "GenuineIntel"; } }
-        public override double CPU_Frequency 
-        {
-            get
-            {
-                var regex = new Regex(@"hw\.cpufrequency\s*(:|=)\s*(?<cpu_frequency>\d+)");
-                var matches = regex.Matches(Utils.SysctlCommandOutput);
-                return double.Parse(matches[0].Groups["cpu_frequency"].Value) / 1024 / 1024; // Convert from B -> MB
-            }
-        }
+        private IList<CPUInfo> _CPUs;
+        public override IList<CPUInfo> CPUs { get { return _CPUs ?? (_CPUs = new List<CPUInfo> { new MacOSXCPUInfo() }); } }
+        // We'll assume only one physical CPU is supported
 
-        public override ulong RAM_MemoryTotal
-        {
-            get 
-            {
-                var regex = new Regex(@"hw\.memsize\s*(:|=)\s*(?<memory>\d+)");
-                var matches = regex.Matches(Utils.SysctlCommandOutput);
-                return ulong.Parse(matches[0].Groups["memory"].Value) / 1024; // Convert from B -> KB
-            }
-        }
+        private IList<GPUInfo> _GPUs;
+		public override IList<GPUInfo> GPUs { get { return _GPUs ?? (_GPUs = new List<GPUInfo> { new MacOSXGPUInfo() }); } }
+
+        private RAMInfo _RAM;
+        public override RAMInfo RAM { get { return _RAM ?? (_RAM = new MacOSXRAMInfo()); } }
     }
 }

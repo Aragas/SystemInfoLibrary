@@ -16,27 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Text.RegularExpressions;
-
 using SystemInfoLibrary.Hardware;
 
 namespace SystemInfoLibrary.OperatingSystem
 {
-    internal class MacOsxOperatingSystemInfo : UnixOperatingSystemInfo
+    internal class MacOSXOperatingSystemInfo : UnixOperatingSystemInfo
     {
-        public override string Architecture { get { return "x64"; } }
-
-        public override string Name
-        {
-            get
-            {
-                var regex = new Regex(@"System Version:\s(?<version>[\w\s\d\.]*)\s");
-                var matches = regex.Matches(Utils.SystemProfilerCommandOutput);
-                return matches[0].Groups["version"].Value;
-            }
-        }
-
-        HardwareInfo _hardware;
+		private HardwareInfo _hardware;
         public override HardwareInfo Hardware { get { return _hardware ?? (_hardware = new MacOSXHardwareInfo()); } }
+
+        public override OperatingSystemInfo Update()
+        {
+            base.Update();
+
+            _hardware = null;
+
+            return this;
+        }
     }
 }

@@ -52,8 +52,8 @@ namespace SystemInfoLibrary.OperatingSystem
         private readonly Version _javaVersion;
         public override Version JavaVersion { get { return _javaVersion; } }
         
-        private readonly HardwareInfo _hardware = new WindowsHardwareInfo();
-        public override HardwareInfo Hardware { get { return _hardware; } }
+        private HardwareInfo _hardware;
+        public override HardwareInfo Hardware { get { return _hardware ?? (_hardware = new WindowsHardwareInfo()); } }
 
 
         public WindowsOperatingSystemInfo()
@@ -67,6 +67,14 @@ namespace SystemInfoLibrary.OperatingSystem
                 _javaVersion = new Version(javaVersion);
             }
             catch { _javaVersion = new Version(); }
+        }
+
+
+        public override OperatingSystemInfo Update()
+        {
+            _hardware = null;
+
+            return this;
         }
     } 
 }

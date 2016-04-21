@@ -26,24 +26,29 @@ namespace SystemInfoLibrary.OperatingSystem
 {
     internal class UnixOperatingSystemInfo : OperatingSystemInfo
     {
+        private string _unameM;
+        private string UnameM { get { return string.IsNullOrEmpty(_unameM) ? (_unameM = Utils.GetCommandExecutionOutput("uname", "-m")) : _unameM; } }
+
+        private string _unameRS;
+        private string UnameRS { get { return string.IsNullOrEmpty(_unameRS) ? (_unameRS = Utils.GetCommandExecutionOutput("uname", "-rs")) : _unameRS; } }
+
+        private string _java;
+        private string Java { get { return string.IsNullOrEmpty(_java) ? (_java = Utils.GetCommandExecutionOutput("java", "-version")) : _java; } }
+
+
         public override string Architecture
         {
-            get 
+            get
             {
-                try
-                {
-                    var arch = Utils.GetCommandExecutionOutput("uname", "-m");
-                    if (arch.Contains("i386") || arch.Contains("i686"))
-                        return "32-bit";
-                    if (arch.Contains("x86_64"))
-                        return "64-bit";
-                }
-                catch { /* ignored */ }
+                if (UnameM.Contains("i386") || UnameM.Contains("i686"))
+                    return "32-bit";
+                if (UnameM.Contains("x86_64"))
+                    return "64-bit";
 
                 return "Unknown";
             }
         }
-		public override string Name { get { return Utils.GetCommandExecutionOutput("uname", "-rs").Replace("\n", ""); } }
+		public override string Name { get { return UnameRS.Replace("\n", ""); } }
 
         public override Version FrameworkVersion
         {
@@ -72,16 +77,26 @@ namespace SystemInfoLibrary.OperatingSystem
             {
                 try
                 {
-                    var output = Utils.GetCommandExecutionOutput("java", "-version");
                     var regex = new Regex(@"java version\s*""(.*)""");
-                    var matches = regex.Matches(output);
+                    var matches = regex.Matches(Java);
                     return new Version(matches[0].Groups[1].Value.Replace("_", "."));
                 }
                 catch { return new Version(); }
             }
         }
+			
+		private HardwareInfo _hardware;
+		public override HardwareInfo Hardware { get { return _hardware ?? (_hardware = new UnixHardwareInfo()); } }
 
-        private readonly HardwareInfo _hardware = new UnixHardwareInfo();
-        public override HardwareInfo Hardware { get { return _hardware; } }
+        public override OperatingSystemInfo Update()
+        {
+            _hardware = null;
+
+            _unameM = Utils.GetCommandExecutionOutput("uname", "-m");
+            _unameRS = Utils.GetCommandExecutionOutput("uname", "-rs");
+            _java = Utils.GetCommandExecutionOutput("java", "-version");
+
+            return this;
+        }
     }
 }

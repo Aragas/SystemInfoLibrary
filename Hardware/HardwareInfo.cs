@@ -16,63 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Collections.Generic;
+
+using SystemInfoLibrary.Hardware.CPU;
+using SystemInfoLibrary.Hardware.GPU;
+using SystemInfoLibrary.Hardware.RAM;
+
 namespace SystemInfoLibrary.Hardware
 {
     public abstract class HardwareInfo
     {
         /// <summary>
-        /// 
+        /// Returns all available CPUs.
         /// </summary>
-        public abstract string CPU_Name { get; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public abstract string CPU_Brand { get; }
-		/// <summary>
-		/// Could be x86, x64, ARM.
-		/// </summary>
-        public abstract string CPU_Architecture { get; }
-        /// <summary>
-        /// Number of CPU cores.
-        /// </summary>
-        public abstract int CPU_Cores { get; }
-        /// <summary>
-        /// Current CPU frequency, average or of the first core.
-        /// </summary>
-        public abstract double CPU_Frequency { get; }
+        public abstract IList<CPUInfo> CPUs { get; }
 
         /// <summary>
-        /// 
+        /// Returns all available GPUs.
         /// </summary>
-        public abstract string GPU_Name { get; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public abstract string GPU_Architecture { get; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public abstract string GPU_Brand { get; }
-        /// <summary>
-        /// Current resolution of the primary screen, in HxV format.
-        /// </summary>
-        public abstract string GPU_Resolution { get; }
-        /// <summary>
-        /// Current GPU Refrash Rate, in Hz.
-        /// </summary>
-        public abstract int GPU_RefreshRate { get; }
-        /// <summary>
-        /// Amount of total VRAM memory, in KB.
-        /// </summary>
-        public abstract ulong GPU_MemoryTotal { get; }
+        public abstract IList<GPUInfo> GPUs { get; }
 
-        /// <summary>
-        /// Amount of total RAM memory, in KB.
-        /// </summary>
-        public abstract ulong RAM_MemoryTotal { get; }
-        /// <summary>
-        /// Amount of total free RAM memory, in KB.
-        /// </summary>
-        public abstract ulong RAM_MemoryFree { get; }
+        public abstract RAMInfo RAM { get; }
     }
 }

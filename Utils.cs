@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Diagnostics;
 
 using Microsoft.Win32;
@@ -35,24 +36,28 @@ namespace SystemInfoLibrary
 
         public static string GetCommandExecutionOutput(string command, string arguments)
         {
-            var proc = new Process
+            try
             {
-                StartInfo = new ProcessStartInfo
+                var proc = new Process
                 {
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    FileName = command,
-                    Arguments = arguments
-                }
-            };
+                    StartInfo = new ProcessStartInfo
+                    {
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        FileName = command,
+                        Arguments = arguments
+                    }
+                };
 
-            proc.Start();
+                proc.Start();
 
-            var output = proc.StandardOutput.ReadToEnd();
-            if (string.IsNullOrEmpty(output))
-                output = proc.StandardError.ReadToEnd();
-            return output;
+                var output = proc.StandardOutput.ReadToEnd();
+                if (string.IsNullOrEmpty(output))
+                    output = proc.StandardError.ReadToEnd();
+                return output;
+            }
+            catch { return string.Empty; }
         }
 
         public static object GetRegistryValue(RegistryKey regRoot, string regPath, string valueName, object defaultValue = null)
@@ -67,29 +72,5 @@ namespace SystemInfoLibrary
 
             return value;
         }
-
-        #region MacOSX Functions
-        private static string _systemProfiler;
-        public static string SystemProfilerCommandOutput
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_systemProfiler))
-                    _systemProfiler = GetCommandExecutionOutput("system_profiler", "");
-                return _systemProfiler;
-            }
-        }
-
-        private static string _sysctl;
-        public static string SysctlCommandOutput
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_sysctl))
-                    _sysctl = GetCommandExecutionOutput("sysctl", "-a hw");
-                return _sysctl;
-            }
-        }
-        #endregion
     }
 }
