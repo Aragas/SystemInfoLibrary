@@ -1,6 +1,6 @@
 **Mono Latest:** | **Windows .NET 4.5:** | **NuGet**
 ------------ | ------------- | -------------
-[![Build Status](https://travis-ci.org/Aragas/SystemInfoLibrary.svg?branch=master)](https://travis-ci.org/Aragas/SystemInfoLibrary) | [![Build status](https://ci.appveyor.com/api/projects/status/lxtoeug45hhlxi9u?svg=true)](https://ci.appveyor.com/project/Aragas/systeminfolibrary) | [![nugetpkg](https://img.shields.io/badge/nuget-ConsoleManager-orange.svg)](https://www.nuget.org/packages/ConsoleManager/)  
+[![Build Status](https://travis-ci.org/Aragas/SystemInfoLibrary.svg?branch=master)](https://travis-ci.org/Aragas/SystemInfoLibrary) | [![Build status](https://ci.appveyor.com/api/projects/status/lxtoeug45hhlxi9u?svg=true)](https://ci.appveyor.com/project/Aragas/systeminfolibrary) | [![nugetpkg](https://img.shields.io/badge/nuget-SystemInfoLibrary-orange.svg)](https://www.nuget.org/packages/SystemInfoLibrary)  
 
 # SystemInfoLibrary
 
