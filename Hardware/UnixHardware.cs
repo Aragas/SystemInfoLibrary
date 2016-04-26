@@ -50,11 +50,11 @@ namespace SystemInfoLibrary.Hardware
             _CPUs = new List<CPUInfo>();
 
             var matches = new Regex(@"^\s*$", RegexOptions.Multiline).Split(CPU_Info).Where(val => !string.IsNullOrEmpty(val)).ToList();
-            var maxProcIndex = matches.Select(match => int.Parse(new Regex(@"physical id\s*:\s*(?<pid>\d*)").Match(match).Groups["pid"].Value)).Max();
+            var procIndexes = matches.Select(match => int.Parse(new Regex(@"physical id\s*:\s*(?<pid>\d*)").Match(match).Groups["pid"].Value)).Distinct();
 
-            for (var i = 0; i <= maxProcIndex; i++)
+            foreach (var procIndex in procIndexes)
             {
-                var cpuInfo = string.Join("", matches.Where(match => int.Parse(new Regex(@"physical id\s*:\s*(?<pid>\d*)").Match(match).Groups["pid"].Value) == i).ToArray());
+                var cpuInfo = string.Join("", matches.Where(match => int.Parse(new Regex(@"physical id\s*:\s*(?<pid>\d*)").Match(match).Groups["pid"].Value) == procIndex).ToArray());
                 _CPUs.Add(new UnixCPUInfo(cpuInfo));
             }
             // -- CPU

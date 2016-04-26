@@ -65,6 +65,10 @@ namespace SystemInfoLibrary.OperatingSystem
 
         public static OperatingSystemInfo GetOperatingSystemInfo()
         {
+#if UNITY_5
+            return new UnityOperatingSystemInfo();
+#endif
+
             switch (Environment.OSVersion.Platform)
             {
                 case PlatformID.Unix:
