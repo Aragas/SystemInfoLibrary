@@ -17,6 +17,7 @@
 */
 
 using System;
+using System.Runtime.InteropServices;
 using System.Diagnostics;
 
 using Microsoft.Win32;
@@ -72,5 +73,77 @@ namespace SystemInfoLibrary
 
             return value;
         }
+
+
+        [DllImport("libc", EntryPoint = "uname")]
+        public static extern int UName(IntPtr unameStruct);
+
+        #region OS X
+        [DllImport("libc", EntryPoint = "sysctlbyname")]
+		private static extern int SysCtlByName([MarshalAs(UnmanagedType.LPStr)]string propName, IntPtr value, IntPtr oldLen, IntPtr newP, uint newLen);
+
+		[DllImport("libc", EntryPoint = "getpagesize")]
+		public static extern int GetPageSize();
+
+		public static IntPtr GetSysCtlPropertyPtr(string propName)
+		{
+			try
+			{
+				var strLength = Marshal.AllocHGlobal(sizeof(int));
+				SysCtlByName(propName, IntPtr.Zero, strLength, IntPtr.Zero, 0);
+				var length = Marshal.ReadInt32(strLength);
+
+				if(length == 0)
+				{
+					Marshal.FreeHGlobal(strLength);
+					return IntPtr.Zero;
+				}
+
+				var strPtr = Marshal.AllocHGlobal(length);
+				SysCtlByName(propName, strPtr, strLength, IntPtr.Zero, 0);
+
+				Marshal.FreeHGlobal(strLength);
+
+				return strPtr;
+			}
+			catch { return IntPtr.Zero; }
+		}
+		public static string GetSysCtlPropertyString(string propName)
+		{
+			var ptr = GetSysCtlPropertyPtr(propName);
+
+			if(ptr == IntPtr.Zero)
+				return "Unknown";
+
+			return Marshal.PtrToStringAnsi(ptr);
+		}
+		public static short GetSysCtlPropertyInt16(string propName)
+		{
+			var ptr = GetSysCtlPropertyPtr(propName);
+
+			if(ptr == IntPtr.Zero)
+				return 0;
+
+			return Marshal.ReadInt16(ptr);
+		}
+		public static int GetSysCtlPropertyInt32(string propName)
+		{
+			var ptr = GetSysCtlPropertyPtr(propName);
+
+			if(ptr == IntPtr.Zero)
+				return 0;
+
+			return Marshal.ReadInt32(ptr);
+		}
+		public static long GetSysCtlPropertyInt64(string propName)
+		{
+			var ptr = GetSysCtlPropertyPtr(propName);
+
+			if(ptr == IntPtr.Zero)
+				return 0;
+
+			return Marshal.ReadInt64(ptr);
+		}
+#endregion OS X
     }
 }

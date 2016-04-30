@@ -3,15 +3,11 @@
     public abstract class GPUInfo
     {
         /// <summary>
-        /// 
+        /// GPU name.
         /// </summary>
         public abstract string Name { get; }
         /// <summary>
-        /// 
-        /// </summary>
-        public abstract string Architecture { get; }
-        /// <summary>
-        /// 
+        /// GPU vendor.
         /// </summary>
         public abstract string Brand { get; }
         /// <summary>

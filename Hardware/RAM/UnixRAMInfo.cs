@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace SystemInfoLibrary.Hardware.RAM
 {
-    public class UnixRAMInfo : RAMInfo
+    internal class UnixRAMInfo : RAMInfo
     {
         private string _ramInfo;
         private string RAM_Info { get { return string.IsNullOrEmpty(_ramInfo) ? (_ramInfo = Utils.GetCommandExecutionOutput("cat", "/proc/meminfo")) : _ramInfo; } }

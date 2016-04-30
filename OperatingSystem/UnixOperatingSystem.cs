@@ -48,45 +48,46 @@ namespace SystemInfoLibrary.OperatingSystem
                 return "Unknown";
             }
         }
-		public override string Name { get { return UnameRS.Replace("\n", ""); } }
+
+        public override string Name { get { return UnameRS.Replace("\n", ""); } }
 
         public override Version FrameworkVersion
         {
             get
             {
-				try
-				{
-					if (IsMono) 
-					{
-						var type = Type.GetType("Mono.Runtime");
+                try
+                {
+                    if (IsMono)
+                    {
+                        var type = Type.GetType("Mono.Runtime");
 
-						var invokeGetDisplayName = type != null ? type.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static) : null;
-						var displayName = invokeGetDisplayName != null ? invokeGetDisplayName.Invoke(null, null) as string : null;
-						if (displayName != null)
-							return new Version(displayName.Substring(0, displayName.IndexOf(" ", StringComparison.Ordinal)));
-					}
-				}
-				catch { /* ignored */ }
+                        var invokeGetDisplayName = type != null ? type.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static) : null;
+                        var displayName = invokeGetDisplayName != null ? invokeGetDisplayName.Invoke(null, null) as string : null;
+                        if (displayName != null)
+                            return new Version(displayName.Substring(0, displayName.IndexOf(" ", StringComparison.Ordinal)));
+                    }
+                }
+                catch { /* ignored */ }
 
-				return new Version(Environment.Version.Major, Environment.Version.Minor); 
+                return new Version(Environment.Version.Major, Environment.Version.Minor);
             }
         }
+
         public override Version JavaVersion
         {
             get
             {
                 try
                 {
-                    var regex = new Regex(@"java version\s*""(.*)""");
-                    var matches = regex.Matches(Java);
+                    var matches = new Regex(@"java version\s*""(.*)""").Matches(Java);
                     return new Version(matches[0].Groups[1].Value.Replace("_", "."));
                 }
                 catch { return new Version(); }
             }
         }
-			
-		private HardwareInfo _hardware;
-		public override HardwareInfo Hardware { get { return _hardware ?? (_hardware = new UnixHardwareInfo()); } }
+
+        private HardwareInfo _hardware;
+        public override HardwareInfo Hardware { get { return _hardware ?? (_hardware = new UnixHardwareInfo()); } }
 
         public override OperatingSystemInfo Update()
         {

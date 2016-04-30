@@ -2,7 +2,7 @@
 
 namespace SystemInfoLibrary.Hardware.RAM
 {
-    public class WindowsRAMInfo : RAMInfo
+    internal class WindowsRAMInfo : RAMInfo
     {
         public override ulong Free
         {

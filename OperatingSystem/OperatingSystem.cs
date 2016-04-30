@@ -17,6 +17,7 @@
 */
 
 using System;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 using SystemInfoLibrary.Hardware;
@@ -25,6 +26,8 @@ namespace SystemInfoLibrary.OperatingSystem
 {
     public abstract class OperatingSystemInfo
     {
+
+
         /// <summary>
         /// Could be 16-bit 32-bit, 64-bit, ARM.
         /// </summary>
@@ -69,17 +72,35 @@ namespace SystemInfoLibrary.OperatingSystem
             return new UnityOperatingSystemInfo();
 #endif
 
-            switch (Environment.OSVersion.Platform)
-            {
-                case PlatformID.Unix:
-                    return Utils.GetCommandExecutionOutput("uname", "").Contains("Darwin") 
-                        ? new MacOSXOperatingSystemInfo()
-                        : new UnixOperatingSystemInfo();
-                case PlatformID.MacOSX:
-                    return new MacOSXOperatingSystemInfo();
-                default:
-                    return new WindowsOperatingSystemInfo();
-            }
-        }
-    }
+			switch (Environment.OSVersion.Platform)
+			{
+				case PlatformID.Unix:
+
+                    // https://github.com/mono/mono/blob/master/mcs/class/System/System/Platform.cs
+                    // Calling uname from standard c library is pointless. The struct size varies on platforms.
+                    var uname = IntPtr.Zero;
+					try
+					{
+                        // 5 char[] with ~256 size = 1024 minimum
+                        uname = Marshal.AllocHGlobal(8192);
+						if (Utils.UName(uname) == 0 && Marshal.PtrToStringAnsi(uname) == "Darwin")
+							return new MacOSXOperatingSystemInfo();
+					}
+					catch { /* ignored */ }
+					finally
+					{
+						if (uname != IntPtr.Zero)
+							Marshal.FreeHGlobal(uname);
+					}
+					return new UnixOperatingSystemInfo();
+
+				case PlatformID.MacOSX:
+					return new MacOSXOperatingSystemInfo();
+
+				default:
+					return new WindowsOperatingSystemInfo();
+			
+			}
+		}
+	}
 }

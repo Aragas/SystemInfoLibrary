@@ -2,7 +2,7 @@
 
 namespace SystemInfoLibrary.Hardware.GPU
 {
-    public class UnixGPUInfo : GPUInfo
+    internal class UnixGPUInfo : GPUInfo
     {
         private string _glxinfo;
         private string Glxinfo { get { return string.IsNullOrEmpty(_glxinfo) ? (_glxinfo = Utils.GetCommandExecutionOutput("glxinfo", "")) : _glxinfo; } }
@@ -17,7 +17,6 @@ namespace SystemInfoLibrary.Hardware.GPU
                 return string.IsNullOrEmpty(value) ? "Unknown" : value;
             }
         }
-        public override string Architecture { get { return "Unknown"; } }
         public override string Brand
         {
             get

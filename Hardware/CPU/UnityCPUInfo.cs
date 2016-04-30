@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SystemInfoLibrary.Hardware.CPU
 {
-    public class UnityCPUInfo : CPUInfo
+    internal class UnityCPUInfo : CPUInfo
     {
         public override string Name { get { return SystemInfo.processorType; } }
         public override string Brand { get { return "Unknown"; } }

@@ -6,7 +6,7 @@ using Microsoft.Win32;
 
 namespace SystemInfoLibrary.Hardware.CPU
 {
-    public class WindowsCPUInfo : CPUInfo
+    internal class WindowsCPUInfo : CPUInfo
     {
         private enum CPUArchitectureType
         {

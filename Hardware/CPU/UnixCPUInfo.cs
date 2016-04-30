@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace SystemInfoLibrary.Hardware.CPU
 {
-    public class UnixCPUInfo : CPUInfo
+    internal class UnixCPUInfo : CPUInfo
     {
         private readonly string _cpuInfo;
 

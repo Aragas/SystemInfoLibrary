@@ -3,11 +3,11 @@ namespace SystemInfoLibrary.Hardware.CPU
     public abstract class CPUInfo
     {
         /// <summary>
-        /// 
+        /// CPU name. (tm) and (r) are removed.
         /// </summary>
         public abstract string Name { get; }
         /// <summary>
-        /// 
+        /// CPU vendor.
         /// </summary>
         public abstract string Brand { get; }
         /// <summary>

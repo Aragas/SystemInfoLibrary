@@ -1,9 +1,8 @@
-using System;
 using System.Management;
 
 namespace SystemInfoLibrary.Hardware.GPU
 {
-    public class WindowsGPUInfo : GPUInfo
+    internal class WindowsGPUInfo : GPUInfo
     {
         private enum GPUArchitectureType
         {
@@ -18,19 +17,6 @@ namespace SystemInfoLibrary.Hardware.GPU
                 var searcher = new ManagementObjectSearcher("SELECT VideoProcessor FROM Win32_VideoController");
                 foreach (var obj in searcher.Get())
                     return obj["VideoProcessor"].ToString();
-                return "Unknown";
-            }
-        }
-        public override string Architecture
-        {
-            get
-            {
-                var searcher = new ManagementObjectSearcher("SELECT VideoArchitecture FROM Win32_VideoController");
-                foreach (var obj in searcher.Get())
-                {
-                    var arc = int.Parse(obj["VideoArchitecture"].ToString());
-                    return Enum.GetName(typeof(GPUArchitectureType), arc);
-                }
                 return "Unknown";
             }
         }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SystemInfoLibrary.Hardware.RAM
 {
-    public class UnityRAMInfo : RAMInfo
+    internal class UnityRAMInfo : RAMInfo
     {
         public override ulong Free { get { return 0; } }
         public override ulong Total { get { return (ulong) SystemInfo.systemMemorySize * 1024; } }

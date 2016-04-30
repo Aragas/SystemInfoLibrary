@@ -3,21 +3,21 @@ using System.Text.RegularExpressions;
 
 namespace SystemInfoLibrary.Hardware.RAM
 {
-    public class MacOSXRAMInfo : RAMInfo
+    internal class MacOSXRAMInfo : RAMInfo
     {
-        private string _sysctl;
-        private string Sysctl { get { return string.IsNullOrEmpty(_sysctl) ? (_sysctl = Utils.GetCommandExecutionOutput("sysctl", "-a hw")) : _sysctl; } }
+        private string _vmStats;
+		private string VMStats { get { return string.IsNullOrEmpty(_vmStats) ? (_vmStats = Utils.GetCommandExecutionOutput("vm_stat", "")) : _vmStats; } }
 
 
-        public override ulong Total
-        {
-            get
-            {
-                var matches = new Regex(@"hw\.memsize\s*[:|=]\s*(\d+)").Matches(Sysctl);
-                ulong value;
-                return ulong.TryParse(matches[0].Groups[1].Value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out value) ? value / 1024 : 0;
-            }
-        }
-        public override ulong Free { get { return 0; } }
+		public override ulong Total { get { return (ulong) Utils.GetSysCtlPropertyInt64("hw.memsize") / 1024; } }
+        public override ulong Free
+		{
+			get
+			{ 
+				var matches = new Regex(@"Pages free:\s*(\d+)").Matches(VMStats);
+				ulong value;
+				return ulong.TryParse(matches[0].Groups[1].Value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out value) ? value * (ulong) Utils.GetPageSize() / 1024 : 0;
+			}
+		}
     }
 }
