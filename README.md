@@ -27,6 +27,14 @@
 + **GPU:**  
 	- Not supported.
 + **RAM:**  
+	- Full support.
+	
+####Unity:  
++ **CPU:**  
+	- Supports only one physical CPU. Partial support.
++ **GPU:**  
+	- Supports only one physical GPU. Full support.
++ **RAM:**  
 	- Partial support.
   
   
