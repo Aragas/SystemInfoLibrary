@@ -22,8 +22,9 @@ namespace SystemInfoLibrary.OperatingSystem
 {
     internal class MacOSXOperatingSystemInfo : UnixOperatingSystemInfo
     {
-		private HardwareInfo _hardware;
-        public override HardwareInfo Hardware { get { return _hardware ?? (_hardware = new MacOSXHardwareInfo()); } }
+        private HardwareInfo _hardware;
+
+        public override HardwareInfo Hardware => _hardware ?? (_hardware = new MacOSXHardwareInfo());
 
         public override OperatingSystemInfo Update()
         {

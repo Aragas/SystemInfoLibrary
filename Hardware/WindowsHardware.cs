@@ -29,7 +29,8 @@ namespace SystemInfoLibrary.Hardware
     internal sealed class WindowsHardwareInfo : HardwareInfo
     {
         private IList<CPUInfo> _CPUs;
-        public override IList<CPUInfo> CPUs {
+        public override IList<CPUInfo> CPUs
+        {
             get
             {
                 if (_CPUs == null)
@@ -46,7 +47,7 @@ namespace SystemInfoLibrary.Hardware
                         }
                     }
 
-                    if(_CPUs == null)
+                    if (_CPUs == null)
                         throw new ManagementException("Could not get 'NumberOfProcessors' from 'Win32_ComputerSystem'");
                 }
 
@@ -55,10 +56,10 @@ namespace SystemInfoLibrary.Hardware
         }
 
         private IList<GPUInfo> _GPUs;
-        public override IList<GPUInfo> GPUs { get { return _GPUs ?? (_GPUs = new List<GPUInfo> { new WindowsGPUInfo() }); } }
+        public override IList<GPUInfo> GPUs => _GPUs ?? (_GPUs = new List<GPUInfo> { new WindowsGPUInfo() });
         // No idea how to detect multiple GPUs
 
         private RAMInfo _RAM;
-        public override RAMInfo RAM { get { return _RAM ?? (_RAM = new WindowsRAMInfo()); } }
-    } 
+        public override RAMInfo RAM => _RAM ?? (_RAM = new WindowsRAMInfo());
+    }
 }

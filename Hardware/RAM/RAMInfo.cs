@@ -6,6 +6,7 @@ namespace SystemInfoLibrary.Hardware.RAM
         /// Amount of total RAM memory, in KB.
         /// </summary>
         public abstract ulong Total { get; }
+
         /// <summary>
         /// Amount of total free RAM memory, in KB.
         /// </summary>

@@ -5,8 +5,10 @@ namespace SystemInfoLibrary.Hardware.RAM
 {
     internal class UnityRAMInfo : RAMInfo
     {
-        public override ulong Free { get { return 0; } }
-        public override ulong Total { get { return (ulong) SystemInfo.systemMemorySize * 1024; } }
+        public override ulong Free => 0;
+
+        public override ulong Total => (ulong) SystemInfo.systemMemorySize*1024;
     }
 }
+
 #endif

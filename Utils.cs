@@ -79,71 +79,65 @@ namespace SystemInfoLibrary
         public static extern int UName(IntPtr unameStruct);
 
         #region OS X
+
         [DllImport("libc", EntryPoint = "sysctlbyname")]
-		private static extern int SysCtlByName([MarshalAs(UnmanagedType.LPStr)]string propName, IntPtr value, IntPtr oldLen, IntPtr newP, uint newLen);
+        private static extern int SysCtlByName([MarshalAs(UnmanagedType.LPStr)] string propName, IntPtr value, IntPtr oldLen, IntPtr newP, uint newLen);
 
-		[DllImport("libc", EntryPoint = "getpagesize")]
-		public static extern int GetPageSize();
+        [DllImport("libc", EntryPoint = "getpagesize")]
+        public static extern int GetPageSize();
 
-		public static IntPtr GetSysCtlPropertyPtr(string propName)
-		{
-			try
-			{
-				var strLength = Marshal.AllocHGlobal(sizeof(int));
-				SysCtlByName(propName, IntPtr.Zero, strLength, IntPtr.Zero, 0);
-				var length = Marshal.ReadInt32(strLength);
+        public static IntPtr GetSysCtlPropertyPtr(string propName)
+        {
+            try
+            {
+                var strLength = Marshal.AllocHGlobal(sizeof(int));
+                SysCtlByName(propName, IntPtr.Zero, strLength, IntPtr.Zero, 0);
+                var length = Marshal.ReadInt32(strLength);
 
-				if(length == 0)
-				{
-					Marshal.FreeHGlobal(strLength);
-					return IntPtr.Zero;
-				}
+                if (length == 0)
+                {
+                    Marshal.FreeHGlobal(strLength);
+                    return IntPtr.Zero;
+                }
 
-				var strPtr = Marshal.AllocHGlobal(length);
-				SysCtlByName(propName, strPtr, strLength, IntPtr.Zero, 0);
+                var strPtr = Marshal.AllocHGlobal(length);
+                SysCtlByName(propName, strPtr, strLength, IntPtr.Zero, 0);
 
-				Marshal.FreeHGlobal(strLength);
+                Marshal.FreeHGlobal(strLength);
 
-				return strPtr;
-			}
-			catch { return IntPtr.Zero; }
-		}
-		public static string GetSysCtlPropertyString(string propName)
-		{
-			var ptr = GetSysCtlPropertyPtr(propName);
+                return strPtr;
+            }
+            catch { return IntPtr.Zero; }
+        }
 
-			if(ptr == IntPtr.Zero)
-				return "Unknown";
+        public static string GetSysCtlPropertyString(string propName)
+        {
+            var ptr = GetSysCtlPropertyPtr(propName);
 
-			return Marshal.PtrToStringAnsi(ptr);
-		}
-		public static short GetSysCtlPropertyInt16(string propName)
-		{
-			var ptr = GetSysCtlPropertyPtr(propName);
+            return ptr == IntPtr.Zero ? "Unknown" : Marshal.PtrToStringAnsi(ptr);
+        }
 
-			if(ptr == IntPtr.Zero)
-				return 0;
+        public static short GetSysCtlPropertyInt16(string propName)
+        {
+            var ptr = GetSysCtlPropertyPtr(propName);
 
-			return Marshal.ReadInt16(ptr);
-		}
-		public static int GetSysCtlPropertyInt32(string propName)
-		{
-			var ptr = GetSysCtlPropertyPtr(propName);
+            return ptr == IntPtr.Zero ? (short) 0 : Marshal.ReadInt16(ptr);
+        }
 
-			if(ptr == IntPtr.Zero)
-				return 0;
+        public static int GetSysCtlPropertyInt32(string propName)
+        {
+            var ptr = GetSysCtlPropertyPtr(propName);
 
-			return Marshal.ReadInt32(ptr);
-		}
-		public static long GetSysCtlPropertyInt64(string propName)
-		{
-			var ptr = GetSysCtlPropertyPtr(propName);
+            return ptr == IntPtr.Zero ? 0 : Marshal.ReadInt32(ptr);
+        }
 
-			if(ptr == IntPtr.Zero)
-				return 0;
+        public static long GetSysCtlPropertyInt64(string propName)
+        {
+            var ptr = GetSysCtlPropertyPtr(propName);
 
-			return Marshal.ReadInt64(ptr);
-		}
-#endregion OS X
+            return ptr == IntPtr.Zero ? (long) 0 : Marshal.ReadInt64(ptr);
+        }
+
+        #endregion OS X
     }
 }

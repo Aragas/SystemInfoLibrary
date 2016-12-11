@@ -17,6 +17,7 @@ namespace SystemInfoLibrary.Hardware.CPU
                 return string.IsNullOrEmpty(value) ? "Unknown" : value;
             }
         }
+
         public override string Brand
         {
             get
@@ -26,6 +27,7 @@ namespace SystemInfoLibrary.Hardware.CPU
                 return string.IsNullOrEmpty(value) ? "Unknown" : value;
             }
         }
+
         public override string Architecture
         {
             get
@@ -35,10 +37,10 @@ namespace SystemInfoLibrary.Hardware.CPU
                 if (!string.IsNullOrEmpty(value))
                     if (value.Contains(" lm") || value.Contains(" x86-64"))
                         return "x64";
-
                 return "x86";
             }
         }
+
         public override int Cores
         {
             get
@@ -48,6 +50,7 @@ namespace SystemInfoLibrary.Hardware.CPU
                 return int.TryParse(matches[0].Groups[1].Value, NumberStyles.None, CultureInfo.InvariantCulture, out value) ? value : 0;
             }
         }
+
         public override double Frequency
         {
             get
@@ -59,6 +62,9 @@ namespace SystemInfoLibrary.Hardware.CPU
         }
 
 
-        public UnixCPUInfo(string cpuInfo) { _cpuInfo = cpuInfo; }
+        public UnixCPUInfo(string cpuInfo)
+        {
+            _cpuInfo = cpuInfo;
+        }
     }
 }

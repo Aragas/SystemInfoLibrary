@@ -5,7 +5,7 @@ namespace SystemInfoLibrary.Hardware.GPU
     internal class UnixGPUInfo : GPUInfo
     {
         private string _glxinfo;
-        private string Glxinfo { get { return string.IsNullOrEmpty(_glxinfo) ? (_glxinfo = Utils.GetCommandExecutionOutput("glxinfo", "")) : _glxinfo; } }
+        private string Glxinfo => string.IsNullOrEmpty(_glxinfo) ? (_glxinfo = Utils.GetCommandExecutionOutput("glxinfo", "")) : _glxinfo;
 
 
         public override string Name
@@ -17,6 +17,7 @@ namespace SystemInfoLibrary.Hardware.GPU
                 return string.IsNullOrEmpty(value) ? "Unknown" : value;
             }
         }
+
         public override string Brand
         {
             get
@@ -26,8 +27,11 @@ namespace SystemInfoLibrary.Hardware.GPU
                 return string.IsNullOrEmpty(value) ? "Unknown" : value;
             }
         }
-        public override string Resolution { get { return "Unknown"; } }
-        public override int RefreshRate { get { return 0; } }
-        public override ulong MemoryTotal { get { return 0; } }
+
+        public override string Resolution => "Unknown";
+
+        public override int RefreshRate => 0;
+
+        public override ulong MemoryTotal => 0;
     }
 }

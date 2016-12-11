@@ -6,8 +6,19 @@ namespace SystemInfoLibrary.Hardware.GPU
     {
         private enum GPUArchitectureType
         {
-            Other = 1, Unknown = 2, CGA = 3, EGA = 4, VGA = 5, SVGA = 6, MDA = 7, HGC = 8, MCGA = 9,
-            EightFiveOneFourA = 10, XGA = 11, LinearFrameBuffer = 12, PCEightNine = 160
+            Other = 1,
+            Unknown = 2,
+            CGA = 3,
+            EGA = 4,
+            VGA = 5,
+            SVGA = 6,
+            MDA = 7,
+            HGC = 8,
+            MCGA = 9,
+            EightFiveOneFourA = 10,
+            XGA = 11,
+            LinearFrameBuffer = 12,
+            PCEightNine = 160
         };
 
         public override string Name
@@ -20,6 +31,7 @@ namespace SystemInfoLibrary.Hardware.GPU
                 return "Unknown";
             }
         }
+
         public override string Brand
         {
             get
@@ -30,16 +42,20 @@ namespace SystemInfoLibrary.Hardware.GPU
                 return "Unknown";
             }
         }
+
         public override string Resolution
         {
             get
             {
-                var searcher = new ManagementObjectSearcher("SELECT CurrentHorizontalResolution, CurrentVerticalResolution FROM Win32_VideoController");
+                var searcher =
+                    new ManagementObjectSearcher(
+                        "SELECT CurrentHorizontalResolution, CurrentVerticalResolution FROM Win32_VideoController");
                 foreach (var obj in searcher.Get())
-                    return string.Format("{0}x{1}", obj["CurrentHorizontalResolution"], obj["CurrentVerticalResolution"]);
+                    return $"{obj["CurrentHorizontalResolution"]}x{obj["CurrentVerticalResolution"]}";
                 return "Unknown";
             }
         }
+
         public override int RefreshRate
         {
             get
@@ -50,13 +66,14 @@ namespace SystemInfoLibrary.Hardware.GPU
                 return 0;
             }
         }
+
         public override ulong MemoryTotal
         {
             get
             {
                 var searcher = new ManagementObjectSearcher("SELECT AdapterRAM FROM Win32_VideoController");
                 foreach (var obj in searcher.Get())
-                    return ulong.Parse(obj["AdapterRAM"].ToString()) / 1024;
+                    return ulong.Parse(obj["AdapterRAM"].ToString())/1024;
                 return 0;
             }
         }

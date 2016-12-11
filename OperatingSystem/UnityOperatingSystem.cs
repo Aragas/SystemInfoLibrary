@@ -9,16 +9,17 @@ namespace SystemInfoLibrary.OperatingSystem
 {
     internal class UnityOperatingSystemInfo : OperatingSystemInfo
     {
-        public sealed override string Architecture { get { return "Unknown"; } }
-        public override string Name { get { return SystemInfo.operatingSystem; } }
+        public sealed override string Architecture => "Unknown";
 
-        public override Version FrameworkVersion { get { return Environment.Version; } }
+        public override string Name => SystemInfo.operatingSystem;
+
+        public override Version FrameworkVersion => Environment.Version;
+
         private Version _javaVersion;
-        public override Version JavaVersion { get { return _javaVersion ?? (_javaVersion = new Version()); } }
-        
-        private HardwareInfo _hardware;
-        public override HardwareInfo Hardware { get { return _hardware ?? (_hardware = new UnityHardwareInfo()); } }
+        public override Version JavaVersion => _javaVersion ?? (_javaVersion = new Version());
 
+        private HardwareInfo _hardware;
+        public override HardwareInfo Hardware => _hardware ?? (_hardware = new UnityHardwareInfo());
 
 
         public override OperatingSystemInfo Update()
@@ -27,6 +28,7 @@ namespace SystemInfoLibrary.OperatingSystem
 
             return this;
         }
-    } 
+    }
 }
+
 #endif

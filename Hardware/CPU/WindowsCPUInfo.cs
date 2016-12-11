@@ -10,7 +10,13 @@ namespace SystemInfoLibrary.Hardware.CPU
     {
         private enum CPUArchitectureType
         {
-            x86 = 0, MIPS = 1, Alpha = 2, PowerPC = 3, ARM = 5, ia64 = 6, x64 = 9
+            x86 = 0,
+            MIPS = 1,
+            Alpha = 2,
+            PowerPC = 3,
+            ARM = 5,
+            ia64 = 6,
+            x64 = 9
         };
 
         public override string Name
@@ -22,6 +28,7 @@ namespace SystemInfoLibrary.Hardware.CPU
                 return "Unknown";
             }
         }
+
         public override string Brand
         {
             get
@@ -32,6 +39,7 @@ namespace SystemInfoLibrary.Hardware.CPU
                 return "Unknown";
             }
         }
+
         public override string Architecture
         {
             get
@@ -42,6 +50,7 @@ namespace SystemInfoLibrary.Hardware.CPU
                 return "Unknown";
             }
         }
+
         public override int Cores
         {
             get
@@ -52,6 +61,7 @@ namespace SystemInfoLibrary.Hardware.CPU
                 return 0;
             }
         }
-        public override double Frequency { get { return Convert.ToDouble(Utils.GetRegistryValue(Registry.LocalMachine, @"HARDWARE\DESCRIPTION\System\CentralProcessor\0", "~MHz", 0)); } }
+
+        public override double Frequency => Convert.ToDouble(Utils.GetRegistryValue(Registry.LocalMachine, @"HARDWARE\DESCRIPTION\System\CentralProcessor\0", "~MHz", 0));
     }
 }

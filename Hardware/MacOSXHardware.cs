@@ -27,13 +27,12 @@ namespace SystemInfoLibrary.Hardware
     internal class MacOSXHardwareInfo : HardwareInfo
     {
         private IList<CPUInfo> _CPUs;
-        public override IList<CPUInfo> CPUs { get { return _CPUs ?? (_CPUs = new List<CPUInfo> { new MacOSXCPUInfo() }); } }
-        // We'll assume only one physical CPU is supported
+        public override IList<CPUInfo> CPUs => _CPUs ?? (_CPUs = new List<CPUInfo> { new MacOSXCPUInfo() }); // We'll assume only one physical CPU is supported
 
         private IList<GPUInfo> _GPUs;
-		public override IList<GPUInfo> GPUs { get { return _GPUs ?? (_GPUs = new List<GPUInfo> { new MacOSXGPUInfo() }); } }
+        public override IList<GPUInfo> GPUs => _GPUs ?? (_GPUs = new List<GPUInfo> { new MacOSXGPUInfo() });
 
         private RAMInfo _RAM;
-        public override RAMInfo RAM { get { return _RAM ?? (_RAM = new MacOSXRAMInfo()); } }
+        public override RAMInfo RAM => _RAM ?? (_RAM = new MacOSXRAMInfo());
     }
 }

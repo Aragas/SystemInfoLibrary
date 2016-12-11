@@ -29,18 +29,17 @@ namespace SystemInfoLibrary.Hardware
     internal sealed class UnixHardwareInfo : HardwareInfo
     {
         private string _cpuInfo;
-        private string CPU_Info { get { return string.IsNullOrEmpty(_cpuInfo) ? (_cpuInfo = Utils.GetCommandExecutionOutput("cat", "/proc/cpuinfo")) : _cpuInfo; } }
+        private string CPU_Info => string.IsNullOrEmpty(_cpuInfo) ? (_cpuInfo = Utils.GetCommandExecutionOutput("cat", "/proc/cpuinfo")) : _cpuInfo;
 
 
         private IList<CPUInfo> _CPUs;
-        public override IList<CPUInfo> CPUs { get { return _CPUs; } }
+        public override IList<CPUInfo> CPUs => _CPUs;
 
         private IList<GPUInfo> _GPUs;
-        public override IList<GPUInfo> GPUs { get { return _GPUs ?? (_GPUs = new List<GPUInfo> { new UnixGPUInfo() }); } }
-        // No idea how to detect multiple GPUs
+        public override IList<GPUInfo> GPUs => _GPUs ?? (_GPUs = new List<GPUInfo> { new UnixGPUInfo() }); // No idea how to detect multiple GPUs
 
         private RAMInfo _RAM;
-        public override RAMInfo RAM { get { return _RAM ?? (_RAM = new UnixRAMInfo()); } }
+        public override RAMInfo RAM => _RAM ?? (_RAM = new UnixRAMInfo());
 
 
         public UnixHardwareInfo()
@@ -54,7 +53,8 @@ namespace SystemInfoLibrary.Hardware
 
             foreach (var procIndex in procIndexes)
             {
-                var cpuInfo = string.Join("", matches.Where(match => int.Parse(new Regex(@"physical id\s*:\s*(?<pid>\d*)").Match(match).Groups["pid"].Value) == procIndex).ToArray());
+                var cpuInfo = string.Join("",
+                    matches.Where(match => int.Parse(new Regex(@"physical id\s*:\s*(?<pid>\d*)").Match(match).Groups["pid"].Value) == procIndex).ToArray());
                 _CPUs.Add(new UnixCPUInfo(cpuInfo));
             }
             // -- CPU

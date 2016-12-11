@@ -14,6 +14,7 @@ namespace SystemInfoLibrary.Hardware.RAM
                 return 0;
             }
         }
+
         public override ulong Total
         {
             get

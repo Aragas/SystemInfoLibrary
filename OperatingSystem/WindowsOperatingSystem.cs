@@ -37,23 +37,25 @@ namespace SystemInfoLibrary.OperatingSystem
                 return "Unknown";
             }
         }
+
         public override string Name
         {
             get
             {
                 var searcher = new ManagementObjectSearcher("SELECT Caption, ServicePackMajorVersion, ServicePackMinorVersion FROM Win32_OperatingSystem");
                 foreach (var obj in searcher.Get())
-                    return string.Format("{0} SP{1}.{2}", obj["Caption"], obj["ServicePackMajorVersion"], obj["ServicePackMinorVersion"]);
+                    return $"{obj["Caption"]} SP{obj["ServicePackMajorVersion"]}.{obj["ServicePackMinorVersion"]}";
                 return "Unknown";
             }
         }
 
-        public override Version FrameworkVersion { get { return Environment.Version; } }
-        private readonly Version _javaVersion;
-        public override Version JavaVersion { get { return _javaVersion; } }
-        
+        public override Version FrameworkVersion => Environment.Version;
+
+        public override Version JavaVersion { get; }
+
         private HardwareInfo _hardware;
-        public override HardwareInfo Hardware { get { return _hardware ?? (_hardware = new WindowsHardwareInfo()); } }
+
+        public override HardwareInfo Hardware => _hardware ?? (_hardware = new WindowsHardwareInfo());
 
 
         public WindowsOperatingSystemInfo()
@@ -63,10 +65,9 @@ namespace SystemInfoLibrary.OperatingSystem
                 var javaVersion = Architecture == "x86"
                     ? (string) Utils.GetRegistryValue(Registry.LocalMachine, @"Software\JavaSoft\Java Runtime Environment", "CurrentVersion", "")
                     : (string) Utils.GetRegistryValue(Registry.LocalMachine, @"Software\Wow6432Node\JavaSoft\Java Runtime Environment", "CurrentVersion", "");
-
-                _javaVersion = new Version(javaVersion);
+                JavaVersion = new Version(javaVersion);
             }
-            catch { _javaVersion = new Version(); }
+            catch { JavaVersion = new Version(); }
         }
 
 
@@ -76,5 +77,5 @@ namespace SystemInfoLibrary.OperatingSystem
 
             return this;
         }
-    } 
+    }
 }

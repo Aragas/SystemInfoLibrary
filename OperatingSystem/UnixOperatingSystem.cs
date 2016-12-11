@@ -27,13 +27,13 @@ namespace SystemInfoLibrary.OperatingSystem
     internal class UnixOperatingSystemInfo : OperatingSystemInfo
     {
         private string _unameM;
-        private string UnameM { get { return string.IsNullOrEmpty(_unameM) ? (_unameM = Utils.GetCommandExecutionOutput("uname", "-m")) : _unameM; } }
+        private string UnameM => string.IsNullOrEmpty(_unameM) ? (_unameM = Utils.GetCommandExecutionOutput("uname", "-m")) : _unameM;
 
         private string _unameRS;
-        private string UnameRS { get { return string.IsNullOrEmpty(_unameRS) ? (_unameRS = Utils.GetCommandExecutionOutput("uname", "-rs")) : _unameRS; } }
+        private string UnameRS => string.IsNullOrEmpty(_unameRS) ? (_unameRS = Utils.GetCommandExecutionOutput("uname", "-rs")) : _unameRS;
 
         private string _java;
-        private string Java { get { return string.IsNullOrEmpty(_java) ? (_java = Utils.GetCommandExecutionOutput("java", "-version")) : _java; } }
+        private string Java => string.IsNullOrEmpty(_java) ? (_java = Utils.GetCommandExecutionOutput("java", "-version")) : _java;
 
 
         public override string Architecture
@@ -44,12 +44,11 @@ namespace SystemInfoLibrary.OperatingSystem
                     return "32-bit";
                 if (UnameM.Contains("x86_64"))
                     return "64-bit";
-
                 return "Unknown";
             }
         }
 
-        public override string Name { get { return UnameRS.Replace("\n", ""); } }
+        public override string Name => UnameRS.Replace("\n", "");
 
         public override Version FrameworkVersion
         {
@@ -87,7 +86,7 @@ namespace SystemInfoLibrary.OperatingSystem
         }
 
         private HardwareInfo _hardware;
-        public override HardwareInfo Hardware { get { return _hardware ?? (_hardware = new UnixHardwareInfo()); } }
+        public override HardwareInfo Hardware => _hardware ?? (_hardware = new UnixHardwareInfo());
 
         public override OperatingSystemInfo Update()
         {

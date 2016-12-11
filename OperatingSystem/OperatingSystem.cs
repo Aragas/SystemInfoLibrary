@@ -24,14 +24,39 @@ using SystemInfoLibrary.Hardware;
 
 namespace SystemInfoLibrary.OperatingSystem
 {
+    public enum OperatingSystemType
+    {
+        Windows,
+        Unix,
+        MacOSX,
+        Unity5
+    }
+
     public abstract class OperatingSystemInfo
     {
+        public OperatingSystemType OperatingSystemType
+        {
+            get
+            {
+#if UNITY_5
+                return OperatingSystemType.Unity5;
+#endif
 
+                if (GetType() == typeof(UnixOperatingSystemInfo))
+                    return OperatingSystemType.Unix;
+
+                if (GetType() == typeof(MacOSXOperatingSystemInfo))
+                    return OperatingSystemType.MacOSX;
+
+                return OperatingSystemType.Windows;
+            }
+        }
 
         /// <summary>
         /// Could be 16-bit 32-bit, 64-bit, ARM.
         /// </summary>
         public abstract string Architecture { get; }
+
         /// <summary>
         /// Operating System name.
         /// </summary>
@@ -48,12 +73,14 @@ namespace SystemInfoLibrary.OperatingSystem
                 catch { return 1033; } // Just return 1033 (English - USA)
             }
         }
-        
+
         /// <summary>
         /// .NET Framework version.
         /// </summary>
         public abstract Version FrameworkVersion { get; }
-        public bool IsMono { get { return Type.GetType ("Mono.Runtime") != null; } }
+
+        public bool IsMono => Type.GetType("Mono.Runtime") != null;
+
         /// <summary>
         /// Java version.
         /// </summary>
@@ -72,35 +99,35 @@ namespace SystemInfoLibrary.OperatingSystem
             return new UnityOperatingSystemInfo();
 #endif
 
-			switch (Environment.OSVersion.Platform)
-			{
-				case PlatformID.Unix:
+            switch (Environment.OSVersion.Platform)
+            {
+                case PlatformID.Unix:
 
                     // https://github.com/mono/mono/blob/master/mcs/class/System/System/Platform.cs
                     // Calling uname from standard c library is pointless. The struct size varies on platforms.
                     var uname = IntPtr.Zero;
-					try
-					{
+                    try
+                    {
                         // 5 char[] with ~256 size = 1024 minimum
                         uname = Marshal.AllocHGlobal(8192);
-						if (Utils.UName(uname) == 0 && Marshal.PtrToStringAnsi(uname) == "Darwin")
-							return new MacOSXOperatingSystemInfo();
-					}
-					catch { /* ignored */ }
-					finally
-					{
-						if (uname != IntPtr.Zero)
-							Marshal.FreeHGlobal(uname);
-					}
-					return new UnixOperatingSystemInfo();
+                        if (Utils.UName(uname) == 0 && Marshal.PtrToStringAnsi(uname) == "Darwin")
+                            return new MacOSXOperatingSystemInfo();
+                    }
+                    catch { /* ignored */ }
+                    finally
+                    {
+                        if (uname != IntPtr.Zero)
+                            Marshal.FreeHGlobal(uname);
+                    }
+                    return new UnixOperatingSystemInfo();
 
-				case PlatformID.MacOSX:
-					return new MacOSXOperatingSystemInfo();
+                case PlatformID.MacOSX:
+                    return new MacOSXOperatingSystemInfo();
 
-				default:
-					return new WindowsOperatingSystemInfo();
-			
-			}
-		}
-	}
+                default:
+                    return new WindowsOperatingSystemInfo();
+
+            }
+        }
+    }
 }
