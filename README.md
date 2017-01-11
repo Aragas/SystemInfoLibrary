@@ -5,6 +5,11 @@
 # SystemInfoLibrary
 This is a modification of the original repository [LittleSoftwareStatsNET](https://github.com/little-apps/LittleSoftwareStatsNET) made by [little-apps](https://github.com/little-apps).
 
+### License ###
+This library is licensed under the [GNU Lesser General Public License v3](http://www.gnu.org/copyleft/lesser.html).  
+  
+  
+### Supported Operating Systems ###
 ####Windows:
 + **CPU:**  
 	- Supports only one physical CPU.
@@ -36,7 +41,3 @@ This is a modification of the original repository [LittleSoftwareStatsNET](https
 	- Supports only one physical GPU. Full support.
 + **RAM:**  
 	- Partial support.
-  
-  
-### License ###
-This library is licensed under the [GNU Lesser General Public License v3](http://www.gnu.org/copyleft/lesser.html).
