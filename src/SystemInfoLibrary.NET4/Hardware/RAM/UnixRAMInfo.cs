@@ -15,8 +15,7 @@ namespace SystemInfoLibrary.Hardware.RAM
             get
             {
                 var matches = new Regex(@"MemTotal:\s*(\d+)").Matches(RAM_Info);
-                ulong value;
-                return ulong.TryParse(matches[0].Groups[1].Value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out value) ? value : 0;
+                return ulong.TryParse(matches[0].Groups[1].Value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var value) ? value : 0;
             }
         }
 
@@ -25,8 +24,7 @@ namespace SystemInfoLibrary.Hardware.RAM
             get
             {
                 var matches = new Regex(@"MemFree:\s*(\d+)").Matches(RAM_Info);
-                ulong value;
-                return ulong.TryParse(matches[0].Groups[1].Value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out value) ? value : 0;
+                return ulong.TryParse(matches[0].Groups[1].Value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var value) ? value : 0;
             }
         }
     }

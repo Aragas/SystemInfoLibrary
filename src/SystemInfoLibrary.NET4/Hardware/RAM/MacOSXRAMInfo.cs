@@ -16,8 +16,7 @@ namespace SystemInfoLibrary.Hardware.RAM
             get
             {
                 var matches = new Regex(@"Pages free:\s*(\d+)").Matches(VMStats);
-                ulong value;
-                return ulong.TryParse(matches[0].Groups[1].Value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out value) ? value * (ulong) Utils.GetPageSize() / 1024 : 0;
+                return ulong.TryParse(matches[0].Groups[1].Value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var value) ? value * (ulong) Utils.GetPageSize() / 1024 : 0;
             }
         }
     }

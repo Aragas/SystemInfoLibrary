@@ -17,7 +17,6 @@
 */
 
 using System;
-using System.Reflection;
 using System.Text.RegularExpressions;
 
 using SystemInfoLibrary.Hardware;
@@ -54,13 +53,16 @@ namespace SystemInfoLibrary.OperatingSystem
         {
             get
             {
+#if NETSTANDARD2_0
+                return new Version(Environment.Version.Major, Environment.Version.Minor);
+#else
                 try
                 {
                     if (IsMono)
                     {
                         var type = Type.GetType("Mono.Runtime");
 
-                        var invokeGetDisplayName = type != null ? type.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static) : null;
+                        var invokeGetDisplayName = type?.GetMethod("GetDisplayName", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
                         var displayName = invokeGetDisplayName != null ? invokeGetDisplayName.Invoke(null, null) as string : null;
                         if (displayName != null)
                             return new Version(displayName.Substring(0, displayName.IndexOf(" ", StringComparison.Ordinal)));
@@ -69,6 +71,7 @@ namespace SystemInfoLibrary.OperatingSystem
                 catch { /* ignored */ }
 
                 return new Version(Environment.Version.Major, Environment.Version.Minor);
+#endif
             }
         }
 
@@ -81,7 +84,7 @@ namespace SystemInfoLibrary.OperatingSystem
                     var matches = new Regex(@"java version\s*""(.*)""").Matches(Java);
                     return new Version(matches[0].Groups[1].Value.Replace("_", "."));
                 }
-                catch { return new Version(); }
+                catch { return new Version(0, 0); }
             }
         }
 

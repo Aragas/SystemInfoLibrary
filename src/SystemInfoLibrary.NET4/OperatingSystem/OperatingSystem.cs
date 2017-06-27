@@ -63,18 +63,6 @@ namespace SystemInfoLibrary.OperatingSystem
         public abstract string Name { get; }
 
         /// <summary>
-        /// Locale ID assigned by <a href="https://msdn.microsoft.com/en-us/goglobal/bb964664.aspx">Microsoft</a>, in DEC.
-        /// </summary>
-        public int LocaleID
-        {
-            get
-            {
-                try { return Thread.CurrentThread.CurrentCulture.LCID; }
-                catch { return 1033; } // Just return 1033 (English - USA)
-            }
-        }
-
-        /// <summary>
         /// .NET Framework version.
         /// </summary>
         public abstract Version FrameworkVersion { get; }
@@ -99,6 +87,19 @@ namespace SystemInfoLibrary.OperatingSystem
             return new UnityOperatingSystemInfo();
 #endif
 
+#if NETSTANDARD2_0
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                return new UnixOperatingSystemInfo();
+
+            if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                return new MacOSXOperatingSystemInfo();
+
+            if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return new WindowsOperatingSystemInfo();
+            
+            return new WindowsOperatingSystemInfo();
+            return null;
+#else
             switch (Environment.OSVersion.Platform)
             {
                 case PlatformID.Unix:
@@ -126,8 +127,8 @@ namespace SystemInfoLibrary.OperatingSystem
 
                 default:
                     return new WindowsOperatingSystemInfo();
-
             }
+#endif
         }
     }
 }

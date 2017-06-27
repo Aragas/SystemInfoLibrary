@@ -78,7 +78,7 @@ namespace SystemInfoLibrary
         [DllImport("libc", EntryPoint = "uname")]
         public static extern int UName(IntPtr unameStruct);
 
-        #region OS X
+#region OS X
 
         [DllImport("libc", EntryPoint = "sysctlbyname")]
         private static extern int SysCtlByName([MarshalAs(UnmanagedType.LPStr)] string propName, IntPtr value, IntPtr oldLen, IntPtr newP, uint newLen);
@@ -138,6 +138,6 @@ namespace SystemInfoLibrary
             return ptr == IntPtr.Zero ? (long) 0 : Marshal.ReadInt64(ptr);
         }
 
-        #endregion OS X
+#endregion OS X
     }
 }

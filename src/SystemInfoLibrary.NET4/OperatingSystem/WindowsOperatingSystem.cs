@@ -50,7 +50,7 @@ namespace SystemInfoLibrary.OperatingSystem
         }
 
         public override Version FrameworkVersion => Environment.Version;
-
+        
         public override Version JavaVersion { get; }
 
         private HardwareInfo _hardware;
@@ -67,7 +67,7 @@ namespace SystemInfoLibrary.OperatingSystem
                     : (string) Utils.GetRegistryValue(Registry.LocalMachine, @"Software\Wow6432Node\JavaSoft\Java Runtime Environment", "CurrentVersion", "");
                 JavaVersion = new Version(javaVersion);
             }
-            catch { JavaVersion = new Version(); }
+            catch { JavaVersion = new Version(0, 0); }
         }
 
 

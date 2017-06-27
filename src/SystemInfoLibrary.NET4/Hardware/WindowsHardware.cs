@@ -37,8 +37,7 @@ namespace SystemInfoLibrary.Hardware
                 {
                     foreach (var obj in new ManagementObjectSearcher("SELECT NumberOfProcessors FROM Win32_ComputerSystem").Get())
                     {
-                        int value;
-                        if (int.TryParse(obj["NumberOfProcessors"].ToString(), 0, CultureInfo.InvariantCulture, out value))
+                        if (int.TryParse(obj["NumberOfProcessors"].ToString(), 0, CultureInfo.InvariantCulture, out var value))
                         {
                             if (value == 1)
                                 _CPUs = new List<CPUInfo> { new WindowsCPUInfo() };

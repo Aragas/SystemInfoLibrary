@@ -41,6 +41,9 @@
     <Reference Include="System.Management" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Hardware\CPU\CPUInfo.cs" />
     <Compile Include="Hardware\CPU\UnityCPUInfo.cs" />
     <Compile Include="Hardware\GPU\GPUInfo.cs" />
