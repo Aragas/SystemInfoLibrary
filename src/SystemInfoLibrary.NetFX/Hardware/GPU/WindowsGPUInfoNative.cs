@@ -2,25 +2,8 @@ using System.Management;
 
 namespace SystemInfoLibrary.Hardware.GPU
 {
-    internal class WindowsGPUInfo : GPUInfo
+    internal class WindowsGPUInfoNative : WindowsGPUInfo
     {
-        private enum GPUArchitectureType
-        {
-            Other = 1,
-            Unknown = 2,
-            CGA = 3,
-            EGA = 4,
-            VGA = 5,
-            SVGA = 6,
-            MDA = 7,
-            HGC = 8,
-            MCGA = 9,
-            EightFiveOneFourA = 10,
-            XGA = 11,
-            LinearFrameBuffer = 12,
-            PCEightNine = 160
-        };
-
         public override string Name
         {
             get
@@ -73,7 +56,7 @@ namespace SystemInfoLibrary.Hardware.GPU
             {
                 var searcher = new ManagementObjectSearcher("SELECT AdapterRAM FROM Win32_VideoController");
                 foreach (var obj in searcher.Get())
-                    return ulong.Parse(obj["AdapterRAM"].ToString())/1024;
+                    return ulong.Parse(obj["AdapterRAM"].ToString()) / 1024;
                 return 0;
             }
         }

@@ -1,24 +1,12 @@
 using System;
 using System.Globalization;
 using System.Management;
-
 using Microsoft.Win32;
 
 namespace SystemInfoLibrary.Hardware.CPU
 {
-    internal class WindowsCPUInfo : CPUInfo
+    internal class WindowsCPUInfoNative : WindowsCPUInfo
     {
-        private enum CPUArchitectureType
-        {
-            x86 = 0,
-            MIPS = 1,
-            Alpha = 2,
-            PowerPC = 3,
-            ARM = 5,
-            ia64 = 6,
-            x64 = 9
-        };
-
         public override string Name
         {
             get

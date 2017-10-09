@@ -2,6 +2,7 @@
 
 namespace SystemInfoLibrary.Hardware.GPU
 {
+    // TODO: try OpenGL/CL to get the info.
     internal class MacOSXGPUInfo : GPUInfo
     {
         private string _systemProfiler;

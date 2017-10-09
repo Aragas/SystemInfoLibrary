@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>SystemInfoLibrary</RootNamespace>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyName>SystemInfoLibrary</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\CommonAssemblyInfo.cs" Link="Properties\CommonAssemblyInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\CPUInfo.cs" Link="Hardware\CPU\CPUInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\MacOSXCPUInfo.cs" Link="Hardware\CPU\MacOSXCPUInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\UnityCPUInfo.cs" Link="Hardware\CPU\UnityCPUInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\UnixCPUInfo.cs" Link="Hardware\CPU\UnixCPUInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\WindowsCPUInfo.cs" Link="Hardware\CPU\WindowsCPUInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\GPU\GPUInfo.cs" Link="Hardware\GPU\GPUInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\GPU\MacOSXGPUInfo.cs" Link="Hardware\GPU\MacOSXGPUInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\GPU\UnityGPUInfo.cs" Link="Hardware\GPU\UnityGPUInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\GPU\UnixGPUInfo.cs" Link="Hardware\GPU\UnixGPUInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\GPU\WindowsGPUInfo.cs" Link="Hardware\GPU\WindowsGPUInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\HardwareInfo.cs" Link="Hardware\HardwareInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\MacOSXHardware.cs" Link="Hardware\MacOSXHardware.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\RAM\MacOSXRAMInfo.cs" Link="Hardware\RAM\MacOSXRAMInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\RAM\RAMInfo.cs" Link="Hardware\RAM\RAMInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\RAM\UnityRAMInfo.cs" Link="Hardware\RAM\UnityRAMInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\RAM\UnixRAMInfo.cs" Link="Hardware\RAM\UnixRAMInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\RAM\WindowsRAMInfo.cs" Link="Hardware\RAM\WindowsRAMInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\UnityHardware.cs" Link="Hardware\UnityHardware.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\UnixHardware.cs" Link="Hardware\UnixHardware.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\WindowsHardware.cs" Link="Hardware\WindowsHardware.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\MacOSXOperatingSystem.cs" Link="OperatingSystem\MacOSXOperatingSystem.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\OperatingSystem.cs" Link="OperatingSystem\OperatingSystem.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\UnityOperatingSystem.cs" Link="OperatingSystem\UnityOperatingSystem.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\UnixOperatingSystem.cs" Link="OperatingSystem\UnixOperatingSystem.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\WindowsOperatingSystem.cs" Link="OperatingSystem\WindowsOperatingSystem.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Utils.cs" Link="Utils.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Hardware\CPU\" />
+    <Folder Include="Hardware\GPU\" />
+    <Folder Include="Hardware\RAM\" />
+    <Folder Include="OperatingSystem\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Win32.Registry" Version="4.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+
+</Project>

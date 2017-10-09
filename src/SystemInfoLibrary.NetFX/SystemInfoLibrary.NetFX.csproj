@@ -46,8 +46,10 @@
     </Compile>
     <Compile Include="Hardware\CPU\CPUInfo.cs" />
     <Compile Include="Hardware\CPU\UnityCPUInfo.cs" />
+    <Compile Include="Hardware\CPU\WindowsCPUInfoNative.cs" />
     <Compile Include="Hardware\GPU\GPUInfo.cs" />
     <Compile Include="Hardware\GPU\UnityGPUInfo.cs" />
+    <Compile Include="Hardware\GPU\WindowsGPUInfoNative.cs" />
     <Compile Include="Hardware\HardwareInfo.cs" />
     <Compile Include="Hardware\CPU\MacOSXCPUInfo.cs" />
     <Compile Include="Hardware\GPU\MacOSXGPUInfo.cs" />
@@ -58,16 +60,19 @@
     <Compile Include="Hardware\RAM\RAMInfo.cs" />
     <Compile Include="Hardware\RAM\UnityRAMInfo.cs" />
     <Compile Include="Hardware\RAM\UnixRAMInfo.cs" />
+    <Compile Include="Hardware\RAM\WindowsRAMInfoNative.cs" />
     <Compile Include="Hardware\RAM\WindowsRAMInfo.cs" />
     <Compile Include="Hardware\UnixHardware.cs" />
     <Compile Include="Hardware\CPU\WindowsCPUInfo.cs" />
     <Compile Include="Hardware\GPU\WindowsGPUInfo.cs" />
     <Compile Include="Hardware\UnityHardware.cs" />
     <Compile Include="Hardware\WindowsHardware.cs" />
+    <Compile Include="Hardware\WindowsHardwareNative.cs" />
     <Compile Include="OperatingSystem\MacOSXOperatingSystem.cs" />
     <Compile Include="OperatingSystem\OperatingSystem.cs" />
     <Compile Include="OperatingSystem\UnixOperatingSystem.cs" />
     <Compile Include="OperatingSystem\UnityOperatingSystem.cs" />
+    <Compile Include="OperatingSystem\WindowsOperatingSystemNative.cs" />
     <Compile Include="OperatingSystem\WindowsOperatingSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils.cs" />

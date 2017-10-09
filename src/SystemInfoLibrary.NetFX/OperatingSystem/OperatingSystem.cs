@@ -96,9 +96,8 @@ namespace SystemInfoLibrary.OperatingSystem
 
             if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 return new WindowsOperatingSystemInfo();
-            
-            return new WindowsOperatingSystemInfo();
-            return null;
+
+            throw new NotSupportedException("Platform not supported!");
 #else
             switch (Environment.OSVersion.Platform)
             {
@@ -126,7 +125,7 @@ namespace SystemInfoLibrary.OperatingSystem
                     return new MacOSXOperatingSystemInfo();
 
                 default:
-                    return new WindowsOperatingSystemInfo();
+                    return new WindowsOperatingSystemInfoNative();
             }
 #endif
         }

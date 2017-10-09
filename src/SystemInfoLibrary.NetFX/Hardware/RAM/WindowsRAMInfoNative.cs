@@ -1,8 +1,9 @@
-﻿using System.Management;
+﻿
+using System.Management;
 
 namespace SystemInfoLibrary.Hardware.RAM
 {
-    internal class WindowsRAMInfo : RAMInfo
+    internal class WindowsRAMInfoNative : WindowsRAMInfo
     {
         public override ulong Free
         {

@@ -17,7 +17,6 @@
 */
 
 using System;
-using System.Management;
 
 using SystemInfoLibrary.Hardware;
 
@@ -27,27 +26,9 @@ namespace SystemInfoLibrary.OperatingSystem
 {
     internal class WindowsOperatingSystemInfo : OperatingSystemInfo
     {
-        public sealed override string Architecture
-        {
-            get
-            {
-                var searcher = new ManagementObjectSearcher("SELECT OSArchitecture FROM Win32_OperatingSystem");
-                foreach (var obj in searcher.Get())
-                    return obj["OSArchitecture"].ToString();
-                return "Unknown";
-            }
-        }
+        public override string Architecture => Utils.Win32_OperatingSystem["OSArchitecture"];
 
-        public override string Name
-        {
-            get
-            {
-                var searcher = new ManagementObjectSearcher("SELECT Caption, ServicePackMajorVersion, ServicePackMinorVersion FROM Win32_OperatingSystem");
-                foreach (var obj in searcher.Get())
-                    return $"{obj["Caption"]} SP{obj["ServicePackMajorVersion"]}.{obj["ServicePackMinorVersion"]}";
-                return "Unknown";
-            }
-        }
+        public override string Name => $"{Utils.Win32_OperatingSystem["Caption"]} SP{Utils.Win32_OperatingSystem["ServicePackMajorVersion"]}.{Utils.Win32_OperatingSystem["ServicePackMinorVersion"]}";
 
         public override Version FrameworkVersion => Environment.Version;
         
