@@ -29,7 +29,8 @@ namespace SystemInfoLibrary.OperatingSystem
         Windows,
         Unix,
         MacOSX,
-        Unity5
+        Unity5,
+        Other
     }
 
     public abstract class OperatingSystemInfo
@@ -48,7 +49,10 @@ namespace SystemInfoLibrary.OperatingSystem
                 if (GetType() == typeof(MacOSXOperatingSystemInfo))
                     return OperatingSystemType.MacOSX;
 
-                return OperatingSystemType.Windows;
+                if (GetType() == typeof(WindowsOperatingSystemInfo))
+                    return OperatingSystemType.Windows;
+
+                return OperatingSystemType.Other;
             }
         }
 
@@ -63,7 +67,7 @@ namespace SystemInfoLibrary.OperatingSystem
         public abstract string Name { get; }
 
         /// <summary>
-        /// .NET Framework version.
+        /// .NET runtime version.
         /// </summary>
         public abstract Version FrameworkVersion { get; }
 
@@ -96,8 +100,6 @@ namespace SystemInfoLibrary.OperatingSystem
 
             if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 return new WindowsOperatingSystemInfo();
-
-            throw new NotSupportedException("Platform not supported!");
 #else
             switch (Environment.OSVersion.Platform)
             {
@@ -124,10 +126,13 @@ namespace SystemInfoLibrary.OperatingSystem
                 case PlatformID.MacOSX:
                     return new MacOSXOperatingSystemInfo();
 
-                default:
+                case PlatformID.Win32NT:
                     return new WindowsOperatingSystemInfoNative();
             }
 #endif
+
+            return new OtherOperatingSystemInfo();
+            //throw new NotSupportedException("Platform not supported!");
         }
     }
 }

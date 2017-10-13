@@ -70,6 +70,7 @@
     <Compile Include="Hardware\WindowsHardwareNative.cs" />
     <Compile Include="OperatingSystem\MacOSXOperatingSystem.cs" />
     <Compile Include="OperatingSystem\OperatingSystem.cs" />
+    <Compile Include="OperatingSystem\OtherOperatingSystem.cs" />
     <Compile Include="OperatingSystem\UnixOperatingSystem.cs" />
     <Compile Include="OperatingSystem\UnityOperatingSystem.cs" />
     <Compile Include="OperatingSystem\WindowsOperatingSystemNative.cs" />

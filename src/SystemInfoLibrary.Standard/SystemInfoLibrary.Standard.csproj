@@ -32,6 +32,7 @@
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\WindowsHardware.cs" Link="Hardware\WindowsHardware.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\MacOSXOperatingSystem.cs" Link="OperatingSystem\MacOSXOperatingSystem.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\OperatingSystem.cs" Link="OperatingSystem\OperatingSystem.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\OtherOperatingSystem.cs" Link="OperatingSystem\OtherOperatingSystem.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\UnityOperatingSystem.cs" Link="OperatingSystem\UnityOperatingSystem.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\UnixOperatingSystem.cs" Link="OperatingSystem\UnixOperatingSystem.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\WindowsOperatingSystem.cs" Link="OperatingSystem\WindowsOperatingSystem.cs" />
