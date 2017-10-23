@@ -8,6 +8,10 @@
     <AssemblyName>SystemInfoLibrary</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\SystemInfoLibrary.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="..\..\CommonAssemblyInfo.cs" Link="Properties\CommonAssemblyInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\CPUInfo.cs" Link="Hardware\CPU\CPUInfo.cs" />

@@ -46,13 +46,12 @@ namespace SystemInfoLibrary
                 {
                     StartInfo = new ProcessStartInfo
                     {
+                        CreateNoWindow = true,
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
                         RedirectStandardError = true,
                         FileName = command,
                         Arguments = arguments,
-                        //StandardOutputEncoding = Console.OutputEncoding,
-                        //StandardErrorEncoding = Encoding.UTF8
                     }
                 };
 
