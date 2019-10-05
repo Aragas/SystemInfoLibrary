@@ -49,9 +49,6 @@
       
   build_script:
     - ps: msbuild $env:SOLUTION_NAME /verbosity:m
-    
-  test_script:
-    - ps: ./test_script.ps1
 
   after_test:
     - ps: ./after_test_nuget.ps1
@@ -120,9 +117,6 @@
  
   build_script:
     - ps: msbuild $env:SOLUTION_NAME /verbosity:m
-
-  test_script:
-    - ps: ./test_script.ps1
     
   after_test:
     - ps: ./after_test_nuget-devel.ps1
@@ -177,6 +171,3 @@
   
   build_script:
     - ps: msbuild $env:SOLUTION_NAME /verbosity:m
-    
-  test_script:
-    - ps: ./test_script.ps1
