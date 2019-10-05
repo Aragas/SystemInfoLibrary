@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\CommonAssemblyInfo.cs" Link="Properties\CommonAssemblyInfo.cs" />
+    <Compile Include="..\..\common\CommonAssemblyInfo.cs" Link="Properties\CommonAssemblyInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\CPUInfo.cs" Link="Hardware\CPU\CPUInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\MacOSXCPUInfo.cs" Link="Hardware\CPU\MacOSXCPUInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\UnityCPUInfo.cs" Link="Hardware\CPU\UnityCPUInfo.cs" />
