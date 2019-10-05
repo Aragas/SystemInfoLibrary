@@ -57,7 +57,7 @@
   deploy:
     provider: NuGet
     api_key:
-      secure: N2k7BxQ7ZMgScB50k2flOS0T1xWCI1lWXNMTzDer1j/rWPZwLuG42fQWcZzHJ/Th
+      secure: 0SpTSNNvEjoYIXtkbay8DHrR1jbCKCbyZ++lk+wymwbkdFkF7kKWcXfrdMV8rcDw
     skip_symbols: false
     artifact: SystemInfoLibrary.nupkg
     on:
@@ -124,7 +124,7 @@
   deploy:
     provider: NuGet
     api_key:
-      secure: N2k7BxQ7ZMgScB50k2flOS0T1xWCI1lWXNMTzDer1j/rWPZwLuG42fQWcZzHJ/Th
+      secure: 0SpTSNNvEjoYIXtkbay8DHrR1jbCKCbyZ++lk+wymwbkdFkF7kKWcXfrdMV8rcDw
     skip_symbols: false
     artifact: SystemInfoLibrary-devel.nupkg
     on:
