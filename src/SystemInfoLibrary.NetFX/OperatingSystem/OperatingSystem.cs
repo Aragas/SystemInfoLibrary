@@ -52,6 +52,11 @@ namespace SystemInfoLibrary.OperatingSystem
                 if (GetType() == typeof(WindowsOperatingSystemInfo))
                     return OperatingSystemType.Windows;
 
+#if !NETSTANDARD2_0
+                if (GetType() == typeof(WindowsOperatingSystemInfoNative))
+                    return OperatingSystemType.Windows;
+#endif
+
                 return OperatingSystemType.Other;
             }
         }
