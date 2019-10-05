@@ -9,18 +9,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemInfoLibrary.Standard"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Debug|AnyCPU = Debug|AnyCPU
+		Release|AnyCPU = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{55D5E95E-2B94-444A-87BF-93A2E1881EDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55D5E95E-2B94-444A-87BF-93A2E1881EDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55D5E95E-2B94-444A-87BF-93A2E1881EDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55D5E95E-2B94-444A-87BF-93A2E1881EDF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{64E3EFAC-6EDB-4A4D-9BE0-4594F92ACD45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{64E3EFAC-6EDB-4A4D-9BE0-4594F92ACD45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{64E3EFAC-6EDB-4A4D-9BE0-4594F92ACD45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{64E3EFAC-6EDB-4A4D-9BE0-4594F92ACD45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55D5E95E-2B94-444A-87BF-93A2E1881EDF}.Debug|AnyCPU.ActiveCfg = Debug|AnyCPU
+		{55D5E95E-2B94-444A-87BF-93A2E1881EDF}.Debug|AnyCPU.Build.0 = Debug|AnyCPU
+		{55D5E95E-2B94-444A-87BF-93A2E1881EDF}.Release|AnyCPU.ActiveCfg = Release|AnyCPU
+		{55D5E95E-2B94-444A-87BF-93A2E1881EDF}.Release|AnyCPU.Build.0 = Release|AnyCPU
+		{64E3EFAC-6EDB-4A4D-9BE0-4594F92ACD45}.Debug|AnyCPU.ActiveCfg = Debug|AnyCPU
+		{64E3EFAC-6EDB-4A4D-9BE0-4594F92ACD45}.Debug|AnyCPU.Build.0 = Debug|AnyCPU
+		{64E3EFAC-6EDB-4A4D-9BE0-4594F92ACD45}.Release|AnyCPU.ActiveCfg = Release|AnyCPU
+		{64E3EFAC-6EDB-4A4D-9BE0-4594F92ACD45}.Release|AnyCPU.Build.0 = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
