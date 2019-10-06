@@ -1,3 +1,4 @@
+using System;
 using System.Management;
 
 namespace SystemInfoLibrary.Hardware.GPU
@@ -6,37 +7,11 @@ namespace SystemInfoLibrary.Hardware.GPU
     {
         private readonly ManagementBaseObject _win32_videoController;
 
-        public override string Name => _win32_videoController.GetPropertyValue("VideoProcessor").ToString() ?? "Unknown";
+        public override string Name => (String) _win32_videoController.GetPropertyValue("VideoProcessor");
 
-        public override string Brand => _win32_videoController.GetPropertyValue("Name").ToString() ?? "Unknown";
+        public override string Brand => (String) _win32_videoController.GetPropertyValue("Name");
 
-        /*
-        public override string Resolution
-        {
-            get
-            {
-                var searcher =
-                    new ManagementObjectSearcher(
-                        "SELECT CurrentHorizontalResolution, CurrentVerticalResolution FROM Win32_VideoController");
-                foreach (var obj in searcher.Get())
-                    return $"{obj["CurrentHorizontalResolution"]}x{obj["CurrentVerticalResolution"]}";
-                return "Unknown";
-            }
-        }
-
-        public override int RefreshRate
-        {
-            get
-            {
-                var searcher = new ManagementObjectSearcher("SELECT CurrentRefreshRate FROM Win32_VideoController");
-                foreach (var obj in searcher.Get())
-                    return int.Parse(obj["CurrentRefreshRate"].ToString());
-                return 0;
-            }
-        }
-        */
-
-        public override ulong MemoryTotal => ulong.Parse(_win32_videoController.GetPropertyValue("AdapterRAM").ToString() ?? "0") / 1024;
+        public override ulong MemoryTotal => (UInt32) _win32_videoController.GetPropertyValue("AdapterRAM");
 
         public WindowsGPUInfoNative(ManagementBaseObject win32_videoController)
         {

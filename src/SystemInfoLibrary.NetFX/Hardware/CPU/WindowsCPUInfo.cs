@@ -7,7 +7,7 @@ namespace SystemInfoLibrary.Hardware.CPU
 {
     internal class WindowsCPUInfo : CPUInfo
     {
-        protected enum CPUArchitectureType
+        protected enum CPUArchitectureType : UInt16
         {
             x86 = 0,
             MIPS = 1,
