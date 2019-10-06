@@ -11,17 +11,17 @@
         <description>Library for getting system information.
 Supports Windows, Linux, Mac OS X and Unity.
 For more info please visit the project url.</description>
+        <dependencies>
+            <group targetFramework=".NETFramework4.5">
+                <dependency id="System.Runtime.InteropServices.RuntimeInformation" version="4.3.0" />
+            </group>
+            <group targetFramework="netstandard2.0">
+                <dependency id="System.Runtime.InteropServices.RuntimeInformation" version="4.3.0" />
+                <dependency id="Microsoft.Win32.Registry" version="4.6.0" />
+                <dependency id="System.Management" version="4.6.0" />
+            </group>
+        </dependencies>
     </metadata>
-    <dependencies>
-        <group targetFramework=".NETFramework4.5">
-            <dependency id="System.Runtime.InteropServices.RuntimeInformation" version="4.3.0" />
-        </group>
-        <group targetFramework="netstandard2.0">
-            <dependency id="System.Runtime.InteropServices.RuntimeInformation" version="4.3.0" />
-            <dependency id="Microsoft.Win32.Registry" version="4.6.0" />
-            <dependency id="System.Management" version="4.6.0" />
-        </group>
-    </dependencies>
     <files>
         <file src="..\src\SystemInfoLibrary.NetFX\bin\Release\SystemInfoLibrary.dll" target="lib\net45\SystemInfoLibrary.dll" />
         <file src="..\src\SystemInfoLibrary.NetFX\bin\Release\SystemInfoLibrary.xml" target="lib\net45\SystemInfoLibrary.xml" />
