@@ -1,6 +1,6 @@
 ﻿namespace SystemInfoLibrary.Hardware.CPU
 {
-    internal class MacOSXCPUInfo : CPUInfo
+    internal class BSDCPUInfo : CPUInfo
     {
         public override string Name => Utils.FilterCPUName(Utils.GetSysCtlPropertyString("machdep.cpu.brand_string"));
 

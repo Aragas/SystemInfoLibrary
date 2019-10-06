@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace SystemInfoLibrary.Hardware.RAM
 {
-    internal class UnixRAMInfo : RAMInfo
+    internal class LinuxRAMInfo : RAMInfo
     {
         private string _ramInfo;
 

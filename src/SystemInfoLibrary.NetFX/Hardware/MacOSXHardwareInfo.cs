@@ -20,17 +20,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using SystemInfoLibrary.Hardware.CPU;
 using SystemInfoLibrary.Hardware.GPU;
-using SystemInfoLibrary.Hardware.RAM;
 
 namespace SystemInfoLibrary.Hardware
 {
-    internal class MacOSXHardwareInfo : HardwareInfo
+    internal class MacOSXHardwareInfo : BSDHardwareInfo
     {
-        private IList<CPUInfo> _CPUs;
-        public override IList<CPUInfo> CPUs => _CPUs ?? (_CPUs = new List<CPUInfo> { new MacOSXCPUInfo() }); // We'll assume only one physical CPU is supported
-
         private IList<GPUInfo> _GPUs;
         public override IList<GPUInfo> GPUs
         {
@@ -50,8 +45,5 @@ namespace SystemInfoLibrary.Hardware
                 return _GPUs;
             }
         }
-
-        private RAMInfo _RAM;
-        public override RAMInfo RAM => _RAM ?? (_RAM = new MacOSXRAMInfo());
     }
 }

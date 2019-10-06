@@ -1,7 +1,5 @@
 using System;
-using System.Globalization;
-
-using Microsoft.Win32;
+using System.Management;
 
 namespace SystemInfoLibrary.Hardware.CPU
 {
@@ -18,16 +16,23 @@ namespace SystemInfoLibrary.Hardware.CPU
             x64 = 9
         };
 
-        public override string Name => Utils.Win32_Processor["Name"];
+        private readonly ManagementBaseObject _win32_processor;
 
-        public override string Brand => Utils.Win32_Processor["Manufacturer"];
+        public override string Name => (String) _win32_processor.GetPropertyValue("Name");
 
-        public override string Architecture => Enum.GetName(typeof(CPUArchitectureType), int.Parse(Utils.Win32_Processor["Architecture"]));
+        public override string Brand => (String) _win32_processor.GetPropertyValue("Manufacturer");
 
-        public override int PhysicalCores => int.Parse(Utils.Win32_Processor["NumberOfCores"], CultureInfo.InvariantCulture);
+        public override string Architecture => Enum.GetName(typeof(CPUArchitectureType), (UInt16) _win32_processor.GetPropertyValue("Architecture"));
 
-        public override int LogicalCores => int.Parse(Utils.Win32_Processor["NumberOfLogicalProcessors"], CultureInfo.InvariantCulture);
+        public override int PhysicalCores => (Int32) (UInt32) _win32_processor.GetPropertyValue("NumberOfCores");
 
-        public override double Frequency => Convert.ToDouble(Utils.GetRegistryValue(Registry.LocalMachine, @"HARDWARE\DESCRIPTION\System\CentralProcessor\0", "~MHz", 0));
+        public override int LogicalCores => (Int32) (UInt32) _win32_processor.GetPropertyValue("NumberOfLogicalProcessors");
+
+        public override double Frequency => (Double) (UInt32) _win32_processor.GetPropertyValue("CurrentClockSpeed");
+
+        public WindowsCPUInfo(ManagementBaseObject win32_processor)
+        {
+            _win32_processor = win32_processor;
+        }
     }
 }

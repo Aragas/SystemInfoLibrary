@@ -20,11 +20,10 @@ using SystemInfoLibrary.Hardware;
 
 namespace SystemInfoLibrary.OperatingSystem
 {
-    internal class MacOSXOperatingSystemInfo : UnixOperatingSystemInfo
+    internal class BSDOperatingSystemInfo : UnixOperatingSystemInfo
     {
         private HardwareInfo _hardware;
-
-        public override HardwareInfo Hardware => _hardware ?? (_hardware = new MacOSXHardwareInfo());
+        public override HardwareInfo Hardware => _hardware ?? (_hardware = new BSDHardwareInfo());
 
         public override OperatingSystemInfo Update()
         {

@@ -17,17 +17,14 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
+
 using Microsoft.Win32;
 
 namespace SystemInfoLibrary
 {
-    public static class Utils
+    internal static class Utils
     {
         public static string FilterCPUName(string name)
         {
@@ -81,76 +78,6 @@ namespace SystemInfoLibrary
 
         [DllImport("libc", EntryPoint = "uname")]
         public static extern int UName(IntPtr unameStruct);
-
-        #region PowerShell
-
-        private static string GetPSUniqueFileName()
-        {
-            string fileName;
-            do
-            {
-                fileName = Path.GetTempPath() + Guid.NewGuid() + ".ps1";
-            } while (File.Exists(fileName));
-            return fileName;
-        }
-
-        public static Dictionary<string, string> Win32_Processor => _win32_Processor ?? (_win32_Processor = GetWin32_Processor());
-        public static Dictionary<string, string> _win32_Processor;
-        private static Dictionary<string, string> GetWin32_Processor()
-        {
-            var script = "gwmi Win32_Processor | Format-List Name, Manufacturer, Architecture, NumberOfCores";
-            var scriptFile = GetPSUniqueFileName();
-            using (var scriptScream = File.CreateText(scriptFile))
-                scriptScream.WriteLine(script);
-            var output = GetCommandExecutionOutput("PowerShell.exe", $@"-Executionpolicy unrestricted {scriptFile}");
-            return output.Split(new [] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(part => part.Split(':'))
-                .ToDictionary(split => split[0].TrimStart().TrimEnd(), split => split[1].TrimStart().TrimEnd());
-        }
-
-        public static Dictionary<string, string> Win32_VideoController => _win32_VideoController ?? (_win32_VideoController = GetWin32_VideoController());
-        public static Dictionary<string, string> _win32_VideoController;
-        private static Dictionary<string, string> GetWin32_VideoController()
-        {
-            var script = "gwmi Win32_VideoController | Format-List VideoProcessor, Name, CurrentHorizontalResolution, CurrentVerticalResolution, CurrentRefreshRate, AdapterRAM";
-            var scriptFile = GetPSUniqueFileName();
-            using (var scriptScream = File.CreateText(scriptFile))
-                scriptScream.WriteLine(script);
-            var output = GetCommandExecutionOutput("PowerShell.exe", $@"-Executionpolicy unrestricted {scriptFile}");
-            return output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(part => part.Split(':'))
-                .ToDictionary(split => split[0].TrimStart().TrimEnd(), split => split[1].TrimStart().TrimEnd());
-        }
-
-        public static Dictionary<string, string> Win32_OperatingSystem => _win32_OperatingSystem ?? (_win32_OperatingSystem = GetWin32_OperatingSystem());
-        public static Dictionary<string, string> _win32_OperatingSystem;
-        private static Dictionary<string, string> GetWin32_OperatingSystem()
-        {
-            var script = "gwmi Win32_OperatingSystem | Format-List OSArchitecture, Caption, ServicePackMajorVersion, ServicePackMinorVersion, FreePhysicalMemory, TotalVisibleMemorySize";
-            var scriptFile = GetPSUniqueFileName();
-            using (var scriptScream = File.CreateText(scriptFile))
-                scriptScream.WriteLine(script);
-            var output = GetCommandExecutionOutput("PowerShell.exe", $@"-Executionpolicy unrestricted {scriptFile}");
-            return output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(part => part.Split(':'))
-                .ToDictionary(split => split[0].TrimStart().TrimEnd(), split => split[1].TrimStart().TrimEnd());
-        }
-
-        public static Dictionary<string, string> Win32_ComputerSystem => _win32_ComputerSystem ?? (_win32_ComputerSystem = GetWin32_ComputerSystem());
-        public static Dictionary<string, string> _win32_ComputerSystem;
-        private static Dictionary<string, string> GetWin32_ComputerSystem()
-        {
-            var script = "gwmi Win32_ComputerSystem | Format-List NumberOfProcessors";
-            var scriptFile = GetPSUniqueFileName();
-            using (var scriptScream = File.CreateText(scriptFile))
-                scriptScream.WriteLine(script);
-            var output = GetCommandExecutionOutput("PowerShell.exe", $@"-Executionpolicy unrestricted {scriptFile}");
-            return output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(part => part.Split(':'))
-                .ToDictionary(split => split[0].TrimStart().TrimEnd(), split => split[1].TrimStart().TrimEnd());
-        }
-
-        #endregion
 
         #region OS X
 

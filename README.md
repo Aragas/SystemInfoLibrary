@@ -12,13 +12,13 @@ This library is licensed under the [GNU Lesser General Public License v3](http:/
 ### Supported Operating Systems ###
 ####Windows:
 + **CPU:**  
-	- Supports only one physical CPU.
+	- Full support.
 + **GPU:**  
-	- Supports only one physical GPU.
+	- Full support.
 + **RAM:**  
 	- Full support.  
 	
-####Unix:  
+####Linux:  
 + **CPU:**  
 	- Full support.
 + **GPU:**  
@@ -31,6 +31,14 @@ This library is licensed under the [GNU Lesser General Public License v3](http:/
 	- Supports only one physical CPU.
 + **GPU:**  
 	- Full support.
++ **RAM:**  
+	- Full support.
+	
+####BSD (FreeBSD, NetBSD, OpenBSD, AIX, HPUX):  
++ **CPU:**  
+	- Supports only one physical CPU.
++ **GPU:**  
+	- Not supported.
 + **RAM:**  
 	- Full support.
 	

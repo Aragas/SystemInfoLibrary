@@ -1,3 +1,6 @@
+using System;
+using System.Management;
+
 namespace SystemInfoLibrary.Hardware.GPU
 {
     internal class WindowsGPUInfo : GPUInfo
@@ -19,16 +22,17 @@ namespace SystemInfoLibrary.Hardware.GPU
             PCEightNine = 160
         };
 
-        public override string Name => Utils.Win32_VideoController["VideoProcessor"];
+        private readonly ManagementBaseObject _win32_videoController;
 
-        public override string Brand => Utils.Win32_VideoController["Name"];
+        public override string Name => (String) _win32_videoController.GetPropertyValue("VideoProcessor");
 
-        /*
-        public override string Resolution => $"{Utils.Win32_VideoController["CurrentHorizontalResolution"]}x{Utils.Win32_VideoController["CurrentVerticalResolution"]}";
+        public override string Brand => (String) _win32_videoController.GetPropertyValue("Name");
 
-        public override int RefreshRate => int.Parse(Utils.Win32_VideoController["CurrentRefreshRate"]);
-        */
+        public override ulong MemoryTotal => (UInt32) _win32_videoController.GetPropertyValue("AdapterRAM");
 
-        public override ulong MemoryTotal => ulong.Parse(Utils.Win32_VideoController["AdapterRAM"]);
+        public WindowsGPUInfo(ManagementBaseObject win32_videoController)
+        {
+            _win32_videoController = win32_videoController;
+        }
     }
 }

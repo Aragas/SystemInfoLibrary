@@ -2,7 +2,7 @@
 
 namespace SystemInfoLibrary.Hardware.GPU
 {
-    internal class UnixGPUInfo : GPUInfo
+    internal class LinuxGPUInfo : GPUInfo
     {
         private string _glxinfo;
         private string Glxinfo => string.IsNullOrEmpty(_glxinfo) ? (_glxinfo = Utils.GetCommandExecutionOutput("glxinfo", "")) : _glxinfo;

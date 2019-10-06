@@ -8,7 +8,7 @@ using SystemInfoLibrary.Hardware.RAM;
 
 namespace SystemInfoLibrary.Hardware
 {
-    internal sealed class WindowsHardwareInfoNative : WindowsHardwareInfo
+    internal sealed class WindowsHardwareInfo : HardwareInfo
     {
         private IList<CPUInfo> _CPUs;
         public override IList<CPUInfo> CPUs
@@ -19,7 +19,7 @@ namespace SystemInfoLibrary.Hardware
                 {
                     using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Processor"))
                     {
-                        _CPUs = (from ManagementBaseObject processor in searcher.Get() select (CPUInfo)new WindowsCPUInfoNative(processor)).ToList();
+                        _CPUs = (from ManagementBaseObject processor in searcher.Get() select (CPUInfo)new WindowsCPUInfo(processor)).ToList();
                     }
                 }
 
@@ -36,7 +36,7 @@ namespace SystemInfoLibrary.Hardware
                 {
                     using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_VideoController"))
                     {
-                        _GPUs = (from ManagementBaseObject videoController in searcher.Get() select (GPUInfo)new WindowsGPUInfoNative(videoController)).ToList();
+                        _GPUs = (from ManagementBaseObject videoController in searcher.Get() select (GPUInfo)new WindowsGPUInfo(videoController)).ToList();
                     }
                 }
 
@@ -45,6 +45,20 @@ namespace SystemInfoLibrary.Hardware
         }
 
         private RAMInfo _RAM;
-        public override RAMInfo RAM => _RAM ?? (_RAM = new WindowsRAMInfoNative());
+        public override RAMInfo RAM
+        {
+            get
+            {
+                if (_RAM == null)
+                {
+                    using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem"))
+                    {
+                        _RAM = (from ManagementBaseObject os in searcher.Get() select (RAMInfo) new WindowsRAMInfo(os)).FirstOrDefault();
+                    }
+                }
+
+                return _RAM;
+            }
+        }
     }
 }

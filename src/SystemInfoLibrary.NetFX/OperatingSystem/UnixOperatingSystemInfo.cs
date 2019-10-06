@@ -34,7 +34,6 @@ namespace SystemInfoLibrary.OperatingSystem
         private string _java;
         private string Java => string.IsNullOrEmpty(_java) ? (_java = Utils.GetCommandExecutionOutput("java", "-version")) : _java;
 
-
         public override string Architecture
         {
             get
@@ -62,13 +61,10 @@ namespace SystemInfoLibrary.OperatingSystem
             }
         }
 
-        private HardwareInfo _hardware;
-        public override HardwareInfo Hardware => _hardware ?? (_hardware = new UnixHardwareInfo());
+        public override HardwareInfo Hardware => null;
 
         public override OperatingSystemInfo Update()
         {
-            _hardware = null;
-
             _unameM = Utils.GetCommandExecutionOutput("uname", "-m");
             _unameRS = Utils.GetCommandExecutionOutput("uname", "-rs");
             _java = Utils.GetCommandExecutionOutput("java", "-version");

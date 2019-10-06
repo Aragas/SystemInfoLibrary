@@ -26,7 +26,7 @@ using SystemInfoLibrary.Hardware.RAM;
 
 namespace SystemInfoLibrary.Hardware
 {
-    internal sealed class UnixHardwareInfo : HardwareInfo
+    internal sealed class LinuxHardwareInfo : HardwareInfo
     {
         private string _cpuInfo;
         private string CPU_Info => string.IsNullOrEmpty(_cpuInfo) ? (_cpuInfo = Utils.GetCommandExecutionOutput("cat", "/proc/cpuinfo")) : _cpuInfo;
@@ -36,13 +36,13 @@ namespace SystemInfoLibrary.Hardware
         public override IList<CPUInfo> CPUs => _CPUs;
 
         private IList<GPUInfo> _GPUs;
-        public override IList<GPUInfo> GPUs => _GPUs ?? (_GPUs = new List<GPUInfo> { new UnixGPUInfo() }); // No idea how to detect multiple GPUs
+        public override IList<GPUInfo> GPUs => _GPUs ?? (_GPUs = new List<GPUInfo> { new LinuxGPUInfo() }); // No idea how to detect multiple GPUs
 
         private RAMInfo _RAM;
-        public override RAMInfo RAM => _RAM ?? (_RAM = new UnixRAMInfo());
+        public override RAMInfo RAM => _RAM ?? (_RAM = new LinuxRAMInfo());
 
 
-        public UnixHardwareInfo()
+        public LinuxHardwareInfo()
         {
             // -- CPU
             _cpuInfo = string.Empty;
@@ -55,7 +55,7 @@ namespace SystemInfoLibrary.Hardware
             {
                 var cpuInfo = string.Join("",
                     matches.Where(match => int.Parse(new Regex(@"physical id\s*:\s*(?<pid>\d*)").Match(match).Groups["pid"].Value) == procIndex).ToArray());
-                _CPUs.Add(new UnixCPUInfo(cpuInfo));
+                _CPUs.Add(new LinuxCPUInfo(cpuInfo));
             }
             // -- CPU
         }

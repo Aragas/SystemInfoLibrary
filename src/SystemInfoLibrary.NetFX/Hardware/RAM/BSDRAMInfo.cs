@@ -3,13 +3,13 @@ using System.Text.RegularExpressions;
 
 namespace SystemInfoLibrary.Hardware.RAM
 {
-    internal class MacOSXRAMInfo : RAMInfo
+    internal class BSDRAMInfo : RAMInfo
     {
         private string _vmStats;
         private string VMStats => string.IsNullOrEmpty(_vmStats) ? (_vmStats = Utils.GetCommandExecutionOutput("vm_stat", "")) : _vmStats;
 
 
-        public override ulong Total => (ulong) Utils.GetSysCtlPropertyInt64("hw.memsize")/1024;
+        public override ulong Total => (ulong) Utils.GetSysCtlPropertyInt64("hw.memsize") / 1024;
 
         public override ulong Free
         {

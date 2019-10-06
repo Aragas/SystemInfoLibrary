@@ -3,10 +3,9 @@ using System.Text.RegularExpressions;
 
 namespace SystemInfoLibrary.Hardware.CPU
 {
-    internal class UnixCPUInfo : CPUInfo
+    internal class LinuxCPUInfo : CPUInfo
     {
         private readonly string _cpuInfo;
-
 
         public override string Name
         {
@@ -69,7 +68,7 @@ namespace SystemInfoLibrary.Hardware.CPU
         }
 
 
-        public UnixCPUInfo(string cpuInfo)
+        public LinuxCPUInfo(string cpuInfo)
         {
             _cpuInfo = cpuInfo;
         }
