@@ -17,6 +17,7 @@
 */
 
 using System.Management;
+
 using SystemInfoLibrary.Hardware;
 
 namespace SystemInfoLibrary.OperatingSystem

@@ -10,7 +10,6 @@ namespace SystemInfoLibrary.OperatingSystem
 
         public override string Name => "Unknown";
 
-        public override Version FrameworkVersion => Environment.Version;
 
         private Version _javaVersion;
         public override Version JavaVersion => _javaVersion ?? (_javaVersion = new Version());

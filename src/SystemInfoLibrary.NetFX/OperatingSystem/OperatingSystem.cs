@@ -18,7 +18,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Threading;
 
 using SystemInfoLibrary.Hardware;
 
@@ -72,9 +71,9 @@ namespace SystemInfoLibrary.OperatingSystem
         public abstract string Name { get; }
 
         /// <summary>
-        /// .NET runtime version.
+        /// .NET runtime.
         /// </summary>
-        public abstract Version FrameworkVersion { get; }
+        public string Runtime => RuntimeInformation.FrameworkDescription;
 
         public bool IsMono => Type.GetType("Mono.Runtime") != null;
 
@@ -97,13 +96,13 @@ namespace SystemInfoLibrary.OperatingSystem
 #endif
 
 #if NETSTANDARD2_0
-            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return new UnixOperatingSystemInfo();
 
-            if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 return new MacOSXOperatingSystemInfo();
 
-            if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 return new WindowsOperatingSystemInfo();
 #else
             switch (Environment.OSVersion.Platform)

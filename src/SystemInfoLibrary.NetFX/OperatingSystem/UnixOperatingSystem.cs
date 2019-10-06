@@ -49,32 +49,6 @@ namespace SystemInfoLibrary.OperatingSystem
 
         public override string Name => UnameRS.Replace("\n", "");
 
-        public override Version FrameworkVersion
-        {
-            get
-            {
-#if NETSTANDARD2_0
-                return new Version(Environment.Version.Major, Environment.Version.Minor);
-#else
-                try
-                {
-                    if (IsMono)
-                    {
-                        var type = Type.GetType("Mono.Runtime");
-
-                        var invokeGetDisplayName = type?.GetMethod("GetDisplayName", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-                        var displayName = invokeGetDisplayName != null ? invokeGetDisplayName.Invoke(null, null) as string : null;
-                        if (displayName != null)
-                            return new Version(displayName.Substring(0, displayName.IndexOf(" ", StringComparison.Ordinal)));
-                    }
-                }
-                catch { /* ignored */ }
-
-                return new Version(Environment.Version.Major, Environment.Version.Minor);
-#endif
-            }
-        }
-
         public override Version JavaVersion
         {
             get

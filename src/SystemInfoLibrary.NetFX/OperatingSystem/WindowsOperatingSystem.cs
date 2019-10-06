@@ -29,8 +29,6 @@ namespace SystemInfoLibrary.OperatingSystem
         public override string Architecture => Utils.Win32_OperatingSystem["OSArchitecture"];
 
         public override string Name => $"{Utils.Win32_OperatingSystem["Caption"]} SP{Utils.Win32_OperatingSystem["ServicePackMajorVersion"]}.{Utils.Win32_OperatingSystem["ServicePackMinorVersion"]}";
-
-        public override Version FrameworkVersion => Environment.Version;
         
         public override Version JavaVersion { get; }
 
