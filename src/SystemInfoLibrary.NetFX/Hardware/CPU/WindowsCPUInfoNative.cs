@@ -7,17 +7,17 @@ namespace SystemInfoLibrary.Hardware.CPU
     {
         private readonly ManagementBaseObject _win32_processor;
 
-        public override string Name => _win32_processor.GetPropertyValue("Name") as string ?? "Unknown";
+        public override string Name => _win32_processor.GetPropertyValue("Name").ToString() ?? "Unknown";
 
-        public override string Brand => _win32_processor.GetPropertyValue("Manufacturer") as string ?? "Unknown";
+        public override string Brand => _win32_processor.GetPropertyValue("Manufacturer").ToString() ?? "Unknown";
 
-        public override string Architecture => Enum.GetName(typeof(CPUArchitectureType), int.Parse(_win32_processor.GetPropertyValue("Architecture") as string ?? string.Empty));
+        public override string Architecture => Enum.GetName(typeof(CPUArchitectureType), int.Parse(_win32_processor.GetPropertyValue("Architecture").ToString() ?? "0"));
 
-        public override int PhysicalCores => int.Parse(_win32_processor.GetPropertyValue("NumberOfCores") as string ?? "0");
+        public override int PhysicalCores => int.Parse(_win32_processor.GetPropertyValue("NumberOfCores").ToString() ?? "0");
 
-        public override int LogicalCores => int.Parse(_win32_processor.GetPropertyValue("NumberOfLogicalProcessors") as string ?? "0");
+        public override int LogicalCores => int.Parse(_win32_processor.GetPropertyValue("NumberOfLogicalProcessors").ToString() ?? "0");
 
-        public override double Frequency => int.Parse(_win32_processor.GetPropertyValue("CurrentClockSpeed") as string ?? "0");
+        public override double Frequency => int.Parse(_win32_processor.GetPropertyValue("CurrentClockSpeed").ToString() ?? "0");
         //    Convert.ToDouble(Utils.GetRegistryValue(Microsoft.Win32.Registry.LocalMachine, @"HARDWARE\DESCRIPTION\System\CentralProcessor\0", "~MHz", 0));
 
         public WindowsCPUInfoNative(ManagementBaseObject win32_processor)
