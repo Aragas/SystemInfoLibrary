@@ -19,6 +19,7 @@ For more info please visit the project url.</description>
         <group targetFramework="netstandard2.0">
             <dependency id="System.Runtime.InteropServices.RuntimeInformation" version="4.3.0" />
             <dependency id="Microsoft.Win32.Registry" version="4.6.0" />
+            <dependency id="System.Management" version="4.6.0" />
         </group>
     </dependencies>
     <files>

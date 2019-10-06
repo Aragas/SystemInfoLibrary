@@ -103,7 +103,7 @@ namespace SystemInfoLibrary.OperatingSystem
                 return new MacOSXOperatingSystemInfo();
 
             if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return new WindowsOperatingSystemInfo();
+                return new WindowsOperatingSystemInfoNative();
 #else
             switch (Environment.OSVersion.Platform)
             {

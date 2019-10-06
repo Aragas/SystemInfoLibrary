@@ -19,12 +19,14 @@
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\UnityCPUInfo.cs" Link="Hardware\CPU\UnityCPUInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\UnixCPUInfo.cs" Link="Hardware\CPU\UnixCPUInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\WindowsCPUInfo.cs" Link="Hardware\CPU\WindowsCPUInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\WindowsCPUInfoNative.cs" Link="Hardware\CPU\WindowsCPUInfoNative.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\Display\DisplayInfo.cs" Link="Hardware\Display\DisplayInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\GPU\GPUInfo.cs" Link="Hardware\GPU\GPUInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\GPU\MacOSXGPUInfo.cs" Link="Hardware\GPU\MacOSXGPUInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\GPU\UnityGPUInfo.cs" Link="Hardware\GPU\UnityGPUInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\GPU\UnixGPUInfo.cs" Link="Hardware\GPU\UnixGPUInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\GPU\WindowsGPUInfo.cs" Link="Hardware\GPU\WindowsGPUInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\GPU\WindowsGPUInfoNative.cs" Link="Hardware\GPU\WindowsGPUInfoNative.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\HardwareInfo.cs" Link="Hardware\HardwareInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\MacOSXHardware.cs" Link="Hardware\MacOSXHardware.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\RAM\MacOSXRAMInfo.cs" Link="Hardware\RAM\MacOSXRAMInfo.cs" />
@@ -32,15 +34,18 @@
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\RAM\UnityRAMInfo.cs" Link="Hardware\RAM\UnityRAMInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\RAM\UnixRAMInfo.cs" Link="Hardware\RAM\UnixRAMInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\RAM\WindowsRAMInfo.cs" Link="Hardware\RAM\WindowsRAMInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\RAM\WindowsRAMInfoNative.cs" Link="Hardware\RAM\WindowsRAMInfoNative.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\UnityHardware.cs" Link="Hardware\UnityHardware.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\UnixHardware.cs" Link="Hardware\UnixHardware.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\WindowsHardware.cs" Link="Hardware\WindowsHardware.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\WindowsHardwareNative.cs" Link="Hardware\WindowsHardwareNative.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\MacOSXOperatingSystem.cs" Link="OperatingSystem\MacOSXOperatingSystem.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\OperatingSystem.cs" Link="OperatingSystem\OperatingSystem.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\OtherOperatingSystem.cs" Link="OperatingSystem\OtherOperatingSystem.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\UnityOperatingSystem.cs" Link="OperatingSystem\UnityOperatingSystem.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\UnixOperatingSystem.cs" Link="OperatingSystem\UnixOperatingSystem.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\WindowsOperatingSystem.cs" Link="OperatingSystem\WindowsOperatingSystem.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\OperatingSystem\WindowsOperatingSystemNative.cs" Link="OperatingSystem\WindowsOperatingSystemNative.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Utils.cs" Link="Utils.cs" />
   </ItemGroup>
 
@@ -54,7 +59,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Win32.Registry" Version="4.4.0" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="4.6.0" />
+    <PackageReference Include="System.Management" Version="4.6.0" />
+    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>

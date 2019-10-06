@@ -4,27 +4,11 @@ namespace SystemInfoLibrary.Hardware.GPU
 {
     internal class WindowsGPUInfoNative : WindowsGPUInfo
     {
-        public override string Name
-        {
-            get
-            {
-                var searcher = new ManagementObjectSearcher("SELECT VideoProcessor FROM Win32_VideoController");
-                foreach (var obj in searcher.Get())
-                    return obj["VideoProcessor"].ToString();
-                return "Unknown";
-            }
-        }
+        private readonly ManagementBaseObject _win32_videoController;
 
-        public override string Brand
-        {
-            get
-            {
-                var searcher = new ManagementObjectSearcher("SELECT Name FROM Win32_VideoController");
-                foreach (var obj in searcher.Get())
-                    return obj["Name"].ToString();
-                return "Unknown";
-            }
-        }
+        public override string Name => _win32_videoController.GetPropertyValue("VideoProcessor") as string ?? "Unknown";
+
+        public override string Brand => _win32_videoController.GetPropertyValue("Name") as string ?? "Unknown";
 
         /*
         public override string Resolution
@@ -52,15 +36,11 @@ namespace SystemInfoLibrary.Hardware.GPU
         }
         */
 
-        public override ulong MemoryTotal
+        public override ulong MemoryTotal => ulong.Parse(_win32_videoController.GetPropertyValue("AdapterRAM") as string ?? "0") / 1024;
+
+        public WindowsGPUInfoNative(ManagementBaseObject win32_videoController)
         {
-            get
-            {
-                var searcher = new ManagementObjectSearcher("SELECT AdapterRAM FROM Win32_VideoController");
-                foreach (var obj in searcher.Get())
-                    return ulong.Parse(obj["AdapterRAM"].ToString()) / 1024;
-                return 0;
-            }
+            _win32_videoController = win32_videoController;
         }
     }
 }
