@@ -18,9 +18,14 @@ namespace SystemInfoLibrary.Hardware.CPU
         public abstract string Architecture { get; }
 
         /// <summary>
-        /// Number of CPU cores.
+        /// Number of physical CPU cores.
         /// </summary>
-        public abstract int Cores { get; }
+        public abstract int PhysicalCores { get; }
+
+        /// <summary>
+        /// Number of logical CPU cores.
+        /// </summary>
+        public abstract int LogicalCores { get; }
 
         /// <summary>
         /// Current CPU frequency, average or of the first core.

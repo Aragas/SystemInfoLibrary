@@ -8,7 +8,9 @@
 
         public override string Architecture => Utils.GetSysCtlPropertyInt32("hw.cpu64bit_capable") == 1 ? "x64" : "x86";
 
-        public override int Cores => Utils.GetSysCtlPropertyInt32("hw.logicalcpu");
+        public override int PhysicalCores => Utils.GetSysCtlPropertyInt32("hw.physicalcpu");
+
+        public override int LogicalCores => Utils.GetSysCtlPropertyInt32("hw.logicalcpu");
 
         public override double Frequency => (double) Utils.GetSysCtlPropertyInt64("hw.cpufrequency")/(double) 1024/(double) 1024;
     }

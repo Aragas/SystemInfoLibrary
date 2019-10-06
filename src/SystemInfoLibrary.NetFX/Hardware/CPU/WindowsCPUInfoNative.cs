@@ -39,13 +39,24 @@ namespace SystemInfoLibrary.Hardware.CPU
             }
         }
 
-        public override int Cores
+        public override int PhysicalCores
         {
             get
             {
                 var searcher = new ManagementObjectSearcher("SELECT NumberOfCores FROM Win32_Processor");
                 foreach (var obj in searcher.Get())
                     return int.Parse(obj["NumberOfCores"].ToString(), CultureInfo.InvariantCulture);
+                return 0;
+            }
+        }
+
+        public override int LogicalCores
+        {
+            get
+            {
+                var searcher = new ManagementObjectSearcher("SELECT NumberOfLogicalProcessors FROM Win32_Processor");
+                foreach (var obj in searcher.Get())
+                    return int.Parse(obj["NumberOfLogicalProcessors"].ToString(), CultureInfo.InvariantCulture);
                 return 0;
             }
         }

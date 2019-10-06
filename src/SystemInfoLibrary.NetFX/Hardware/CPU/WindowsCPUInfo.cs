@@ -24,7 +24,9 @@ namespace SystemInfoLibrary.Hardware.CPU
 
         public override string Architecture => Enum.GetName(typeof(CPUArchitectureType), int.Parse(Utils.Win32_Processor["Architecture"]));
 
-        public override int Cores => int.Parse(Utils.Win32_Processor["NumberOfCores"], CultureInfo.InvariantCulture);
+        public override int PhysicalCores => int.Parse(Utils.Win32_Processor["NumberOfCores"], CultureInfo.InvariantCulture);
+
+        public override int LogicalCores => int.Parse(Utils.Win32_Processor["NumberOfLogicalProcessors"], CultureInfo.InvariantCulture);
 
         public override double Frequency => Convert.ToDouble(Utils.GetRegistryValue(Registry.LocalMachine, @"HARDWARE\DESCRIPTION\System\CentralProcessor\0", "~MHz", 0));
     }

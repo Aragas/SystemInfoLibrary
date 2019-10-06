@@ -41,11 +41,20 @@ namespace SystemInfoLibrary.Hardware.CPU
             }
         }
 
-        public override int Cores
+        public override int PhysicalCores
         {
             get
             {
                 var matches = new Regex(@"cpu cores\s*:\s*(\d*)").Matches(_cpuInfo);
+                return int.TryParse(matches[0].Groups[1].Value, NumberStyles.None, CultureInfo.InvariantCulture, out var value) ? value : 0;
+            }
+        }
+
+        public override int LogicalCores
+        {
+            get
+            {
+                var matches = new Regex(@"siblings\s*:\s*(\d*)").Matches(_cpuInfo);
                 return int.TryParse(matches[0].Groups[1].Value, NumberStyles.None, CultureInfo.InvariantCulture, out var value) ? value : 0;
             }
         }

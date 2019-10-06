@@ -11,7 +11,10 @@ namespace SystemInfoLibrary.Hardware.CPU
 
         public override string Architecture => "Unknown";
 
-        public override int Cores => SystemInfo.processorCount;
+        public override int PhysicalCores => SystemInfo.processorCount;
+
+        public override int LogicalCores => 0;
+
 
         public override double Frequency => SystemInfo.processorFrequency;
     }
