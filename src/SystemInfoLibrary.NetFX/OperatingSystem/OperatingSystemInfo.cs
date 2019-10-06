@@ -41,7 +41,7 @@ namespace SystemInfoLibrary.OperatingSystem
         public static System.Runtime.InteropServices.OSPlatform FreeBSD = System.Runtime.InteropServices.OSPlatform.Create("FREEBSD");
         public static System.Runtime.InteropServices.OSPlatform NetBSD = System.Runtime.InteropServices.OSPlatform.Create("NETBSD");
         public static System.Runtime.InteropServices.OSPlatform WebAssembly = System.Runtime.InteropServices.OSPlatform.Create("WEBASSEMBLY");
-        // Mono pre-defined
+        // Mono pre-defined https://github.com/mono/mono/blob/master/mcs/class/corlib/System.Runtime.InteropServices.RuntimeInformation/RuntimeInformation.cs
         public static System.Runtime.InteropServices.OSPlatform Solaris = System.Runtime.InteropServices.OSPlatform.Create("SOLARIS");
         public static System.Runtime.InteropServices.OSPlatform OpenBSD = System.Runtime.InteropServices.OSPlatform.Create("OPENBSD");
         public static System.Runtime.InteropServices.OSPlatform AIX = System.Runtime.InteropServices.OSPlatform.Create("AIX");
