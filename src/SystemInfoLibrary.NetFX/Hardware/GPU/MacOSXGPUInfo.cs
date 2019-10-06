@@ -1,30 +1,27 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Linq;
 
 namespace SystemInfoLibrary.Hardware.GPU
 {
-    // TODO: try OpenGL/CL to get the info.
     internal class MacOSXGPUInfo : GPUInfo
     {
-        private string _systemProfiler;
-        private string SystemProfiler => string.IsNullOrEmpty(_systemProfiler) ? (_systemProfiler = Utils.GetCommandExecutionOutput("system_profiler", "SPDisplaysDataType")) : _systemProfiler;
+        private readonly string[] _info;
 
+        public override string Name => _info.FirstOrDefault()?.Split(' ').FirstOrDefault();
 
-        public override string Name
+        public override string Brand
         {
             get
             {
-                var matches = new Regex(@"Processor Name\s*:\s*(.*)").Matches(SystemProfiler);
-                var value = matches[0].Groups[1].Value;
-                return string.IsNullOrEmpty(value) ? "Unknown" : value;
+                var split = _info.FirstOrDefault()?.Split(' ');
+                return split?.Length >= 2 ? string.Join(" ", _info.FirstOrDefault()?.Split(' ').Skip(1)) : string.Empty;
             }
         }
 
-        public override string Brand => "Unknown";
+        public override ulong MemoryTotal => _info.Length >= 2 ? (ulong.TryParse(_info[1].Split(' ').FirstOrDefault(), out var vram) ? vram * 1024 : 0) : 0;
 
-        public override string Resolution => "Unknown";
-
-        public override int RefreshRate => 0;
-
-        public override ulong MemoryTotal => 0;
+        public MacOSXGPUInfo(string[] info)
+        {
+            _info = info;
+        }
     }
 }

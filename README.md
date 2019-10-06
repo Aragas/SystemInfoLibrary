@@ -20,17 +20,17 @@ This library is licensed under the [GNU Lesser General Public License v3](http:/
 	
 ####Unix:  
 + **CPU:**  
-	- Supports multiple physical CPUs.
+	- Full support.
 + **GPU:**  
 	- Supports only one physical GPU. Partial support. *glxinfo* is needed to be installed.
 + **RAM:**  
-  - Full support.  
+    - Full support.  
   
 ####MacOSX:  
 + **CPU:**  
 	- Supports only one physical CPU.
 + **GPU:**  
-	- Not supported.
+	- Full support.
 + **RAM:**  
 	- Full support.
 	

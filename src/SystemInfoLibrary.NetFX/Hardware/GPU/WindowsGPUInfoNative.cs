@@ -26,6 +26,7 @@ namespace SystemInfoLibrary.Hardware.GPU
             }
         }
 
+        /*
         public override string Resolution
         {
             get
@@ -49,6 +50,7 @@ namespace SystemInfoLibrary.Hardware.GPU
                 return 0;
             }
         }
+        */
 
         public override ulong MemoryTotal
         {

@@ -19,6 +19,7 @@
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\UnityCPUInfo.cs" Link="Hardware\CPU\UnityCPUInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\UnixCPUInfo.cs" Link="Hardware\CPU\UnixCPUInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\CPU\WindowsCPUInfo.cs" Link="Hardware\CPU\WindowsCPUInfo.cs" />
+    <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\Display\DisplayInfo.cs" Link="Hardware\Display\DisplayInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\GPU\GPUInfo.cs" Link="Hardware\GPU\GPUInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\GPU\MacOSXGPUInfo.cs" Link="Hardware\GPU\MacOSXGPUInfo.cs" />
     <Compile Include="..\SystemInfoLibrary.NetFX\Hardware\GPU\UnityGPUInfo.cs" Link="Hardware\GPU\UnityGPUInfo.cs" />
@@ -45,6 +46,7 @@
 
   <ItemGroup>
     <Folder Include="Hardware\CPU\" />
+    <Folder Include="Hardware\Display\" />
     <Folder Include="Hardware\GPU\" />
     <Folder Include="Hardware\RAM\" />
     <Folder Include="OperatingSystem\" />

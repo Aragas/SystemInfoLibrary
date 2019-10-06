@@ -32,10 +32,6 @@ namespace SystemInfoLibrary.Hardware.GPU
             }
         }
 
-        public override string Resolution => "Unknown";
-
-        public override int RefreshRate => 0;
-
         public override ulong MemoryTotal => 0;
     }
 }

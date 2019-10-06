@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using SystemInfoLibrary.Hardware.CPU;
 using SystemInfoLibrary.Hardware.GPU;
@@ -30,7 +32,24 @@ namespace SystemInfoLibrary.Hardware
         public override IList<CPUInfo> CPUs => _CPUs ?? (_CPUs = new List<CPUInfo> { new MacOSXCPUInfo() }); // We'll assume only one physical CPU is supported
 
         private IList<GPUInfo> _GPUs;
-        public override IList<GPUInfo> GPUs => _GPUs ?? (_GPUs = new List<GPUInfo> { new MacOSXGPUInfo() });
+        public override IList<GPUInfo> GPUs
+        {
+            get
+            {
+                if (_GPUs == null)
+                {
+                    var chipsetVendors = Utils.GetCommandExecutionOutput("system_profiler", "SPDisplaysDataType | grep 'Chipset Model' | awk -F \": \" '{ print $2 }'")
+                        .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                    var vrams = Utils.GetCommandExecutionOutput("system_profiler", "SPDisplaysDataType | grep 'VRAM' | awk -F \": \" '{ print $2 }'")
+                        .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                    var zip = chipsetVendors.Zip(vrams, (chipsetVendor, vram) => new [] { chipsetVendor, vram }).ToArray();
+
+                    _GPUs = zip.Select(info => (GPUInfo) new MacOSXGPUInfo(info)).ToList();
+                }
+
+                return _GPUs;
+            }
+        }
 
         private RAMInfo _RAM;
         public override RAMInfo RAM => _RAM ?? (_RAM = new MacOSXRAMInfo());

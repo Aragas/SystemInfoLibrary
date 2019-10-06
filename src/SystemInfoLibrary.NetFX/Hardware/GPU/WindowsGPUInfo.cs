@@ -23,9 +23,11 @@ namespace SystemInfoLibrary.Hardware.GPU
 
         public override string Brand => Utils.Win32_VideoController["Name"];
 
+        /*
         public override string Resolution => $"{Utils.Win32_VideoController["CurrentHorizontalResolution"]}x{Utils.Win32_VideoController["CurrentVerticalResolution"]}";
 
         public override int RefreshRate => int.Parse(Utils.Win32_VideoController["CurrentRefreshRate"]);
+        */
 
         public override ulong MemoryTotal => ulong.Parse(Utils.Win32_VideoController["AdapterRAM"]);
     }

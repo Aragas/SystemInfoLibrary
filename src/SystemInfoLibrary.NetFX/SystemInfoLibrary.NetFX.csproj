@@ -47,6 +47,7 @@
     <Compile Include="Hardware\CPU\CPUInfo.cs" />
     <Compile Include="Hardware\CPU\UnityCPUInfo.cs" />
     <Compile Include="Hardware\CPU\WindowsCPUInfoNative.cs" />
+    <Compile Include="Hardware\Display\DisplayInfo.cs" />
     <Compile Include="Hardware\GPU\GPUInfo.cs" />
     <Compile Include="Hardware\GPU\UnityGPUInfo.cs" />
     <Compile Include="Hardware\GPU\WindowsGPUInfoNative.cs" />
