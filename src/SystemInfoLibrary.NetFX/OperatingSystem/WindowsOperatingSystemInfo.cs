@@ -32,7 +32,7 @@ namespace SystemInfoLibrary.OperatingSystem
 
         public override string Architecture => (String) _win32_OperatingSystem.GetPropertyValue("OSArchitecture");
 
-        public override string Name => $"{(String) _win32_OperatingSystem.GetPropertyValue("Caption")} SP{(String) _win32_OperatingSystem.GetPropertyValue("ServicePackMajorVersion")}.{(String) _win32_OperatingSystem.GetPropertyValue("ServicePackMinorVersion")}";
+        public override string Name => $"{(String) _win32_OperatingSystem.GetPropertyValue("Caption")} SP{(UInt16) _win32_OperatingSystem.GetPropertyValue("ServicePackMajorVersion")}.{(UInt16) _win32_OperatingSystem.GetPropertyValue("ServicePackMinorVersion")}";
 
         public Version _javaVersion;
         public override Version JavaVersion

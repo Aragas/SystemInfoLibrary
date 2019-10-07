@@ -35,6 +35,7 @@ namespace SystemInfoLibrary.OperatingSystem
         Other
     }
 
+    // TODO: Use https://github.com/Microsoft/omi
     public abstract class OperatingSystemInfo
     {
         // Mono and NET Core pre-defined, check https://github.com/dotnet/corefx/blob/master/src/Native/Unix/configure.cmake (search for PAL_UNIX_NAME)
